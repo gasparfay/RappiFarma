@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "934663385169",
+    "project_id": "rappifarma-5a9c0",
+    "storage_bucket": "rappifarma-5a9c0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934663385169:android:542067d573cfb2bf8d0870",
+        "android_client_info": {
+          "package_name": "com.grupo13IS.rappifarma"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGF7ISr_H_BwqRJMYcHTxn7quuzWCy7js"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
