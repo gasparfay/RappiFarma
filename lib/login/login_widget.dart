@@ -687,8 +687,8 @@ class _LoginWidgetState extends State<LoginWidget>
                               Align(
                                 alignment: AlignmentDirectional(1.0, 0.0),
                                 child: Container(
-                                  width: 36.0,
-                                  height: 36.0,
+                                  width: 30.0,
+                                  height: 30.0,
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context).primary,
                                     boxShadow: [
