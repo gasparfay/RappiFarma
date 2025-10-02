@@ -703,10 +703,6 @@ class _LoginWidgetState extends State<LoginWidget>
                                     ],
                                     borderRadius: BorderRadius.circular(30.0),
                                     shape: BoxShape.rectangle,
-                                    border: Border.all(
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                    ),
                                   ),
                                 ).animateOnActionTrigger(
                                   animationsMap[
