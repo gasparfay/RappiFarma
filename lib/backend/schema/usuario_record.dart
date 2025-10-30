@@ -40,11 +40,6 @@ class UsuarioRecord extends FirestoreRecord {
   String get domicilio => _domicilio ?? '';
   bool hasDomicilio() => _domicilio != null;
 
-  // "numeroTelefono" field.
-  String? _numeroTelefono;
-  String get numeroTelefono => _numeroTelefono ?? '';
-  bool hasNumeroTelefono() => _numeroTelefono != null;
-
   // "numeroObraSocial" field.
   String? _numeroObraSocial;
   String get numeroObraSocial => _numeroObraSocial ?? '';
@@ -91,7 +86,6 @@ class UsuarioRecord extends FirestoreRecord {
     _editedTime = snapshotData['edited_time'] as DateTime?;
     _nombreObraSocial = snapshotData['nombreObraSocial'] as String?;
     _domicilio = snapshotData['domicilio'] as String?;
-    _numeroTelefono = snapshotData['numeroTelefono'] as String?;
     _numeroObraSocial = snapshotData['numeroObraSocial'] as String?;
     _carnetObraSocial = snapshotData['carnetObraSocial'] as String?;
     _uid = snapshotData['uid'] as String?;
@@ -142,7 +136,6 @@ Map<String, dynamic> createUsuarioRecordData({
   DateTime? editedTime,
   String? nombreObraSocial,
   String? domicilio,
-  String? numeroTelefono,
   String? numeroObraSocial,
   String? carnetObraSocial,
   String? uid,
@@ -159,7 +152,6 @@ Map<String, dynamic> createUsuarioRecordData({
       'edited_time': editedTime,
       'nombreObraSocial': nombreObraSocial,
       'domicilio': domicilio,
-      'numeroTelefono': numeroTelefono,
       'numeroObraSocial': numeroObraSocial,
       'carnetObraSocial': carnetObraSocial,
       'uid': uid,
@@ -184,7 +176,6 @@ class UsuarioRecordDocumentEquality implements Equality<UsuarioRecord> {
         e1?.editedTime == e2?.editedTime &&
         e1?.nombreObraSocial == e2?.nombreObraSocial &&
         e1?.domicilio == e2?.domicilio &&
-        e1?.numeroTelefono == e2?.numeroTelefono &&
         e1?.numeroObraSocial == e2?.numeroObraSocial &&
         e1?.carnetObraSocial == e2?.carnetObraSocial &&
         e1?.uid == e2?.uid &&
@@ -202,7 +193,6 @@ class UsuarioRecordDocumentEquality implements Equality<UsuarioRecord> {
         e?.editedTime,
         e?.nombreObraSocial,
         e?.domicilio,
-        e?.numeroTelefono,
         e?.numeroObraSocial,
         e?.carnetObraSocial,
         e?.uid,

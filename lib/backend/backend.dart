@@ -6,7 +6,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 import 'schema/util/firestore_util.dart';
 
 import 'schema/usuario_record.dart';
-import 'schema/producto_record.dart';
+import 'schema/farmacia_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -16,7 +16,7 @@ export 'schema/util/firestore_util.dart';
 export 'schema/util/schema_util.dart';
 
 export 'schema/usuario_record.dart';
-export 'schema/producto_record.dart';
+export 'schema/farmacia_record.dart';
 
 /// Functions to query UsuarioRecords (as a Stream and as a Future).
 Future<int> queryUsuarioRecordCount({
@@ -55,38 +55,38 @@ Future<List<UsuarioRecord>> queryUsuarioRecordOnce({
       singleRecord: singleRecord,
     );
 
-/// Functions to query ProductoRecords (as a Stream and as a Future).
-Future<int> queryProductoRecordCount({
+/// Functions to query FarmaciaRecords (as a Stream and as a Future).
+Future<int> queryFarmaciaRecordCount({
   Query Function(Query)? queryBuilder,
   int limit = -1,
 }) =>
     queryCollectionCount(
-      ProductoRecord.collection,
+      FarmaciaRecord.collection,
       queryBuilder: queryBuilder,
       limit: limit,
     );
 
-Stream<List<ProductoRecord>> queryProductoRecord({
+Stream<List<FarmaciaRecord>> queryFarmaciaRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollection(
-      ProductoRecord.collection,
-      ProductoRecord.fromSnapshot,
+      FarmaciaRecord.collection,
+      FarmaciaRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-Future<List<ProductoRecord>> queryProductoRecordOnce({
+Future<List<FarmaciaRecord>> queryFarmaciaRecordOnce({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollectionOnce(
-      ProductoRecord.collection,
-      ProductoRecord.fromSnapshot,
+      FarmaciaRecord.collection,
+      FarmaciaRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

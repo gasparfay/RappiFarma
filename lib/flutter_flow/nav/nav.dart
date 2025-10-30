@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '/backend/backend.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
@@ -95,21 +96,50 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => RegisterWidget(),
         ),
         FFRoute(
-          name: CatalogoWidget.routeName,
-          path: CatalogoWidget.routePath,
-          builder: (context, params) => CatalogoWidget(),
+          name: RecoveryWidget.routeName,
+          path: RecoveryWidget.routePath,
+          builder: (context, params) => RecoveryWidget(),
         ),
         FFRoute(
-          name: ProductoWidget.routeName,
-          path: ProductoWidget.routePath,
-          builder: (context, params) => ProductoWidget(
-            productRef: params.getParam(
-              'productRef',
-              ParamType.DocumentReference,
-              isList: false,
-              collectionNamePath: ['Producto'],
+          name: LoginFarmaciaWidget.routeName,
+          path: LoginFarmaciaWidget.routePath,
+          builder: (context, params) => LoginFarmaciaWidget(),
+        ),
+        FFRoute(
+          name: DashboardWidget.routeName,
+          path: DashboardWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => DashboardWidget(
+            name: params.getParam(
+              'name',
+              ParamType.String,
             ),
           ),
+        ),
+        FFRoute(
+          name: ResumenCompraWidget.routeName,
+          path: ResumenCompraWidget.routePath,
+          builder: (context, params) => ResumenCompraWidget(),
+        ),
+        FFRoute(
+          name: CatalogoWidget.routeName,
+          path: CatalogoWidget.routePath,
+          requireAuth: true,
+          asyncParams: {
+            'usuario': getDoc(['Usuario'], UsuarioRecord.fromSnapshot),
+          },
+          builder: (context, params) => CatalogoWidget(
+            usuario: params.getParam(
+              'usuario',
+              ParamType.Document,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: EditarPerfilWidget.routeName,
+          path: EditarPerfilWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => EditarPerfilWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -229,6 +259,7 @@ class FFParameters {
     ParamType type, {
     bool isList = false,
     List<String>? collectionNamePath,
+    StructBuilder<T>? structBuilder,
   }) {
     if (futureParamValues.containsKey(paramName)) {
       return futureParamValues[paramName];
@@ -247,6 +278,7 @@ class FFParameters {
       type,
       isList,
       collectionNamePath: collectionNamePath,
+      structBuilder: structBuilder,
     );
   }
 }
