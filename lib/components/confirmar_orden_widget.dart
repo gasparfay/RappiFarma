@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -9,7 +10,16 @@ import 'confirmar_orden_model.dart';
 export 'confirmar_orden_model.dart';
 
 class ConfirmarOrdenWidget extends StatefulWidget {
-  const ConfirmarOrdenWidget({super.key});
+  const ConfirmarOrdenWidget({
+    super.key,
+    required this.index,
+    required this.ordenObjeto,
+    required this.farmacia,
+  });
+
+  final int? index;
+  final OrdenRecord? ordenObjeto;
+  final String? farmacia;
 
   @override
   State<ConfirmarOrdenWidget> createState() => _ConfirmarOrdenWidgetState();
@@ -32,14 +42,14 @@ class _ConfirmarOrdenWidgetState extends State<ConfirmarOrdenWidget>
     super.initState();
     _model = createModel(context, () => ConfirmarOrdenModel());
 
-    _model.yourNameTextController1 ??= TextEditingController();
-    _model.yourNameFocusNode1 ??= FocusNode();
+    _model.productosTextController ??= TextEditingController();
+    _model.productosFocusNode ??= FocusNode();
 
-    _model.yourNameTextController2 ??= TextEditingController();
-    _model.yourNameFocusNode2 ??= FocusNode();
+    _model.precioTotalTextController ??= TextEditingController();
+    _model.precioTotalFocusNode ??= FocusNode();
 
-    _model.yourNameTextController3 ??= TextEditingController();
-    _model.yourNameFocusNode3 ??= FocusNode();
+    _model.descuentoTextController ??= TextEditingController();
+    _model.descuentoFocusNode ??= FocusNode();
 
     animationsMap.addAll({
       'containerOnPageLoadAnimation': AnimationInfo(
@@ -166,8 +176,8 @@ class _ConfirmarOrdenWidgetState extends State<ConfirmarOrdenWidget>
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
                     child: TextFormField(
-                      controller: _model.yourNameTextController1,
-                      focusNode: _model.yourNameFocusNode1,
+                      controller: _model.productosTextController,
+                      focusNode: _model.productosFocusNode,
                       autofocus: true,
                       obscureText: false,
                       decoration: InputDecoration(
@@ -260,7 +270,7 @@ class _ConfirmarOrdenWidgetState extends State<ConfirmarOrdenWidget>
                                 .fontStyle,
                           ),
                       cursorColor: FlutterFlowTheme.of(context).primary,
-                      validator: _model.yourNameTextController1Validator
+                      validator: _model.productosTextControllerValidator
                           .asValidator(context),
                     ),
                   ),
@@ -268,12 +278,12 @@ class _ConfirmarOrdenWidgetState extends State<ConfirmarOrdenWidget>
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
                     child: TextFormField(
-                      controller: _model.yourNameTextController2,
-                      focusNode: _model.yourNameFocusNode2,
+                      controller: _model.precioTotalTextController,
+                      focusNode: _model.precioTotalFocusNode,
                       autofocus: true,
                       obscureText: false,
                       decoration: InputDecoration(
-                        labelText: 'Precio final',
+                        labelText: 'Precio total',
                         labelStyle:
                             FlutterFlowTheme.of(context).labelMedium.override(
                                   font: GoogleFonts.inter(
@@ -364,7 +374,7 @@ class _ConfirmarOrdenWidgetState extends State<ConfirmarOrdenWidget>
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
                       cursorColor: FlutterFlowTheme.of(context).primary,
-                      validator: _model.yourNameTextController2Validator
+                      validator: _model.precioTotalTextControllerValidator
                           .asValidator(context),
                     ),
                   ),
@@ -372,8 +382,8 @@ class _ConfirmarOrdenWidgetState extends State<ConfirmarOrdenWidget>
                     padding:
                         EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 0.0),
                     child: TextFormField(
-                      controller: _model.yourNameTextController3,
-                      focusNode: _model.yourNameFocusNode3,
+                      controller: _model.descuentoTextController,
+                      focusNode: _model.descuentoFocusNode,
                       autofocus: true,
                       obscureText: false,
                       decoration: InputDecoration(
@@ -468,7 +478,7 @@ class _ConfirmarOrdenWidgetState extends State<ConfirmarOrdenWidget>
                       keyboardType:
                           const TextInputType.numberWithOptions(decimal: true),
                       cursorColor: FlutterFlowTheme.of(context).primary,
-                      validator: _model.yourNameTextController3Validator
+                      validator: _model.descuentoTextControllerValidator
                           .asValidator(context),
                     ),
                   ),
@@ -537,6 +547,28 @@ class _ConfirmarOrdenWidgetState extends State<ConfirmarOrdenWidget>
                           padding: EdgeInsets.all(18.0),
                           child: FFButtonWidget(
                             onPressed: () async {
+                              await widget.ordenObjeto!.reference.delete();
+
+                              await OfertaRecord.collection
+                                  .doc()
+                                  .set(createOfertaRecordData(
+                                    oferta: updateOfertaStruct(
+                                      OfertaStruct(
+                                        precioTotal: double.tryParse(_model
+                                            .precioTotalTextController.text),
+                                        descuentoOS: double.tryParse(_model
+                                            .descuentoTextController.text),
+                                        productos:
+                                            _model.productosTextController.text,
+                                        farmacia: '',
+                                        uid: widget.ordenObjeto?.orden.uid,
+                                        direccion: widget
+                                            .ordenObjeto?.orden.direccion,
+                                      ),
+                                      clearUnsetFields: false,
+                                      create: true,
+                                    ),
+                                  ));
                               Navigator.pop(context);
                             },
                             text: 'Confirmar',

@@ -1,13 +1,14 @@
+import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'receta_model.dart';
-export 'receta_model.dart';
+import 'receta_orden_model.dart';
+export 'receta_orden_model.dart';
 
-class RecetaWidget extends StatefulWidget {
-  const RecetaWidget({
+class RecetaOrdenWidget extends StatefulWidget {
+  const RecetaOrdenWidget({
     super.key,
     this.foto,
   });
@@ -15,11 +16,11 @@ class RecetaWidget extends StatefulWidget {
   final String? foto;
 
   @override
-  State<RecetaWidget> createState() => _RecetaWidgetState();
+  State<RecetaOrdenWidget> createState() => _RecetaOrdenWidgetState();
 }
 
-class _RecetaWidgetState extends State<RecetaWidget> {
-  late RecetaModel _model;
+class _RecetaOrdenWidgetState extends State<RecetaOrdenWidget> {
+  late RecetaOrdenModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -30,7 +31,7 @@ class _RecetaWidgetState extends State<RecetaWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => RecetaModel());
+    _model = createModel(context, () => RecetaOrdenModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -84,16 +85,52 @@ class _RecetaWidgetState extends State<RecetaWidget> {
                     Expanded(
                       child: Align(
                         alignment: AlignmentDirectional(0.0, 0.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
-                          child: Image.network(
-                            valueOrDefault<String>(
+                        child: InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            await Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.fade,
+                                child: FlutterFlowExpandedImageView(
+                                  image: Image.network(
+                                    valueOrDefault<String>(
+                                      widget.foto,
+                                      'none',
+                                    ),
+                                    fit: BoxFit.contain,
+                                  ),
+                                  allowRotation: false,
+                                  tag: valueOrDefault<String>(
+                                    widget.foto,
+                                    'none',
+                                  ),
+                                  useHeroAnimation: true,
+                                ),
+                              ),
+                            );
+                          },
+                          child: Hero(
+                            tag: valueOrDefault<String>(
                               widget.foto,
                               'none',
                             ),
-                            width: MediaQuery.sizeOf(context).width * 0.667,
-                            height: MediaQuery.sizeOf(context).height * 0.5,
-                            fit: BoxFit.cover,
+                            transitionOnUserGestures: true,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.0),
+                              child: Image.network(
+                                valueOrDefault<String>(
+                                  widget.foto,
+                                  'none',
+                                ),
+                                width: MediaQuery.sizeOf(context).width * 0.667,
+                                height: MediaQuery.sizeOf(context).height * 0.5,
+                                fit: BoxFit.scaleDown,
+                              ),
+                            ),
                           ),
                         ),
                       ),

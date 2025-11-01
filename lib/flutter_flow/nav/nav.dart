@@ -76,14 +76,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       debugLogDiagnostics: true,
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
-      errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? CatalogoWidget() : LoginWidget(),
+      errorBuilder: (context, state) => RootPageContext.wrap(
+        appStateNotifier.loggedIn ? PaginaPrincipalWidget() : LoginWidget(),
+        errorRoute: state.uri.toString(),
+      ),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
-          builder: (context, _) =>
-              appStateNotifier.loggedIn ? CatalogoWidget() : LoginWidget(),
+          builder: (context, _) => RootPageContext.wrap(
+            appStateNotifier.loggedIn ? PaginaPrincipalWidget() : LoginWidget(),
+          ),
         ),
         FFRoute(
           name: LoginWidget.routeName,
@@ -91,14 +94,14 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => LoginWidget(),
         ),
         FFRoute(
-          name: RegisterWidget.routeName,
-          path: RegisterWidget.routePath,
-          builder: (context, params) => RegisterWidget(),
+          name: RegistrarseWidget.routeName,
+          path: RegistrarseWidget.routePath,
+          builder: (context, params) => RegistrarseWidget(),
         ),
         FFRoute(
-          name: RecoveryWidget.routeName,
-          path: RecoveryWidget.routePath,
-          builder: (context, params) => RecoveryWidget(),
+          name: RecuperarContraseniaWidget.routeName,
+          path: RecuperarContraseniaWidget.routePath,
+          builder: (context, params) => RecuperarContraseniaWidget(),
         ),
         FFRoute(
           name: LoginFarmaciaWidget.routeName,
@@ -106,10 +109,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => LoginFarmaciaWidget(),
         ),
         FFRoute(
-          name: DashboardWidget.routeName,
-          path: DashboardWidget.routePath,
+          name: PanelControlWidget.routeName,
+          path: PanelControlWidget.routePath,
           requireAuth: true,
-          builder: (context, params) => DashboardWidget(
+          builder: (context, params) => PanelControlWidget(
             name: params.getParam(
               'name',
               ParamType.String,
@@ -119,16 +122,25 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: ResumenCompraWidget.routeName,
           path: ResumenCompraWidget.routePath,
-          builder: (context, params) => ResumenCompraWidget(),
+          requireAuth: true,
+          asyncParams: {
+            'oferta': getDoc(['Oferta'], OfertaRecord.fromSnapshot),
+          },
+          builder: (context, params) => ResumenCompraWidget(
+            oferta: params.getParam(
+              'oferta',
+              ParamType.Document,
+            ),
+          ),
         ),
         FFRoute(
-          name: CatalogoWidget.routeName,
-          path: CatalogoWidget.routePath,
+          name: PaginaPrincipalWidget.routeName,
+          path: PaginaPrincipalWidget.routePath,
           requireAuth: true,
           asyncParams: {
             'usuario': getDoc(['Usuario'], UsuarioRecord.fromSnapshot),
           },
-          builder: (context, params) => CatalogoWidget(
+          builder: (context, params) => PaginaPrincipalWidget(
             usuario: params.getParam(
               'usuario',
               ParamType.Document,
@@ -140,6 +152,17 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: EditarPerfilWidget.routePath,
           requireAuth: true,
           builder: (context, params) => EditarPerfilWidget(),
+        ),
+        FFRoute(
+          name: OfertasWidget.routeName,
+          path: OfertasWidget.routePath,
+          requireAuth: true,
+          builder: (context, params) => OfertasWidget(
+            tiempoInicio: params.getParam(
+              'tiempoInicio',
+              ParamType.int,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -1,6 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
-import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -13,22 +13,22 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'register_model.dart';
-export 'register_model.dart';
+import 'registrarse_model.dart';
+export 'registrarse_model.dart';
 
-class RegisterWidget extends StatefulWidget {
-  const RegisterWidget({super.key});
+class RegistrarseWidget extends StatefulWidget {
+  const RegistrarseWidget({super.key});
 
-  static String routeName = 'Register';
-  static String routePath = '/register';
+  static String routeName = 'registrarse';
+  static String routePath = '/registrarse';
 
   @override
-  State<RegisterWidget> createState() => _RegisterWidgetState();
+  State<RegistrarseWidget> createState() => _RegistrarseWidgetState();
 }
 
-class _RegisterWidgetState extends State<RegisterWidget>
+class _RegistrarseWidgetState extends State<RegistrarseWidget>
     with TickerProviderStateMixin {
-  late RegisterModel _model;
+  late RegistrarseModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var hasTextFieldTriggered = false;
@@ -38,7 +38,7 @@ class _RegisterWidgetState extends State<RegisterWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => RegisterModel());
+    _model = createModel(context, () => RegistrarseModel());
 
     _model.nombreTextController ??= TextEditingController();
     _model.nombreFocusNode ??= FocusNode();
@@ -1536,13 +1536,11 @@ class _RegisterWidgetState extends State<RegisterWidget>
                                                               m.storagePath,
                                                               context))) {
                                                     safeSetState(() => _model
-                                                            .isDataUploading_fotoCarnet =
+                                                            .isDataUploading_fotoCarnetSubida =
                                                         true);
                                                     var selectedUploadedFiles =
                                                         <FFUploadedFile>[];
 
-                                                    var downloadUrls =
-                                                        <String>[];
                                                     try {
                                                       selectedUploadedFiles =
                                                           selectedMedia
@@ -1565,43 +1563,87 @@ class _RegisterWidgetState extends State<RegisterWidget>
                                                                         .blurHash,
                                                                   ))
                                                               .toList();
-
-                                                      downloadUrls =
-                                                          (await Future.wait(
-                                                        selectedMedia.map(
-                                                          (m) async =>
-                                                              await uploadData(
-                                                                  m.storagePath,
-                                                                  m.bytes),
-                                                        ),
-                                                      ))
-                                                              .where((u) =>
-                                                                  u != null)
-                                                              .map((u) => u!)
-                                                              .toList();
                                                     } finally {
-                                                      _model.isDataUploading_fotoCarnet =
+                                                      _model.isDataUploading_fotoCarnetSubida =
                                                           false;
                                                     }
                                                     if (selectedUploadedFiles
-                                                                .length ==
-                                                            selectedMedia
-                                                                .length &&
-                                                        downloadUrls.length ==
-                                                            selectedMedia
-                                                                .length) {
+                                                            .length ==
+                                                        selectedMedia.length) {
                                                       safeSetState(() {
-                                                        _model.uploadedLocalFile_fotoCarnet =
+                                                        _model.uploadedLocalFile_fotoCarnetSubida =
                                                             selectedUploadedFiles
                                                                 .first;
-                                                        _model.uploadedFileUrl_fotoCarnet =
-                                                            downloadUrls.first;
                                                       });
                                                     } else {
                                                       safeSetState(() {});
                                                       return;
                                                     }
                                                   }
+
+                                                  _model.urlCarnet =
+                                                      await UploadToCloudinaryCall
+                                                          .call(
+                                                    file: _model
+                                                        .uploadedLocalFile_fotoCarnetSubida,
+                                                  );
+
+                                                  if ((_model.urlCarnet
+                                                          ?.succeeded ??
+                                                      true)) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'Se subio la imagen correctamente.',
+                                                          style: TextStyle(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                        duration: Duration(
+                                                            milliseconds: 2000),
+                                                        backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondary,
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'No se pudo subir la imagen, intente nuevamente.',
+                                                          style: TextStyle(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                        duration: Duration(
+                                                            milliseconds: 2000),
+                                                        backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondary,
+                                                      ),
+                                                    );
+                                                    safeSetState(() {});
+                                                  }
+
+                                                  safeSetState(() {});
                                                 },
                                                 child: Container(
                                                   width: double.infinity,
@@ -2025,14 +2067,16 @@ class _RegisterWidgetState extends State<RegisterWidget>
                                           .doc(user.uid)
                                           .update({
                                         ...createUsuarioRecordData(
-                                          email:
-                                              _model.emailTextController.text,
                                           apellido: _model
                                               .apellidoTextController.text,
-                                          carnetObraSocial:
-                                              _model.uploadedFileUrl_fotoCarnet,
+                                          carnetObraSocial: getJsonField(
+                                            (_model.urlCarnet?.jsonBody ?? ''),
+                                            r'''$.secure_url''',
+                                          ).toString(),
                                           domicilio: _model
                                               .domicilioTextController.text,
+                                          email:
+                                              _model.emailTextController.text,
                                           nombre:
                                               _model.nombreTextController.text,
                                           nombreObraSocial: _model
@@ -2040,6 +2084,7 @@ class _RegisterWidgetState extends State<RegisterWidget>
                                           numeroObraSocial: _model
                                               .numerobenficiarioTextController
                                               .text,
+                                          pedidoActivo: false,
                                           phoneNumber: _model
                                               .telefonoTextController.text,
                                         ),
@@ -2052,7 +2097,7 @@ class _RegisterWidgetState extends State<RegisterWidget>
                                       });
 
                                       context.goNamedAuth(
-                                          CatalogoWidget.routeName,
+                                          PaginaPrincipalWidget.routeName,
                                           context.mounted);
                                     },
                                     text: 'Crear cuenta',

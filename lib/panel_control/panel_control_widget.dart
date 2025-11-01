@@ -1,35 +1,34 @@
-import '/components/confirmar_orden_widget.dart';
-import '/components/receta_widget.dart';
+import '/backend/backend.dart';
+import '/components/orden_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'dashboard_model.dart';
-export 'dashboard_model.dart';
+import 'panel_control_model.dart';
+export 'panel_control_model.dart';
 
-class DashboardWidget extends StatefulWidget {
-  const DashboardWidget({
+class PanelControlWidget extends StatefulWidget {
+  const PanelControlWidget({
     super.key,
     this.name,
   });
 
   final String? name;
 
-  static String routeName = 'Dashboard';
-  static String routePath = '/dashboard';
+  static String routeName = 'panelControl';
+  static String routePath = '/panelControl';
 
   @override
-  State<DashboardWidget> createState() => _DashboardWidgetState();
+  State<PanelControlWidget> createState() => _PanelControlWidgetState();
 }
 
-class _DashboardWidgetState extends State<DashboardWidget>
+class _PanelControlWidgetState extends State<PanelControlWidget>
     with TickerProviderStateMixin {
-  late DashboardModel _model;
+  late PanelControlModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -38,7 +37,7 @@ class _DashboardWidgetState extends State<DashboardWidget>
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => DashboardModel());
+    _model = createModel(context, () => PanelControlModel());
 
     animationsMap.addAll({
       'containerOnActionTriggerAnimation': AnimationInfo(
@@ -74,8 +73,6 @@ class _DashboardWidgetState extends State<DashboardWidget>
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -361,8 +358,7 @@ class _DashboardWidgetState extends State<DashboardWidget>
                                     color: FlutterFlowTheme.of(context).primary,
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 12.0, 12.0, 0.0),
+                                    padding: EdgeInsets.all(12.0),
                                     child: InkWell(
                                       splashColor: Colors.transparent,
                                       focusColor: Colors.transparent,
@@ -599,377 +595,149 @@ class _DashboardWidgetState extends State<DashboardWidget>
                               mainAxisAlignment: MainAxisAlignment.end,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: EdgeInsets.all(12.0),
-                                  child: Text(
-                                    'Ordenes',
-                                    style: FlutterFlowTheme.of(context)
-                                        .headlineMedium
-                                        .override(
-                                          font: GoogleFonts.interTight(
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .headlineMedium
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .headlineMedium
-                                                    .fontStyle,
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.all(12.0),
+                                      child: Text(
+                                        'Ordenes',
+                                        style: FlutterFlowTheme.of(context)
+                                            .headlineMedium
+                                            .override(
+                                              font: GoogleFonts.interTight(
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .fontStyle,
+                                              ),
+                                              letterSpacing: 0.0,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .headlineMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .headlineMedium
+                                                      .fontStyle,
+                                            ),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      child: Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 32.0, 0.0, 32.0),
+                                        child: FFButtonWidget(
+                                          onPressed: () async {
+                                            safeSetState(() {});
+                                          },
+                                          text: 'Actualizar',
+                                          options: FFButtonOptions(
+                                            width: 180.0,
+                                            height: 52.0,
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            iconPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            color: FlutterFlowTheme.of(context)
+                                                .primaryBackground,
+                                            textStyle: FlutterFlowTheme.of(
+                                                    context)
+                                                .titleSmall
+                                                .override(
+                                                  font: GoogleFonts.interTight(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .titleSmall
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .titleSmall
+                                                            .fontStyle,
+                                                  ),
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .titleSmall
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .titleSmall
+                                                          .fontStyle,
+                                                ),
+                                            elevation: 3.0,
+                                            borderSide: BorderSide(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              width: 2.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(40.0),
                                           ),
-                                          letterSpacing: 0.0,
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .headlineMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .headlineMedium
-                                                  .fontStyle,
                                         ),
-                                  ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                Builder(
-                                  builder: (context) {
-                                    final ordenes = FFAppState()
-                                        .ordenes
-                                        .toList()
-                                        .take(10)
-                                        .toList();
+                                StreamBuilder<List<OrdenRecord>>(
+                                  stream: queryOrdenRecord(),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    List<OrdenRecord> listViewOrdenRecordList =
+                                        snapshot.data!;
 
                                     return ListView.builder(
                                       padding: EdgeInsets.zero,
                                       shrinkWrap: true,
                                       scrollDirection: Axis.vertical,
-                                      itemCount: ordenes.length,
-                                      itemBuilder: (context, ordenesIndex) {
-                                        final ordenesItem =
-                                            ordenes[ordenesIndex];
-                                        return Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 12.0),
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            elevation: 2.0,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12.0),
-                                            ),
-                                            child: Container(
-                                              width: double.infinity,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryBackground,
-                                                borderRadius:
-                                                    BorderRadius.circular(12.0),
-                                                border: Border.all(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primary,
-                                                  width: 1.0,
-                                                ),
-                                              ),
-                                              child: Padding(
-                                                padding: EdgeInsets.all(12.0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Expanded(
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            'Pedido ${ordenesIndex.toString()}',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .titleMedium
-                                                                .override(
-                                                                  font: GoogleFonts
-                                                                      .interTight(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .titleMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                          ),
-                                                          Text(
-                                                            'Obra social: ${valueOrDefault<String>(
-                                                              ordenesItem
-                                                                  .obraSocial,
-                                                              '-',
-                                                            )}',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodySmall
-                                                                .override(
-                                                                  font:
-                                                                      GoogleFonts
-                                                                          .inter(
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodySmall
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodySmall
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .fontStyle,
-                                                                ),
-                                                          ),
-                                                          Text(
-                                                            'Observaciones:${valueOrDefault<String>(
-                                                              ordenesItem
-                                                                  .observaciones,
-                                                              '-',
-                                                            )}',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodySmall
-                                                                .override(
-                                                                  font:
-                                                                      GoogleFonts
-                                                                          .inter(
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodySmall
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodySmall
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .fontStyle,
-                                                                ),
-                                                          ),
-                                                          Text(
-                                                            'Dirección: ${valueOrDefault<String>(
-                                                              ordenesItem
-                                                                  .direccion,
-                                                              '-',
-                                                            )}',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .bodySmall
-                                                                .override(
-                                                                  font:
-                                                                      GoogleFonts
-                                                                          .inter(
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodySmall
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodySmall
-                                                                        .fontStyle,
-                                                                  ),
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .secondaryText,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .fontWeight,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .bodySmall
-                                                                      .fontStyle,
-                                                                ),
-                                                          ),
-                                                        ].divide(SizedBox(
-                                                            height: 4.0)),
-                                                      ),
-                                                    ),
-                                                    FlutterFlowIconButton(
-                                                      borderColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      borderRadius: 8.0,
-                                                      borderWidth: 2.0,
-                                                      buttonSize: 40.0,
-                                                      fillColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryBackground,
-                                                      icon: Icon(
-                                                        Icons.photo_camera,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        size: 24.0,
-                                                      ),
-                                                      onPressed: () async {
-                                                        await showModalBottomSheet(
-                                                          isScrollControlled:
-                                                              true,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          enableDrag: false,
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return GestureDetector(
-                                                              onTap: () {
-                                                                FocusScope.of(
-                                                                        context)
-                                                                    .unfocus();
-                                                                FocusManager
-                                                                    .instance
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                              },
-                                                              child: Padding(
-                                                                padding: MediaQuery
-                                                                    .viewInsetsOf(
-                                                                        context),
-                                                                child:
-                                                                    RecetaWidget(
-                                                                  foto: ordenesItem
-                                                                      .receta,
-                                                                ),
-                                                              ),
-                                                            );
-                                                          },
-                                                        ).then((value) =>
-                                                            safeSetState(
-                                                                () {}));
-                                                      },
-                                                    ),
-                                                    FlutterFlowIconButton(
-                                                      borderColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      borderRadius: 8.0,
-                                                      borderWidth: 2.0,
-                                                      buttonSize: 40.0,
-                                                      fillColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryBackground,
-                                                      icon: Icon(
-                                                        Icons.check,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        size: 24.0,
-                                                      ),
-                                                      onPressed: () async {
-                                                        await showModalBottomSheet(
-                                                          isScrollControlled:
-                                                              true,
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .transparent,
-                                                          enableDrag: false,
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return GestureDetector(
-                                                              onTap: () {
-                                                                FocusScope.of(
-                                                                        context)
-                                                                    .unfocus();
-                                                                FocusManager
-                                                                    .instance
-                                                                    .primaryFocus
-                                                                    ?.unfocus();
-                                                              },
-                                                              child: Padding(
-                                                                padding: MediaQuery
-                                                                    .viewInsetsOf(
-                                                                        context),
-                                                                child:
-                                                                    ConfirmarOrdenWidget(),
-                                                              ),
-                                                            );
-                                                          },
-                                                        ).then((value) =>
-                                                            safeSetState(
-                                                                () {}));
-                                                      },
-                                                    ),
-                                                    FlutterFlowIconButton(
-                                                      borderColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      borderRadius: 8.0,
-                                                      borderWidth: 2.0,
-                                                      buttonSize: 40.0,
-                                                      fillColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryBackground,
-                                                      icon: Icon(
-                                                        Icons.close,
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        size: 24.0,
-                                                      ),
-                                                      onPressed: () async {
-                                                        FFAppState()
-                                                            .removeFromOrdenes(
-                                                                ordenesItem);
-                                                        safeSetState(() {});
-                                                      },
-                                                    ),
-                                                  ].divide(
-                                                      SizedBox(width: 12.0)),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
+                                      itemCount: listViewOrdenRecordList.length,
+                                      itemBuilder: (context, listViewIndex) {
+                                        final listViewOrdenRecord =
+                                            listViewOrdenRecordList[
+                                                listViewIndex];
+                                        return OrdenWidget(
+                                          key: Key(
+                                              'Keyhks_${listViewIndex}_of_${listViewOrdenRecordList.length}'),
+                                          tiempo: (180000 +
+                                                  listViewOrdenRecord
+                                                      .orden.tiempoInicio) -
+                                              getCurrentTimestamp
+                                                  .millisecondsSinceEpoch,
+                                          index: listViewIndex,
+                                          orden: listViewOrdenRecord,
+                                          farmacia: widget.name!,
                                         );
                                       },
                                     );

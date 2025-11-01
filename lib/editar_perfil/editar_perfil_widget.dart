@@ -1491,8 +1491,6 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                         numeroObraSocial: _model
                                             .numerobenficiarioTextController
                                             .text,
-                                        carnetObraSocial: _model
-                                            .uploadedFileUrl_uploadDataKbt,
                                         phoneNumber:
                                             _model.telefonoTextController.text,
                                         nombre:
@@ -1500,6 +1498,27 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                         apellido:
                                             _model.apellidoTextController.text,
                                       ));
+                                      context.safePop();
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        SnackBar(
+                                          content: Text(
+                                            'Perfil modificado correctamente',
+                                            style: GoogleFonts.roboto(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 24.0,
+                                            ),
+                                          ),
+                                          duration:
+                                              Duration(milliseconds: 2100),
+                                          backgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondary,
+                                        ),
+                                      );
                                     },
                                     text: 'Guardar Cambios',
                                     options: FFButtonOptions(

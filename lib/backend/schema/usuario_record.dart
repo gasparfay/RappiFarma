@@ -45,11 +45,6 @@ class UsuarioRecord extends FirestoreRecord {
   String get numeroObraSocial => _numeroObraSocial ?? '';
   bool hasNumeroObraSocial() => _numeroObraSocial != null;
 
-  // "carnetObraSocial" field.
-  String? _carnetObraSocial;
-  String get carnetObraSocial => _carnetObraSocial ?? '';
-  bool hasCarnetObraSocial() => _carnetObraSocial != null;
-
   // "uid" field.
   String? _uid;
   String get uid => _uid ?? '';
@@ -80,6 +75,21 @@ class UsuarioRecord extends FirestoreRecord {
   String get photoUrl => _photoUrl ?? '';
   bool hasPhotoUrl() => _photoUrl != null;
 
+  // "carnetObraSocial" field.
+  String? _carnetObraSocial;
+  String get carnetObraSocial => _carnetObraSocial ?? '';
+  bool hasCarnetObraSocial() => _carnetObraSocial != null;
+
+  // "pedidoActivo" field.
+  bool? _pedidoActivo;
+  bool get pedidoActivo => _pedidoActivo ?? false;
+  bool hasPedidoActivo() => _pedidoActivo != null;
+
+  // "codigoSeguridad" field.
+  int? _codigoSeguridad;
+  int get codigoSeguridad => _codigoSeguridad ?? 0;
+  bool hasCodigoSeguridad() => _codigoSeguridad != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
@@ -87,13 +97,15 @@ class UsuarioRecord extends FirestoreRecord {
     _nombreObraSocial = snapshotData['nombreObraSocial'] as String?;
     _domicilio = snapshotData['domicilio'] as String?;
     _numeroObraSocial = snapshotData['numeroObraSocial'] as String?;
-    _carnetObraSocial = snapshotData['carnetObraSocial'] as String?;
     _uid = snapshotData['uid'] as String?;
     _phoneNumber = snapshotData['phone_number'] as String?;
     _nombre = snapshotData['nombre'] as String?;
     _apellido = snapshotData['apellido'] as String?;
     _displayName = snapshotData['display_name'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
+    _carnetObraSocial = snapshotData['carnetObraSocial'] as String?;
+    _pedidoActivo = snapshotData['pedidoActivo'] as bool?;
+    _codigoSeguridad = castToType<int>(snapshotData['codigoSeguridad']);
   }
 
   static CollectionReference get collection =>
@@ -137,13 +149,15 @@ Map<String, dynamic> createUsuarioRecordData({
   String? nombreObraSocial,
   String? domicilio,
   String? numeroObraSocial,
-  String? carnetObraSocial,
   String? uid,
   String? phoneNumber,
   String? nombre,
   String? apellido,
   String? displayName,
   String? photoUrl,
+  String? carnetObraSocial,
+  bool? pedidoActivo,
+  int? codigoSeguridad,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -153,13 +167,15 @@ Map<String, dynamic> createUsuarioRecordData({
       'nombreObraSocial': nombreObraSocial,
       'domicilio': domicilio,
       'numeroObraSocial': numeroObraSocial,
-      'carnetObraSocial': carnetObraSocial,
       'uid': uid,
       'phone_number': phoneNumber,
       'nombre': nombre,
       'apellido': apellido,
       'display_name': displayName,
       'photo_url': photoUrl,
+      'carnetObraSocial': carnetObraSocial,
+      'pedidoActivo': pedidoActivo,
+      'codigoSeguridad': codigoSeguridad,
     }.withoutNulls,
   );
 
@@ -177,13 +193,15 @@ class UsuarioRecordDocumentEquality implements Equality<UsuarioRecord> {
         e1?.nombreObraSocial == e2?.nombreObraSocial &&
         e1?.domicilio == e2?.domicilio &&
         e1?.numeroObraSocial == e2?.numeroObraSocial &&
-        e1?.carnetObraSocial == e2?.carnetObraSocial &&
         e1?.uid == e2?.uid &&
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.nombre == e2?.nombre &&
         e1?.apellido == e2?.apellido &&
         e1?.displayName == e2?.displayName &&
-        e1?.photoUrl == e2?.photoUrl;
+        e1?.photoUrl == e2?.photoUrl &&
+        e1?.carnetObraSocial == e2?.carnetObraSocial &&
+        e1?.pedidoActivo == e2?.pedidoActivo &&
+        e1?.codigoSeguridad == e2?.codigoSeguridad;
   }
 
   @override
@@ -194,13 +212,15 @@ class UsuarioRecordDocumentEquality implements Equality<UsuarioRecord> {
         e?.nombreObraSocial,
         e?.domicilio,
         e?.numeroObraSocial,
-        e?.carnetObraSocial,
         e?.uid,
         e?.phoneNumber,
         e?.nombre,
         e?.apellido,
         e?.displayName,
-        e?.photoUrl
+        e?.photoUrl,
+        e?.carnetObraSocial,
+        e?.pedidoActivo,
+        e?.codigoSeguridad
       ]);
 
   @override

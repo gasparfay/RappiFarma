@@ -1,0 +1,259 @@
+// ignore_for_file: unnecessary_getters_setters
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '/backend/schema/util/firestore_util.dart';
+
+import '/flutter_flow/flutter_flow_util.dart';
+
+class OfertaStruct extends FFFirebaseStruct {
+  OfertaStruct({
+    double? precioTotal,
+    double? descuentoOS,
+    String? productos,
+    String? farmacia,
+    String? uid,
+    String? direccion,
+    FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
+  })  : _precioTotal = precioTotal,
+        _descuentoOS = descuentoOS,
+        _productos = productos,
+        _farmacia = farmacia,
+        _uid = uid,
+        _direccion = direccion,
+        super(firestoreUtilData);
+
+  // "precioTotal" field.
+  double? _precioTotal;
+  double get precioTotal => _precioTotal ?? 0.0;
+  set precioTotal(double? val) => _precioTotal = val;
+
+  void incrementPrecioTotal(double amount) =>
+      precioTotal = precioTotal + amount;
+
+  bool hasPrecioTotal() => _precioTotal != null;
+
+  // "descuentoOS" field.
+  double? _descuentoOS;
+  double get descuentoOS => _descuentoOS ?? 0.0;
+  set descuentoOS(double? val) => _descuentoOS = val;
+
+  void incrementDescuentoOS(double amount) =>
+      descuentoOS = descuentoOS + amount;
+
+  bool hasDescuentoOS() => _descuentoOS != null;
+
+  // "productos" field.
+  String? _productos;
+  String get productos => _productos ?? '';
+  set productos(String? val) => _productos = val;
+
+  bool hasProductos() => _productos != null;
+
+  // "farmacia" field.
+  String? _farmacia;
+  String get farmacia => _farmacia ?? '';
+  set farmacia(String? val) => _farmacia = val;
+
+  bool hasFarmacia() => _farmacia != null;
+
+  // "uid" field.
+  String? _uid;
+  String get uid => _uid ?? '';
+  set uid(String? val) => _uid = val;
+
+  bool hasUid() => _uid != null;
+
+  // "direccion" field.
+  String? _direccion;
+  String get direccion => _direccion ?? '';
+  set direccion(String? val) => _direccion = val;
+
+  bool hasDireccion() => _direccion != null;
+
+  static OfertaStruct fromMap(Map<String, dynamic> data) => OfertaStruct(
+        precioTotal: castToType<double>(data['precioTotal']),
+        descuentoOS: castToType<double>(data['descuentoOS']),
+        productos: data['productos'] as String?,
+        farmacia: data['farmacia'] as String?,
+        uid: data['uid'] as String?,
+        direccion: data['direccion'] as String?,
+      );
+
+  static OfertaStruct? maybeFromMap(dynamic data) =>
+      data is Map ? OfertaStruct.fromMap(data.cast<String, dynamic>()) : null;
+
+  Map<String, dynamic> toMap() => {
+        'precioTotal': _precioTotal,
+        'descuentoOS': _descuentoOS,
+        'productos': _productos,
+        'farmacia': _farmacia,
+        'uid': _uid,
+        'direccion': _direccion,
+      }.withoutNulls;
+
+  @override
+  Map<String, dynamic> toSerializableMap() => {
+        'precioTotal': serializeParam(
+          _precioTotal,
+          ParamType.double,
+        ),
+        'descuentoOS': serializeParam(
+          _descuentoOS,
+          ParamType.double,
+        ),
+        'productos': serializeParam(
+          _productos,
+          ParamType.String,
+        ),
+        'farmacia': serializeParam(
+          _farmacia,
+          ParamType.String,
+        ),
+        'uid': serializeParam(
+          _uid,
+          ParamType.String,
+        ),
+        'direccion': serializeParam(
+          _direccion,
+          ParamType.String,
+        ),
+      }.withoutNulls;
+
+  static OfertaStruct fromSerializableMap(Map<String, dynamic> data) =>
+      OfertaStruct(
+        precioTotal: deserializeParam(
+          data['precioTotal'],
+          ParamType.double,
+          false,
+        ),
+        descuentoOS: deserializeParam(
+          data['descuentoOS'],
+          ParamType.double,
+          false,
+        ),
+        productos: deserializeParam(
+          data['productos'],
+          ParamType.String,
+          false,
+        ),
+        farmacia: deserializeParam(
+          data['farmacia'],
+          ParamType.String,
+          false,
+        ),
+        uid: deserializeParam(
+          data['uid'],
+          ParamType.String,
+          false,
+        ),
+        direccion: deserializeParam(
+          data['direccion'],
+          ParamType.String,
+          false,
+        ),
+      );
+
+  @override
+  String toString() => 'OfertaStruct(${toMap()})';
+
+  @override
+  bool operator ==(Object other) {
+    return other is OfertaStruct &&
+        precioTotal == other.precioTotal &&
+        descuentoOS == other.descuentoOS &&
+        productos == other.productos &&
+        farmacia == other.farmacia &&
+        uid == other.uid &&
+        direccion == other.direccion;
+  }
+
+  @override
+  int get hashCode => const ListEquality()
+      .hash([precioTotal, descuentoOS, productos, farmacia, uid, direccion]);
+}
+
+OfertaStruct createOfertaStruct({
+  double? precioTotal,
+  double? descuentoOS,
+  String? productos,
+  String? farmacia,
+  String? uid,
+  String? direccion,
+  Map<String, dynamic> fieldValues = const {},
+  bool clearUnsetFields = true,
+  bool create = false,
+  bool delete = false,
+}) =>
+    OfertaStruct(
+      precioTotal: precioTotal,
+      descuentoOS: descuentoOS,
+      productos: productos,
+      farmacia: farmacia,
+      uid: uid,
+      direccion: direccion,
+      firestoreUtilData: FirestoreUtilData(
+        clearUnsetFields: clearUnsetFields,
+        create: create,
+        delete: delete,
+        fieldValues: fieldValues,
+      ),
+    );
+
+OfertaStruct? updateOfertaStruct(
+  OfertaStruct? oferta, {
+  bool clearUnsetFields = true,
+  bool create = false,
+}) =>
+    oferta
+      ?..firestoreUtilData = FirestoreUtilData(
+        clearUnsetFields: clearUnsetFields,
+        create: create,
+      );
+
+void addOfertaStructData(
+  Map<String, dynamic> firestoreData,
+  OfertaStruct? oferta,
+  String fieldName, [
+  bool forFieldValue = false,
+]) {
+  firestoreData.remove(fieldName);
+  if (oferta == null) {
+    return;
+  }
+  if (oferta.firestoreUtilData.delete) {
+    firestoreData[fieldName] = FieldValue.delete();
+    return;
+  }
+  final clearFields =
+      !forFieldValue && oferta.firestoreUtilData.clearUnsetFields;
+  if (clearFields) {
+    firestoreData[fieldName] = <String, dynamic>{};
+  }
+  final ofertaData = getOfertaFirestoreData(oferta, forFieldValue);
+  final nestedData = ofertaData.map((k, v) => MapEntry('$fieldName.$k', v));
+
+  final mergeFields = oferta.firestoreUtilData.create || clearFields;
+  firestoreData
+      .addAll(mergeFields ? mergeNestedFields(nestedData) : nestedData);
+}
+
+Map<String, dynamic> getOfertaFirestoreData(
+  OfertaStruct? oferta, [
+  bool forFieldValue = false,
+]) {
+  if (oferta == null) {
+    return {};
+  }
+  final firestoreData = mapToFirestore(oferta.toMap());
+
+  // Add any Firestore field values
+  oferta.firestoreUtilData.fieldValues.forEach((k, v) => firestoreData[k] = v);
+
+  return forFieldValue ? mergeNestedFields(firestoreData) : firestoreData;
+}
+
+List<Map<String, dynamic>> getOfertaListFirestoreData(
+  List<OfertaStruct>? ofertas,
+) =>
+    ofertas?.map((e) => getOfertaFirestoreData(e, true)).toList() ?? [];

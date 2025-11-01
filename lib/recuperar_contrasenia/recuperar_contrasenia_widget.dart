@@ -9,28 +9,30 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'recovery_model.dart';
-export 'recovery_model.dart';
+import 'recuperar_contrasenia_model.dart';
+export 'recuperar_contrasenia_model.dart';
 
-class RecoveryWidget extends StatefulWidget {
-  const RecoveryWidget({super.key});
+class RecuperarContraseniaWidget extends StatefulWidget {
+  const RecuperarContraseniaWidget({super.key});
 
-  static String routeName = 'Recovery';
-  static String routePath = '/recovery';
+  static String routeName = 'recuperarContrasenia';
+  static String routePath = '/recuperarContrasenia';
 
   @override
-  State<RecoveryWidget> createState() => _RecoveryWidgetState();
+  State<RecuperarContraseniaWidget> createState() =>
+      _RecuperarContraseniaWidgetState();
 }
 
-class _RecoveryWidgetState extends State<RecoveryWidget> {
-  late RecoveryModel _model;
+class _RecuperarContraseniaWidgetState
+    extends State<RecuperarContraseniaWidget> {
+  late RecuperarContraseniaModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => RecoveryModel());
+    _model = createModel(context, () => RecuperarContraseniaModel());
 
     _model.emailTextController ??= TextEditingController();
     _model.emailFocusNode ??= FocusNode();

@@ -1,9 +1,10 @@
+import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
-import 'register_widget.dart' show RegisterWidget;
+import 'registrarse_widget.dart' show RegistrarseWidget;
 import 'package:flutter/material.dart';
 
-class RegisterModel extends FlutterFlowModel<RegisterWidget> {
+class RegistrarseModel extends FlutterFlowModel<RegistrarseWidget> {
   ///  State fields for stateful widgets in this page.
 
   final formKey = GlobalKey<FormState>();
@@ -40,11 +41,12 @@ class RegisterModel extends FlutterFlowModel<RegisterWidget> {
   TextEditingController? numerobenficiarioTextController;
   String? Function(BuildContext, String?)?
       numerobenficiarioTextControllerValidator;
-  bool isDataUploading_fotoCarnet = false;
-  FFUploadedFile uploadedLocalFile_fotoCarnet =
+  bool isDataUploading_fotoCarnetSubida = false;
+  FFUploadedFile uploadedLocalFile_fotoCarnetSubida =
       FFUploadedFile(bytes: Uint8List.fromList([]));
-  String uploadedFileUrl_fotoCarnet = '';
 
+  // Stores action output result for [Backend Call - API (UploadToCloudinary)] action in Container widget.
+  ApiCallResponse? urlCarnet;
   // State field(s) for password widget.
   FocusNode? passwordFocusNode;
   TextEditingController? passwordTextController;

@@ -15,7 +15,7 @@ export 'login_farmacia_model.dart';
 class LoginFarmaciaWidget extends StatefulWidget {
   const LoginFarmaciaWidget({super.key});
 
-  static String routeName = 'LoginFarmacia';
+  static String routeName = 'loginFarmacia';
   static String routePath = '/loginFarmacia';
 
   @override
@@ -335,7 +335,7 @@ class _LoginFarmaciaWidgetState extends State<LoginFarmaciaWidget>
                                         }
 
                                         context.goNamedAuth(
-                                          DashboardWidget.routeName,
+                                          PanelControlWidget.routeName,
                                           context.mounted,
                                           queryParameters: {
                                             'name': serializeParam(
@@ -425,8 +425,7 @@ class _LoginFarmaciaWidgetState extends State<LoginFarmaciaWidget>
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                    padding: EdgeInsets.all(12.0),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,

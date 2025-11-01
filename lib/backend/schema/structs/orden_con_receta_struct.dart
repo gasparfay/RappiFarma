@@ -12,11 +12,15 @@ class OrdenConRecetaStruct extends FFFirebaseStruct {
     String? obraSocial,
     String? observaciones,
     String? direccion,
+    int? tiempoInicio,
+    String? uid,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _receta = receta,
         _obraSocial = obraSocial,
         _observaciones = observaciones,
         _direccion = direccion,
+        _tiempoInicio = tiempoInicio,
+        _uid = uid,
         super(firestoreUtilData);
 
   // "receta" field.
@@ -47,12 +51,31 @@ class OrdenConRecetaStruct extends FFFirebaseStruct {
 
   bool hasDireccion() => _direccion != null;
 
+  // "tiempoInicio" field.
+  int? _tiempoInicio;
+  int get tiempoInicio => _tiempoInicio ?? 0;
+  set tiempoInicio(int? val) => _tiempoInicio = val;
+
+  void incrementTiempoInicio(int amount) =>
+      tiempoInicio = tiempoInicio + amount;
+
+  bool hasTiempoInicio() => _tiempoInicio != null;
+
+  // "uid" field.
+  String? _uid;
+  String get uid => _uid ?? '';
+  set uid(String? val) => _uid = val;
+
+  bool hasUid() => _uid != null;
+
   static OrdenConRecetaStruct fromMap(Map<String, dynamic> data) =>
       OrdenConRecetaStruct(
         receta: data['receta'] as String?,
         obraSocial: data['obraSocial'] as String?,
         observaciones: data['observaciones'] as String?,
         direccion: data['direccion'] as String?,
+        tiempoInicio: castToType<int>(data['tiempoInicio']),
+        uid: data['uid'] as String?,
       );
 
   static OrdenConRecetaStruct? maybeFromMap(dynamic data) => data is Map
@@ -64,6 +87,8 @@ class OrdenConRecetaStruct extends FFFirebaseStruct {
         'obraSocial': _obraSocial,
         'observaciones': _observaciones,
         'direccion': _direccion,
+        'tiempoInicio': _tiempoInicio,
+        'uid': _uid,
       }.withoutNulls;
 
   @override
@@ -82,6 +107,14 @@ class OrdenConRecetaStruct extends FFFirebaseStruct {
         ),
         'direccion': serializeParam(
           _direccion,
+          ParamType.String,
+        ),
+        'tiempoInicio': serializeParam(
+          _tiempoInicio,
+          ParamType.int,
+        ),
+        'uid': serializeParam(
+          _uid,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -108,6 +141,16 @@ class OrdenConRecetaStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        tiempoInicio: deserializeParam(
+          data['tiempoInicio'],
+          ParamType.int,
+          false,
+        ),
+        uid: deserializeParam(
+          data['uid'],
+          ParamType.String,
+          false,
+        ),
       );
 
   @override
@@ -119,12 +162,14 @@ class OrdenConRecetaStruct extends FFFirebaseStruct {
         receta == other.receta &&
         obraSocial == other.obraSocial &&
         observaciones == other.observaciones &&
-        direccion == other.direccion;
+        direccion == other.direccion &&
+        tiempoInicio == other.tiempoInicio &&
+        uid == other.uid;
   }
 
   @override
-  int get hashCode =>
-      const ListEquality().hash([receta, obraSocial, observaciones, direccion]);
+  int get hashCode => const ListEquality()
+      .hash([receta, obraSocial, observaciones, direccion, tiempoInicio, uid]);
 }
 
 OrdenConRecetaStruct createOrdenConRecetaStruct({
@@ -132,6 +177,8 @@ OrdenConRecetaStruct createOrdenConRecetaStruct({
   String? obraSocial,
   String? observaciones,
   String? direccion,
+  int? tiempoInicio,
+  String? uid,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -142,6 +189,8 @@ OrdenConRecetaStruct createOrdenConRecetaStruct({
       obraSocial: obraSocial,
       observaciones: observaciones,
       direccion: direccion,
+      tiempoInicio: tiempoInicio,
+      uid: uid,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

@@ -15,7 +15,7 @@ export 'login_model.dart';
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
 
-  static String routeName = 'Login';
+  static String routeName = 'login';
   static String routePath = '/login';
 
   @override
@@ -37,6 +37,9 @@ class _LoginWidgetState extends State<LoginWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (RootPageContext.isInactiveRootPage(context)) {
+        return;
+      }
       if ((Theme.of(context).brightness == Brightness.dark) != true) {
         setDarkModeSetting(context, ThemeMode.light);
         if (animationsMap['containerOnActionTriggerAnimation'] != null) {
@@ -468,7 +471,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                       }
 
                                       context.goNamedAuth(
-                                          CatalogoWidget.routeName,
+                                          PaginaPrincipalWidget.routeName,
                                           context.mounted);
                                     },
                                     text: 'Iniciar sesión',
@@ -589,7 +592,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                           recognizer: TapGestureRecognizer()
                                             ..onTap = () async {
                                               context.pushNamed(
-                                                  RegisterWidget.routeName);
+                                                  RegistrarseWidget.routeName);
                                             },
                                         )
                                       ],
@@ -633,8 +636,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      context
-                                          .pushNamed(RecoveryWidget.routeName);
+                                      context.pushNamed(
+                                          RecuperarContraseniaWidget.routeName);
                                     },
                                     child: RichText(
                                       textScaler:
@@ -703,8 +706,7 @@ class _LoginWidgetState extends State<LoginWidget>
                     ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 12.0, 0.0),
+                    padding: EdgeInsets.all(12.0),
                     child: InkWell(
                       splashColor: Colors.transparent,
                       focusColor: Colors.transparent,
@@ -802,6 +804,41 @@ class _LoginWidgetState extends State<LoginWidget>
                           ),
                         ),
                       ),
+                    ),
+                  ),
+                  FFButtonWidget(
+                    onPressed: () async {
+                      context.pushNamed(LoginFarmaciaWidget.routeName);
+                    },
+                    text: 'ir a loginFarmacia',
+                    options: FFButtonOptions(
+                      height: 40.0,
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                      iconPadding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      color: FlutterFlowTheme.of(context).primary,
+                      textStyle:
+                          FlutterFlowTheme.of(context).titleSmall.override(
+                                font: GoogleFonts.interTight(
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontStyle,
+                                ),
+                                color: Colors.white,
+                                letterSpacing: 0.0,
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .titleSmall
+                                    .fontStyle,
+                              ),
+                      elevation: 0.0,
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
                   ),
                 ],

@@ -1,9 +1,8 @@
 import '/flutter_flow/flutter_flow_util.dart';
-import '/index.dart';
-import 'dashboard_widget.dart' show DashboardWidget;
+import 'codigo_seguridad_widget.dart' show CodigoSeguridadWidget;
 import 'package:flutter/material.dart';
 
-class DashboardModel extends FlutterFlowModel<DashboardWidget> {
+class CodigoSeguridadModel extends FlutterFlowModel<CodigoSeguridadWidget> {
   @override
   void initState(BuildContext context) {}
 

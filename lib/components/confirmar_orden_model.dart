@@ -5,31 +5,31 @@ import 'package:flutter/material.dart';
 class ConfirmarOrdenModel extends FlutterFlowModel<ConfirmarOrdenWidget> {
   ///  State fields for stateful widgets in this component.
 
-  // State field(s) for yourName widget.
-  FocusNode? yourNameFocusNode1;
-  TextEditingController? yourNameTextController1;
-  String? Function(BuildContext, String?)? yourNameTextController1Validator;
-  // State field(s) for yourName widget.
-  FocusNode? yourNameFocusNode2;
-  TextEditingController? yourNameTextController2;
-  String? Function(BuildContext, String?)? yourNameTextController2Validator;
-  // State field(s) for yourName widget.
-  FocusNode? yourNameFocusNode3;
-  TextEditingController? yourNameTextController3;
-  String? Function(BuildContext, String?)? yourNameTextController3Validator;
+  // State field(s) for productos widget.
+  FocusNode? productosFocusNode;
+  TextEditingController? productosTextController;
+  String? Function(BuildContext, String?)? productosTextControllerValidator;
+  // State field(s) for precioTotal widget.
+  FocusNode? precioTotalFocusNode;
+  TextEditingController? precioTotalTextController;
+  String? Function(BuildContext, String?)? precioTotalTextControllerValidator;
+  // State field(s) for descuento widget.
+  FocusNode? descuentoFocusNode;
+  TextEditingController? descuentoTextController;
+  String? Function(BuildContext, String?)? descuentoTextControllerValidator;
 
   @override
   void initState(BuildContext context) {}
 
   @override
   void dispose() {
-    yourNameFocusNode1?.dispose();
-    yourNameTextController1?.dispose();
+    productosFocusNode?.dispose();
+    productosTextController?.dispose();
 
-    yourNameFocusNode2?.dispose();
-    yourNameTextController2?.dispose();
+    precioTotalFocusNode?.dispose();
+    precioTotalTextController?.dispose();
 
-    yourNameFocusNode3?.dispose();
-    yourNameTextController3?.dispose();
+    descuentoFocusNode?.dispose();
+    descuentoTextController?.dispose();
   }
 }

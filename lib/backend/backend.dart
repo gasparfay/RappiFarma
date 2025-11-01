@@ -7,6 +7,8 @@ import 'schema/util/firestore_util.dart';
 
 import 'schema/usuario_record.dart';
 import 'schema/farmacia_record.dart';
+import 'schema/orden_record.dart';
+import 'schema/oferta_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -17,6 +19,8 @@ export 'schema/util/schema_util.dart';
 
 export 'schema/usuario_record.dart';
 export 'schema/farmacia_record.dart';
+export 'schema/orden_record.dart';
+export 'schema/oferta_record.dart';
 
 /// Functions to query UsuarioRecords (as a Stream and as a Future).
 Future<int> queryUsuarioRecordCount({
@@ -87,6 +91,80 @@ Future<List<FarmaciaRecord>> queryFarmaciaRecordOnce({
     queryCollectionOnce(
       FarmaciaRecord.collection,
       FarmaciaRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query OrdenRecords (as a Stream and as a Future).
+Future<int> queryOrdenRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      OrdenRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<OrdenRecord>> queryOrdenRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      OrdenRecord.collection,
+      OrdenRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<OrdenRecord>> queryOrdenRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      OrdenRecord.collection,
+      OrdenRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query OfertaRecords (as a Stream and as a Future).
+Future<int> queryOfertaRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      OfertaRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<OfertaRecord>> queryOfertaRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      OfertaRecord.collection,
+      OfertaRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<OfertaRecord>> queryOfertaRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      OfertaRecord.collection,
+      OfertaRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

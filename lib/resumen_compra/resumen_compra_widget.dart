@@ -1,14 +1,22 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'resumen_compra_model.dart';
 export 'resumen_compra_model.dart';
 
 class ResumenCompraWidget extends StatefulWidget {
-  const ResumenCompraWidget({super.key});
+  const ResumenCompraWidget({
+    super.key,
+    required this.oferta,
+  });
+
+  final OfertaRecord? oferta;
 
   static String routeName = 'resumenCompra';
   static String routePath = '/resumenCompra';
@@ -181,7 +189,11 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                               .headlineMedium
                                               .override(
                                                 font: GoogleFonts.interTight(
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineMedium
+                                                          .fontWeight,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
@@ -189,7 +201,10 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                                           .fontStyle,
                                                 ),
                                                 letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .fontWeight,
                                                 fontStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .headlineMedium
@@ -209,7 +224,7 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  '',
+                                                  'Productos',
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .titleMedium
@@ -235,7 +250,11 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                                       ),
                                                 ),
                                                 Text(
-                                                  'Noise Canceling • Midnight Black',
+                                                  valueOrDefault<String>(
+                                                    widget.oferta?.oferta
+                                                        .productos,
+                                                    'productos',
+                                                  ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -268,46 +287,6 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                                                 .bodyMedium
                                                                 .fontStyle,
                                                       ),
-                                                ),
-                                                Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      '\$399.99',
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleMedium
-                                                              .override(
-                                                                font: GoogleFonts
-                                                                    .interTight(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w600,
-                                                                  fontStyle: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleMedium
-                                                                      .fontStyle,
-                                                                ),
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
-                                                                letterSpacing:
-                                                                    0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600,
-                                                                fontStyle: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleMedium
-                                                                    .fontStyle,
-                                                              ),
-                                                    ),
-                                                  ],
                                                 ),
                                               ].divide(SizedBox(height: 8.0)),
                                             ),
@@ -346,20 +325,26 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                       Text(
                                         'Precio\n',
                                         style: FlutterFlowTheme.of(context)
-                                            .titleLarge
+                                            .headlineMedium
                                             .override(
                                               font: GoogleFonts.interTight(
-                                                fontWeight: FontWeight.w600,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .fontWeight,
                                                 fontStyle:
                                                     FlutterFlowTheme.of(context)
-                                                        .titleLarge
+                                                        .headlineMedium
                                                         .fontStyle,
                                               ),
                                               letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .headlineMedium
+                                                      .fontWeight,
                                               fontStyle:
                                                   FlutterFlowTheme.of(context)
-                                                      .titleLarge
+                                                      .headlineMedium
                                                       .fontStyle,
                                             ),
                                       ),
@@ -369,7 +354,7 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            'Subtotal',
+                                            'Total productos',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyLarge
                                                 .override(
@@ -399,7 +384,84 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            '\$399.99',
+                                            valueOrDefault<String>(
+                                              widget
+                                                  .oferta?.oferta.precioTotal
+                                                  .toString(),
+                                              '99999',
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyLarge
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyLarge
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyLarge
+                                                            .fontStyle,
+                                                  ),
+                                                  letterSpacing: 0.0,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyLarge
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyLarge
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'Descuento por obra social',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyLarge
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyLarge
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyLarge
+                                                            .fontStyle,
+                                                  ),
+                                                  letterSpacing: 0.0,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyLarge
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyLarge
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                          Text(
+                                            valueOrDefault<String>(
+                                              widget
+                                                  .oferta?.oferta.descuentoOS
+                                                  .toString(),
+                                              '0',
+                                            ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyLarge
                                                 .override(
@@ -466,7 +528,7 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            'Free',
+                                            'Gratis',
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyLarge
                                                 .override(
@@ -485,73 +547,6 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                                   color: FlutterFlowTheme.of(
                                                           context)
                                                       .success,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontStyle,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            'Impuesto',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  font: GoogleFonts.inter(
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
-                                                            .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
-                                                            .fontStyle,
-                                                  ),
-                                                  letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .fontStyle,
-                                                ),
-                                          ),
-                                          Text(
-                                            '\$32.00',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyLarge
-                                                .override(
-                                                  font: GoogleFonts.inter(
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
-                                                            .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyLarge
-                                                            .fontStyle,
-                                                  ),
                                                   letterSpacing: 0.0,
                                                   fontWeight:
                                                       FlutterFlowTheme.of(
@@ -600,7 +595,11 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                                 ),
                                           ),
                                           Text(
-                                            '\$431.99',
+                                            (widget.oferta!.oferta
+                                                        .precioTotal -
+                                                    widget.oferta!.oferta
+                                                        .descuentoOS)
+                                                .toString(),
                                             style: FlutterFlowTheme.of(context)
                                                 .titleLarge
                                                 .override(
@@ -658,20 +657,26 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                       Text(
                                         'Informacion Del Delivery',
                                         style: FlutterFlowTheme.of(context)
-                                            .titleLarge
+                                            .headlineMedium
                                             .override(
                                               font: GoogleFonts.interTight(
-                                                fontWeight: FontWeight.w600,
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineMedium
+                                                        .fontWeight,
                                                 fontStyle:
                                                     FlutterFlowTheme.of(context)
-                                                        .titleLarge
+                                                        .headlineMedium
                                                         .fontStyle,
                                               ),
                                               letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .headlineMedium
+                                                      .fontWeight,
                                               fontStyle:
                                                   FlutterFlowTheme.of(context)
-                                                      .titleLarge
+                                                      .headlineMedium
                                                       .fontStyle,
                                             ),
                                       ),
@@ -716,77 +721,11 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                                       ),
                                                 ),
                                                 Text(
-                                                  'John Smith',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                Text(
-                                                  '123 Main Street, Apt 4B',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                                ),
-                                                Text(
-                                                  'New York, NY 10001',
+                                                  valueOrDefault<String>(
+                                                    widget.oferta?.oferta
+                                                        .direccion,
+                                                    '-',
+                                                  ),
                                                   style: FlutterFlowTheme.of(
                                                           context)
                                                       .bodyMedium
@@ -926,8 +865,33 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 16.0),
                                 child: FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
+                                  onPressed: () async {
+                                    _model.ofertasUid =
+                                        await queryOfertaRecordOnce(
+                                      queryBuilder: (ofertaRecord) =>
+                                          ofertaRecord.where(
+                                        'oferta.uid',
+                                        isEqualTo: currentUserUid,
+                                      ),
+                                    );
+                                    while (_model.ofertasUid != null &&
+                                        (_model.ofertasUid)!.isNotEmpty) {
+                                      await _model
+                                          .ofertasUid!.lastOrNull!.reference
+                                          .delete();
+                                    }
+                                    _model.ordenUid =
+                                        await queryOrdenRecordOnce(
+                                      queryBuilder: (ordenRecord) =>
+                                          ordenRecord.where(
+                                        'orden.uid',
+                                        isEqualTo: currentUserUid,
+                                      ),
+                                      singleRecord: true,
+                                    ).then((s) => s.firstOrNull);
+                                    await _model.ordenUid!.reference.delete();
+
+                                    safeSetState(() {});
                                   },
                                   text: 'Confirmar compra',
                                   options: FFButtonOptions(
