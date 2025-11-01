@@ -1,13 +1,19 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'codigo_seguridad_model.dart';
 export 'codigo_seguridad_model.dart';
 
 class CodigoSeguridadWidget extends StatefulWidget {
-  const CodigoSeguridadWidget({super.key});
+  const CodigoSeguridadWidget({
+    super.key,
+    required this.codigo,
+  });
+
+  final int? codigo;
 
   @override
   State<CodigoSeguridadWidget> createState() => _CodigoSeguridadWidgetState();
@@ -47,7 +53,7 @@ class _CodigoSeguridadWidgetState extends State<CodigoSeguridadWidget> {
         padding: EdgeInsetsDirectional.fromSTEB(24.0, 24.0, 24.0, 24.0),
         child: Container(
           decoration: BoxDecoration(
-            color: FlutterFlowTheme.of(context).secondaryBackground,
+            color: FlutterFlowTheme.of(context).primaryBackground,
             boxShadow: [
               BoxShadow(
                 blurRadius: 8.0,
@@ -95,7 +101,10 @@ class _CodigoSeguridadWidgetState extends State<CodigoSeguridadWidget> {
                             ),
                       ),
                       TextSpan(
-                        text: '[base de datos]',
+                        text: valueOrDefault<String>(
+                          widget.codigo?.toString(),
+                          '0',
+                        ),
                         style:
                             FlutterFlowTheme.of(context).displayMedium.override(
                                   font: GoogleFonts.interTight(
@@ -134,7 +143,7 @@ class _CodigoSeguridadWidgetState extends State<CodigoSeguridadWidget> {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  'Anotar este código, luego de \"Cerrar\" se perderá para siempre.',
+                  'Dale este codigo al repartidor para recibir la entrega.',
                   textAlign: TextAlign.center,
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         font: GoogleFonts.inter(
@@ -152,45 +161,51 @@ class _CodigoSeguridadWidgetState extends State<CodigoSeguridadWidget> {
                             FlutterFlowTheme.of(context).bodyMedium.fontStyle,
                       ),
                 ),
-                FFButtonWidget(
-                  onPressed: () {
-                    print('Button pressed ...');
-                  },
-                  text: 'Cerrar',
-                  options: FFButtonOptions(
-                    width: 120.0,
-                    height: 36.0,
-                    padding: EdgeInsets.all(8.0),
-                    iconPadding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                    color: FlutterFlowTheme.of(context).error,
-                    textStyle: FlutterFlowTheme.of(context)
-                        .labelMedium
-                        .override(
-                          font: GoogleFonts.inter(
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .labelMedium
-                                .fontStyle,
-                          ),
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          letterSpacing: 0.0,
-                          fontWeight: FlutterFlowTheme.of(context)
-                              .labelMedium
-                              .fontWeight,
-                          fontStyle: FlutterFlowTheme.of(context)
-                              .labelMedium
-                              .fontStyle,
+                Align(
+                  alignment: AlignmentDirectional(0.0, 0.0),
+                  child: Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 32.0),
+                    child: FFButtonWidget(
+                      onPressed: () async {
+                        context.goNamed(PaginaPrincipalWidget.routeName);
+                      },
+                      text: 'Cerrar',
+                      options: FFButtonOptions(
+                        width: 230.0,
+                        height: 52.0,
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).primaryBackground,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  font: GoogleFonts.interTight(
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .titleSmall
+                                        .fontStyle,
+                                  ),
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .titleSmall
+                                      .fontStyle,
+                                ),
+                        elevation: 3.0,
+                        borderSide: BorderSide(
+                          color: FlutterFlowTheme.of(context).primary,
+                          width: 2.0,
                         ),
-                    elevation: 0.0,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1.0,
+                        borderRadius: BorderRadius.circular(40.0),
+                      ),
                     ),
-                    borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
               ].divide(SizedBox(height: 24.0)),

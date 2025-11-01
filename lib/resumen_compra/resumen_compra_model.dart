@@ -4,6 +4,10 @@ import 'resumen_compra_widget.dart' show ResumenCompraWidget;
 import 'package:flutter/material.dart';
 
 class ResumenCompraModel extends FlutterFlowModel<ResumenCompraWidget> {
+  ///  Local state fields for this page.
+
+  int? codigo;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Firestore Query - Query a collection] action in Button widget.

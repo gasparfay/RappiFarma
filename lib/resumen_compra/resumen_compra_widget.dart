@@ -1,9 +1,11 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/codigo_seguridad_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -890,6 +892,36 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                       singleRecord: true,
                                     ).then((s) => s.firstOrNull);
                                     await _model.ordenUid!.reference.delete();
+                                    _model.codigo =
+                                        random_data.randomInteger(0, 9999);
+
+                                    await currentUserReference!
+                                        .update(createUsuarioRecordData(
+                                      pedidoActivo: true,
+                                      codigoSeguridad: _model.codigo,
+                                    ));
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      enableDrag: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            FocusScope.of(context).unfocus();
+                                            FocusManager.instance.primaryFocus
+                                                ?.unfocus();
+                                          },
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: CodigoSeguridadWidget(
+                                              codigo: _model.codigo!,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ).then((value) => safeSetState(() {}));
 
                                     safeSetState(() {});
                                   },
