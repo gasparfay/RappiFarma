@@ -156,140 +156,70 @@ class _OfertasWidgetState extends State<OfertasWidget> {
                                   ),
                         ),
                       ),
-                      StreamBuilder<List<OfertaRecord>>(
-                        stream: queryOfertaRecord(
-                          queryBuilder: (ofertaRecord) => ofertaRecord.where(
-                            'oferta.uid',
-                            isEqualTo: currentUserUid,
-                          ),
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    FlutterFlowTheme.of(context).primary,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          List<OfertaRecord> listViewOfertaRecordList =
-                              snapshot.data!;
-
-                          return ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: listViewOfertaRecordList.length,
-                            itemBuilder: (context, listViewIndex) {
-                              final listViewOfertaRecord =
-                                  listViewOfertaRecordList[listViewIndex];
-                              return OfertaWidget(
-                                key: Key(
-                                    'Keywpl_${listViewIndex}_of_${listViewOfertaRecordList.length}'),
-                              );
-                            },
-                          );
-                        },
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Tiempo restante: ',
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.inter(
-                                    fontWeight: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontWeight,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .fontStyle,
-                                  ),
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                ),
-                          ),
-                          FlutterFlowTimer(
-                            initialTime: (180000 + (widget.tiempoInicio!)) -
-                                getCurrentTimestamp.millisecondsSinceEpoch,
-                            getDisplayTime: (value) =>
-                                StopWatchTimer.getDisplayTime(
-                              value,
-                              hours: false,
-                              milliSecond: false,
+                      Padding(
+                        padding: EdgeInsets.all(6.0),
+                        child: StreamBuilder<List<OfertaRecord>>(
+                          stream: queryOfertaRecord(
+                            queryBuilder: (ofertaRecord) => ofertaRecord.where(
+                              'oferta.uid',
+                              isEqualTo: currentUserUid,
                             ),
-                            controller: _model.timerController,
-                            updateStateInterval: Duration(milliseconds: 1000),
-                            onChanged: (value, displayTime, shouldUpdate) {
-                              _model.timerMilliseconds = value;
-                              _model.timerValue = displayTime;
-                              if (shouldUpdate) safeSetState(() {});
-                            },
-                            onEnded: () async {
-                              _model.ofertasUid = await queryOfertaRecordOnce(
-                                queryBuilder: (ofertaRecord) =>
-                                    ofertaRecord.where(
-                                  'oferta.uid',
-                                  isEqualTo: currentUserUid,
+                          ),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(
+                                child: SizedBox(
+                                  width: 50.0,
+                                  height: 50.0,
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                      FlutterFlowTheme.of(context).primary,
+                                    ),
+                                  ),
                                 ),
                               );
-                              while (_model.ofertasUid != null &&
-                                  (_model.ofertasUid)!.isNotEmpty) {
-                                await _model.ofertasUid!.lastOrNull!.reference
-                                    .delete();
-                              }
-                              _model.ordenUid = await queryOrdenRecordOnce(
-                                queryBuilder: (ordenRecord) =>
-                                    ordenRecord.where(
-                                  'orden.uid',
-                                  isEqualTo: currentUserUid,
-                                ),
-                                singleRecord: true,
-                              ).then((s) => s.firstOrNull);
-                              await _model.ordenUid!.reference.delete();
-                              await showDialog(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text(
-                                        'No hay farmacias disponibles para su pedido.'),
-                                    content: Text(
-                                        'Lo sentimos, intente nuevamente mas tarde.'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(alertDialogContext),
-                                        child: Text('Volver atras'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
+                            }
+                            List<OfertaRecord> listViewOfertaRecordList =
+                                snapshot.data!;
 
-                              context
-                                  .pushNamed(PaginaPrincipalWidget.routeName);
-
-                              safeSetState(() {});
-                            },
-                            textAlign: TextAlign.start,
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  font: GoogleFonts.inter(
+                            return ListView.builder(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: listViewOfertaRecordList.length,
+                              itemBuilder: (context, listViewIndex) {
+                                final listViewOfertaRecord =
+                                    listViewOfertaRecordList[listViewIndex];
+                                return OfertaWidget(
+                                  key: Key(
+                                      'Keywpl_${listViewIndex}_of_${listViewOfertaRecordList.length}'),
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(12.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Tiempo restante: ',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
                                     fontWeight: FlutterFlowTheme.of(context)
                                         .bodyMedium
                                         .fontWeight,
@@ -297,16 +227,92 @@ class _OfertasWidgetState extends State<OfertasWidget> {
                                         .bodyMedium
                                         .fontStyle,
                                   ),
-                                  letterSpacing: 0.0,
-                                  fontWeight: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontWeight,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .fontStyle,
-                                ),
-                          ),
-                        ],
+                            ),
+                            FlutterFlowTimer(
+                              initialTime: (180000 + (widget.tiempoInicio!)) -
+                                  getCurrentTimestamp.millisecondsSinceEpoch,
+                              getDisplayTime: (value) =>
+                                  StopWatchTimer.getDisplayTime(
+                                value,
+                                hours: false,
+                                milliSecond: false,
+                              ),
+                              controller: _model.timerController,
+                              updateStateInterval: Duration(milliseconds: 1000),
+                              onChanged: (value, displayTime, shouldUpdate) {
+                                _model.timerMilliseconds = value;
+                                _model.timerValue = displayTime;
+                                if (shouldUpdate) safeSetState(() {});
+                              },
+                              onEnded: () async {
+                                _model.ofertasUid = await queryOfertaRecordOnce(
+                                  queryBuilder: (ofertaRecord) =>
+                                      ofertaRecord.where(
+                                    'oferta.uid',
+                                    isEqualTo: currentUserUid,
+                                  ),
+                                );
+                                while (_model.ofertasUid != null &&
+                                    (_model.ofertasUid)!.isNotEmpty) {
+                                  await _model.ofertasUid!.lastOrNull!.reference
+                                      .delete();
+                                }
+                                _model.ordenUid = await queryOrdenRecordOnce(
+                                  queryBuilder: (ordenRecord) =>
+                                      ordenRecord.where(
+                                    'orden.uid',
+                                    isEqualTo: currentUserUid,
+                                  ),
+                                  singleRecord: true,
+                                ).then((s) => s.firstOrNull);
+                                await _model.ordenUid!.reference.delete();
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text(
+                                          'No hay farmacias disponibles para su pedido.'),
+                                      content: Text(
+                                          'Lo sentimos, intente nuevamente mas tarde.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Volver atras'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+
+                                context
+                                    .pushNamed(PaginaPrincipalWidget.routeName);
+
+                                safeSetState(() {});
+                              },
+                              textAlign: TextAlign.start,
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.inter(
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    letterSpacing: 0.0,
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

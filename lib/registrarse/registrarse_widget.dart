@@ -840,7 +840,6 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
-                                      keyboardType: TextInputType.number,
                                       cursorColor: Color(0xFFFF6600),
                                       validator: _model
                                           .domicilioTextControllerValidator

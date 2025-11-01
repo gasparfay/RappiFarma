@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'panel_control_model.dart';
@@ -38,6 +39,13 @@ class _PanelControlWidgetState extends State<PanelControlWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => PanelControlModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (widget.name == null || widget.name == '') {
+        context.pushNamed(LoginFarmaciaWidget.routeName);
+      }
+    });
 
     animationsMap.addAll({
       'containerOnActionTriggerAnimation': AnimationInfo(

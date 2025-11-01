@@ -111,7 +111,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: PanelControlWidget.routeName,
           path: PanelControlWidget.routePath,
-          requireAuth: true,
           builder: (context, params) => PanelControlWidget(
             name: params.getParam(
               'name',

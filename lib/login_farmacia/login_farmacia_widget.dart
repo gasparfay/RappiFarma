@@ -1,4 +1,3 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -327,16 +326,8 @@ class _LoginFarmaciaWidgetState extends State<LoginFarmaciaWidget>
                                       ).then((s) => s.firstOrNull);
                                       if (_model.authenticated?.codigo ==
                                           _model.codeTextController.text) {
-                                        GoRouter.of(context).prepareAuthEvent();
-                                        final user = await authManager
-                                            .signInAnonymously(context);
-                                        if (user == null) {
-                                          return;
-                                        }
-
-                                        context.goNamedAuth(
+                                        context.goNamed(
                                           PanelControlWidget.routeName,
-                                          context.mounted,
                                           queryParameters: {
                                             'name': serializeParam(
                                               _model.authenticated?.name,
