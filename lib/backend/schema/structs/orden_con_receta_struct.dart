@@ -3,7 +3,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
 
+import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 class OrdenConRecetaStruct extends FFFirebaseStruct {
@@ -13,6 +15,7 @@ class OrdenConRecetaStruct extends FFFirebaseStruct {
     String? observaciones,
     String? direccion,
     int? tiempoInicio,
+    List<String>? uidsPendientes,
     String? uid,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _receta = receta,
@@ -20,6 +23,7 @@ class OrdenConRecetaStruct extends FFFirebaseStruct {
         _observaciones = observaciones,
         _direccion = direccion,
         _tiempoInicio = tiempoInicio,
+        _uidsPendientes = uidsPendientes,
         _uid = uid,
         super(firestoreUtilData);
 
@@ -61,6 +65,17 @@ class OrdenConRecetaStruct extends FFFirebaseStruct {
 
   bool hasTiempoInicio() => _tiempoInicio != null;
 
+  // "uidsPendientes" field.
+  List<String>? _uidsPendientes;
+  List<String> get uidsPendientes => _uidsPendientes ?? const [];
+  set uidsPendientes(List<String>? val) => _uidsPendientes = val;
+
+  void updateUidsPendientes(Function(List<String>) updateFn) {
+    updateFn(_uidsPendientes ??= []);
+  }
+
+  bool hasUidsPendientes() => _uidsPendientes != null;
+
   // "uid" field.
   String? _uid;
   String get uid => _uid ?? '';
@@ -75,6 +90,7 @@ class OrdenConRecetaStruct extends FFFirebaseStruct {
         observaciones: data['observaciones'] as String?,
         direccion: data['direccion'] as String?,
         tiempoInicio: castToType<int>(data['tiempoInicio']),
+        uidsPendientes: getDataList(data['uidsPendientes']),
         uid: data['uid'] as String?,
       );
 
@@ -88,6 +104,7 @@ class OrdenConRecetaStruct extends FFFirebaseStruct {
         'observaciones': _observaciones,
         'direccion': _direccion,
         'tiempoInicio': _tiempoInicio,
+        'uidsPendientes': _uidsPendientes,
         'uid': _uid,
       }.withoutNulls;
 
@@ -112,6 +129,11 @@ class OrdenConRecetaStruct extends FFFirebaseStruct {
         'tiempoInicio': serializeParam(
           _tiempoInicio,
           ParamType.int,
+        ),
+        'uidsPendientes': serializeParam(
+          _uidsPendientes,
+          ParamType.String,
+          isList: true,
         ),
         'uid': serializeParam(
           _uid,
@@ -146,6 +168,11 @@ class OrdenConRecetaStruct extends FFFirebaseStruct {
           ParamType.int,
           false,
         ),
+        uidsPendientes: deserializeParam<String>(
+          data['uidsPendientes'],
+          ParamType.String,
+          true,
+        ),
         uid: deserializeParam(
           data['uid'],
           ParamType.String,
@@ -158,18 +185,27 @@ class OrdenConRecetaStruct extends FFFirebaseStruct {
 
   @override
   bool operator ==(Object other) {
+    const listEquality = ListEquality();
     return other is OrdenConRecetaStruct &&
         receta == other.receta &&
         obraSocial == other.obraSocial &&
         observaciones == other.observaciones &&
         direccion == other.direccion &&
         tiempoInicio == other.tiempoInicio &&
+        listEquality.equals(uidsPendientes, other.uidsPendientes) &&
         uid == other.uid;
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([receta, obraSocial, observaciones, direccion, tiempoInicio, uid]);
+  int get hashCode => const ListEquality().hash([
+        receta,
+        obraSocial,
+        observaciones,
+        direccion,
+        tiempoInicio,
+        uidsPendientes,
+        uid
+      ]);
 }
 
 OrdenConRecetaStruct createOrdenConRecetaStruct({

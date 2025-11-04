@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'login_farmacia_model.dart';
@@ -207,8 +208,8 @@ class _LoginFarmaciaWidgetState extends State<LoginFarmaciaWidget>
                                     controller: _model.codeTextController,
                                     focusNode: _model.codeFocusNode,
                                     autofocus: true,
-                                    autofillHints: [AutofillHints.email],
-                                    obscureText: false,
+                                    autofillHints: [AutofillHints.password],
+                                    obscureText: !_model.codeVisibility,
                                     decoration: InputDecoration(
                                       labelText: 'Codigo',
                                       labelStyle: FlutterFlowTheme.of(context)
@@ -276,6 +277,21 @@ class _LoginFarmaciaWidgetState extends State<LoginFarmaciaWidget>
                                       contentPadding:
                                           EdgeInsetsDirectional.fromSTEB(
                                               24.0, 24.0, 0.0, 24.0),
+                                      suffixIcon: InkWell(
+                                        onTap: () => safeSetState(
+                                          () => _model.codeVisibility =
+                                              !_model.codeVisibility,
+                                        ),
+                                        focusNode:
+                                            FocusNode(skipTraversal: true),
+                                        child: Icon(
+                                          _model.codeVisibility
+                                              ? Icons.visibility_outlined
+                                              : Icons.visibility_off_outlined,
+                                          color: Color(0xFF757575),
+                                          size: 22.0,
+                                        ),
+                                      ),
                                     ),
                                     style: FlutterFlowTheme.of(context)
                                         .bodyMedium
@@ -300,10 +316,14 @@ class _LoginFarmaciaWidgetState extends State<LoginFarmaciaWidget>
                                                   .bodyMedium
                                                   .fontStyle,
                                         ),
-                                    keyboardType: TextInputType.emailAddress,
+                                    keyboardType: TextInputType.number,
                                     validator: _model
                                         .codeTextControllerValidator
                                         .asValidator(context),
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(
+                                          RegExp('[0-9]'))
+                                    ],
                                   ),
                                 ),
                               ),
@@ -329,11 +349,14 @@ class _LoginFarmaciaWidgetState extends State<LoginFarmaciaWidget>
                                         context.goNamed(
                                           PanelControlWidget.routeName,
                                           queryParameters: {
-                                            'name': serializeParam(
-                                              _model.authenticated?.name,
-                                              ParamType.String,
+                                            'farmacia': serializeParam(
+                                              _model.authenticated,
+                                              ParamType.Document,
                                             ),
                                           }.withoutNulls,
+                                          extra: <String, dynamic>{
+                                            'farmacia': _model.authenticated,
+                                          },
                                         );
                                       } else {
                                         ScaffoldMessenger.of(context)

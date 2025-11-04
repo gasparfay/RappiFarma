@@ -3,7 +3,6 @@ import '/components/orden_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -15,10 +14,10 @@ export 'panel_control_model.dart';
 class PanelControlWidget extends StatefulWidget {
   const PanelControlWidget({
     super.key,
-    this.name,
+    required this.farmacia,
   });
 
-  final String? name;
+  final FarmaciaRecord? farmacia;
 
   static String routeName = 'panelControl';
   static String routePath = '/panelControl';
@@ -42,7 +41,7 @@ class _PanelControlWidgetState extends State<PanelControlWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (widget.name == null || widget.name == '') {
+      if (widget.farmacia == null) {
         context.pushNamed(LoginFarmaciaWidget.routeName);
       }
     });
@@ -194,7 +193,7 @@ class _PanelControlWidgetState extends State<PanelControlWidget>
                                           children: [
                                             Text(
                                               valueOrDefault<String>(
-                                                widget.name,
+                                                widget.farmacia?.name,
                                                 'Farmacia',
                                               ),
                                               style:
@@ -580,7 +579,7 @@ class _PanelControlWidgetState extends State<PanelControlWidget>
                                                   .labelLarge
                                                   .fontStyle,
                                         ),
-                                        fontSize: 24.0,
+                                        fontSize: 16.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FlutterFlowTheme.of(context)
                                             .labelLarge
@@ -609,7 +608,8 @@ class _PanelControlWidgetState extends State<PanelControlWidget>
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Padding(
-                                      padding: EdgeInsets.all(12.0),
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 18.0, 0.0, 18.0),
                                       child: Text(
                                         'Ordenes',
                                         style: FlutterFlowTheme.of(context)
@@ -637,75 +637,17 @@ class _PanelControlWidgetState extends State<PanelControlWidget>
                                             ),
                                       ),
                                     ),
-                                    Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 32.0, 0.0, 32.0),
-                                        child: FFButtonWidget(
-                                          onPressed: () async {
-                                            safeSetState(() {});
-                                          },
-                                          text: 'Actualizar',
-                                          options: FFButtonOptions(
-                                            width: 180.0,
-                                            height: 52.0,
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            iconPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 0.0),
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                            textStyle: FlutterFlowTheme.of(
-                                                    context)
-                                                .titleSmall
-                                                .override(
-                                                  font: GoogleFonts.interTight(
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .titleSmall
-                                                            .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .titleSmall
-                                                            .fontStyle,
-                                                  ),
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primary,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .titleSmall
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .titleSmall
-                                                          .fontStyle,
-                                                ),
-                                            elevation: 3.0,
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              width: 2.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(40.0),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
                                   ],
                                 ),
                                 StreamBuilder<List<OrdenRecord>>(
-                                  stream: queryOrdenRecord(),
+                                  stream: queryOrdenRecord(
+                                    queryBuilder: (ordenRecord) =>
+                                        ordenRecord.where(
+                                      'orden.uidsPendientes',
+                                      arrayContains:
+                                          widget.farmacia?.uid.toString(),
+                                    ),
+                                  ),
                                   builder: (context, snapshot) {
                                     // Customize what your widget looks like when it's loading.
                                     if (!snapshot.hasData) {
@@ -745,7 +687,9 @@ class _PanelControlWidgetState extends State<PanelControlWidget>
                                                   .millisecondsSinceEpoch,
                                           index: listViewIndex,
                                           orden: listViewOrdenRecord,
-                                          farmacia: widget.name!,
+                                          farmacia: widget.farmacia!.name,
+                                          uidFarmacia:
+                                              widget.farmacia!.uid.toString(),
                                         );
                                       },
                                     );

@@ -7,10 +7,6 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:flutter/material.dart';
 
 class OfertasModel extends FlutterFlowModel<OfertasWidget> {
-  ///  Local state fields for this page.
-
-  int? timer = 180000;
-
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for Timer widget.

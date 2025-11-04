@@ -881,9 +881,7 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                         loop1Index++) {
                                       final currentLoop1Item =
                                           _model.ofertasUid![loop1Index];
-                                      await _model
-                                          .ofertasUid!.lastOrNull!.reference
-                                          .delete();
+                                      await currentLoop1Item.reference.delete();
                                     }
                                     _model.ordenUid =
                                         await queryOrdenRecordOnce(
@@ -896,7 +894,8 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                     ).then((s) => s.firstOrNull);
                                     await _model.ordenUid!.reference.delete();
                                     _model.codigo =
-                                        random_data.randomInteger(0, 9999);
+                                        random_data.randomInteger(0, 10);
+                                    safeSetState(() {});
 
                                     await currentUserReference!
                                         .update(createUsuarioRecordData(

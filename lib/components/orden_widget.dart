@@ -19,12 +19,14 @@ class OrdenWidget extends StatefulWidget {
     this.index,
     required this.orden,
     required this.farmacia,
+    required this.uidFarmacia,
   });
 
   final int? tiempo;
   final int? index;
   final OrdenRecord? orden;
   final String? farmacia;
+  final String? uidFarmacia;
 
   @override
   State<OrdenWidget> createState() => _OrdenWidgetState();
@@ -295,6 +297,7 @@ class _OrdenWidgetState extends State<OrdenWidget> {
                             index: widget.index!,
                             ordenObjeto: widget.orden!,
                             farmacia: widget.farmacia!,
+                            uidFarmacia: widget.uidFarmacia!,
                           ),
                         );
                       },

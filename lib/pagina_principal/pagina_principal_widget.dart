@@ -15,12 +15,7 @@ import 'pagina_principal_model.dart';
 export 'pagina_principal_model.dart';
 
 class PaginaPrincipalWidget extends StatefulWidget {
-  const PaginaPrincipalWidget({
-    super.key,
-    this.usuario,
-  });
-
-  final UsuarioRecord? usuario;
+  const PaginaPrincipalWidget({super.key});
 
   static String routeName = 'paginaPrincipal';
   static String routePath = '/main';
@@ -976,8 +971,18 @@ class _PaginaPrincipalWidgetState extends State<PaginaPrincipalWidget>
                                           0.0, 12.0, 0.0, 12.0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          context.pushNamed(
-                                              EditarPerfilWidget.routeName);
+                                          await currentUserReference!.update({
+                                            ...createUsuarioRecordData(
+                                              pedidoActivo: false,
+                                            ),
+                                            ...mapToFirestore(
+                                              {
+                                                'codigoSeguridad':
+                                                    FieldValue.delete(),
+                                              },
+                                            ),
+                                          });
+                                          safeSetState(() {});
                                         },
                                         text: 'Ya recibí',
                                         options: FFButtonOptions(

@@ -56,13 +56,12 @@ class _CodigoSeguridadWidgetState extends State<CodigoSeguridadWidget> {
             color: FlutterFlowTheme.of(context).primaryBackground,
             boxShadow: [
               BoxShadow(
-                blurRadius: 8.0,
+                blurRadius: 4.0,
                 color: Color(0x33000000),
                 offset: Offset(
                   0.0,
                   2.0,
                 ),
-                spreadRadius: 0.0,
               )
             ],
             borderRadius: BorderRadius.circular(16.0),
@@ -168,6 +167,8 @@ class _CodigoSeguridadWidgetState extends State<CodigoSeguridadWidget> {
                         EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 32.0),
                     child: FFButtonWidget(
                       onPressed: () async {
+                        Navigator.pop(context);
+
                         context.goNamed(PaginaPrincipalWidget.routeName);
                       },
                       text: 'Cerrar',

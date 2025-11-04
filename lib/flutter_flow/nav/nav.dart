@@ -111,10 +111,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: PanelControlWidget.routeName,
           path: PanelControlWidget.routePath,
+          asyncParams: {
+            'farmacia': getDoc(['Farmacia'], FarmaciaRecord.fromSnapshot),
+          },
           builder: (context, params) => PanelControlWidget(
-            name: params.getParam(
-              'name',
-              ParamType.String,
+            farmacia: params.getParam(
+              'farmacia',
+              ParamType.Document,
             ),
           ),
         ),
@@ -136,15 +139,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: PaginaPrincipalWidget.routeName,
           path: PaginaPrincipalWidget.routePath,
           requireAuth: true,
-          asyncParams: {
-            'usuario': getDoc(['Usuario'], UsuarioRecord.fromSnapshot),
-          },
-          builder: (context, params) => PaginaPrincipalWidget(
-            usuario: params.getParam(
-              'usuario',
-              ParamType.Document,
-            ),
-          ),
+          builder: (context, params) => PaginaPrincipalWidget(),
         ),
         FFRoute(
           name: EditarPerfilWidget.routeName,
@@ -156,7 +151,12 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: OfertasWidget.routeName,
           path: OfertasWidget.routePath,
           requireAuth: true,
-          builder: (context, params) => OfertasWidget(),
+          builder: (context, params) => OfertasWidget(
+            tiempoInicio: params.getParam(
+              'tiempoInicio',
+              ParamType.int,
+            ),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -343,15 +343,17 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? isWeb
-                  ? Container()
-                  : Container(
-                      color: FlutterFlowTheme.of(context).tertiary,
-                      child: Image.asset(
-                        'assets/images/ChatGPT_Image_Sep_29,_2025,_09_47_45_AM.png',
-                        fit: BoxFit.scaleDown,
+              ? Center(
+                  child: SizedBox(
+                    width: 50.0,
+                    height: 50.0,
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(
+                        FlutterFlowTheme.of(context).primary,
                       ),
-                    )
+                    ),
+                  ),
+                )
               : page;
 
           final transitionInfo = state.transitionInfo;

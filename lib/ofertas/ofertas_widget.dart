@@ -9,12 +9,18 @@ import '/index.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'ofertas_model.dart';
 export 'ofertas_model.dart';
 
 class OfertasWidget extends StatefulWidget {
-  const OfertasWidget({super.key});
+  const OfertasWidget({
+    super.key,
+    required this.tiempoInicio,
+  });
+
+  final int? tiempoInicio;
 
   static String routeName = 'ofertas';
   static String routePath = '/ofertas';
@@ -32,6 +38,11 @@ class _OfertasWidgetState extends State<OfertasWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => OfertasModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.timerController.onStartTimer();
+    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -67,7 +78,7 @@ class _OfertasWidgetState extends State<OfertasWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.safePop();
+              context.pushNamed(PaginaPrincipalWidget.routeName);
             },
           ),
           title: Text(
@@ -225,7 +236,8 @@ class _OfertasWidgetState extends State<OfertasWidget> {
                                   ),
                             ),
                             FlutterFlowTimer(
-                              initialTime: _model.timer!,
+                              initialTime: (180000 + (widget.tiempoInicio!)) -
+                                  getCurrentTimestamp.millisecondsSinceEpoch,
                               getDisplayTime: (value) =>
                                   StopWatchTimer.getDisplayTime(
                                 value,
@@ -247,10 +259,12 @@ class _OfertasWidgetState extends State<OfertasWidget> {
                                     isEqualTo: currentUserUid,
                                   ),
                                 );
-                                while (_model.ofertasUid != null &&
-                                    (_model.ofertasUid)!.isNotEmpty) {
-                                  await _model.ofertasUid!.lastOrNull!.reference
-                                      .delete();
+                                for (int loop1Index = 0;
+                                    loop1Index < _model.ofertasUid!.length;
+                                    loop1Index++) {
+                                  final currentLoop1Item =
+                                      _model.ofertasUid![loop1Index];
+                                  await currentLoop1Item.reference.delete();
                                 }
                                 _model.ordenUid = await queryOrdenRecordOnce(
                                   queryBuilder: (ordenRecord) =>
@@ -281,7 +295,7 @@ class _OfertasWidgetState extends State<OfertasWidget> {
                                 );
 
                                 context
-                                    .pushNamed(PaginaPrincipalWidget.routeName);
+                                    .goNamed(PaginaPrincipalWidget.routeName);
 
                                 safeSetState(() {});
                               },

@@ -1497,6 +1497,8 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                             _model.nombreTextController.text,
                                         apellido:
                                             _model.apellidoTextController.text,
+                                        carnetObraSocial: _model
+                                            .uploadedFileUrl_uploadDataKbt,
                                       ));
                                       context.safePop();
                                       ScaffoldMessenger.of(context)

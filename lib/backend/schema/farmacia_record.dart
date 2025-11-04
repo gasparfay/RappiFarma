@@ -25,9 +25,15 @@ class FarmaciaRecord extends FirestoreRecord {
   String get codigo => _codigo ?? '';
   bool hasCodigo() => _codigo != null;
 
+  // "uid" field.
+  int? _uid;
+  int get uid => _uid ?? 0;
+  bool hasUid() => _uid != null;
+
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
     _codigo = snapshotData['codigo'] as String?;
+    _uid = castToType<int>(snapshotData['uid']);
   }
 
   static CollectionReference get collection =>
@@ -67,11 +73,13 @@ class FarmaciaRecord extends FirestoreRecord {
 Map<String, dynamic> createFarmaciaRecordData({
   String? name,
   String? codigo,
+  int? uid,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'name': name,
       'codigo': codigo,
+      'uid': uid,
     }.withoutNulls,
   );
 
@@ -83,12 +91,14 @@ class FarmaciaRecordDocumentEquality implements Equality<FarmaciaRecord> {
 
   @override
   bool equals(FarmaciaRecord? e1, FarmaciaRecord? e2) {
-    return e1?.name == e2?.name && e1?.codigo == e2?.codigo;
+    return e1?.name == e2?.name &&
+        e1?.codigo == e2?.codigo &&
+        e1?.uid == e2?.uid;
   }
 
   @override
   int hash(FarmaciaRecord? e) =>
-      const ListEquality().hash([e?.name, e?.codigo]);
+      const ListEquality().hash([e?.name, e?.codigo, e?.uid]);
 
   @override
   bool isValidKey(Object? o) => o is FarmaciaRecord;
