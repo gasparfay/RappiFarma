@@ -104,16 +104,6 @@ class _ConfirmarOrdenWidgetState extends State<ConfirmarOrdenWidget>
           ),
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).primaryBackground,
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 12.0,
-                color: Color(0x1E000000),
-                offset: Offset(
-                  0.0,
-                  5.0,
-                ),
-              )
-            ],
             borderRadius: BorderRadius.circular(16.0),
             border: Border.all(
               color: FlutterFlowTheme.of(context).primary,

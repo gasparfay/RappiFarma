@@ -98,14 +98,14 @@ class _RecetaPedidoWidgetState extends State<RecetaPedidoWidget> {
           child: Align(
             alignment: AlignmentDirectional(0.0, 0.0),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Column(
-                    mainAxisSize: MainAxisSize.max,
+                    mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -317,15 +317,7 @@ class _RecetaPedidoWidgetState extends State<RecetaPedidoWidget> {
                                 ),
                               );
 
-                              context.pushNamed(
-                                OfertasWidget.routeName,
-                                queryParameters: {
-                                  'tiempoInicio': serializeParam(
-                                    getCurrentTimestamp.millisecondsSinceEpoch,
-                                    ParamType.int,
-                                  ),
-                                }.withoutNulls,
-                              );
+                              context.pushNamed(OfertasWidget.routeName);
                             },
                             text: 'Enviar pedido',
                             options: FFButtonOptions(

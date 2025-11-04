@@ -14,12 +14,7 @@ import 'ofertas_model.dart';
 export 'ofertas_model.dart';
 
 class OfertasWidget extends StatefulWidget {
-  const OfertasWidget({
-    super.key,
-    required this.tiempoInicio,
-  });
-
-  final int? tiempoInicio;
+  const OfertasWidget({super.key});
 
   static String routeName = 'ofertas';
   static String routePath = '/ofertas';
@@ -194,6 +189,7 @@ class _OfertasWidgetState extends State<OfertasWidget> {
                                 return OfertaWidget(
                                   key: Key(
                                       'Keywpl_${listViewIndex}_of_${listViewOfertaRecordList.length}'),
+                                  ofertaObjeto: listViewOfertaRecord,
                                 );
                               },
                             );
@@ -229,8 +225,7 @@ class _OfertasWidgetState extends State<OfertasWidget> {
                                   ),
                             ),
                             FlutterFlowTimer(
-                              initialTime: (180000 + (widget.tiempoInicio!)) -
-                                  getCurrentTimestamp.millisecondsSinceEpoch,
+                              initialTime: _model.timer!,
                               getDisplayTime: (value) =>
                                   StopWatchTimer.getDisplayTime(
                                 value,

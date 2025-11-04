@@ -2,11 +2,14 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -57,9 +60,6 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
 
     _model.emailTextController ??= TextEditingController();
     _model.emailFocusNode ??= FocusNode();
-
-    _model.obrasocialTextController ??= TextEditingController();
-    _model.obrasocialFocusNode ??= FocusNode();
 
     _model.numerobenficiarioTextController ??= TextEditingController();
     _model.numerobenficiarioFocusNode ??= FocusNode();
@@ -708,6 +708,10 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                       validator: _model
                                           .dniTextControllerValidator
                                           .asValidator(context),
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp('[0-9]'))
+                                      ],
                                     ),
                                     TextFormField(
                                       controller:
@@ -840,6 +844,7 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
+                                      keyboardType: TextInputType.streetAddress,
                                       cursorColor: Color(0xFFFF6600),
                                       validator: _model
                                           .domicilioTextControllerValidator
@@ -980,6 +985,10 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                       validator: _model
                                           .telefonoTextControllerValidator
                                           .asValidator(context),
+                                      inputFormatters: [
+                                        FilteringTextInputFormatter.allow(
+                                            RegExp('[0-9]'))
+                                      ],
                                     ),
                                     TextFormField(
                                       controller: _model.emailTextController,
@@ -1117,14 +1126,18 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                           .emailTextControllerValidator
                                           .asValidator(context),
                                     ),
-                                    TextFormField(
+                                    FlutterFlowDropDown<String>(
                                       controller:
-                                          _model.obrasocialTextController,
-                                      focusNode: _model.obrasocialFocusNode,
-                                      onFieldSubmitted: (_) async {
-                                        if (_model.obrasocialTextController
-                                                    .text !=
-                                                '') {
+                                          _model.obraSocialValueController ??=
+                                              FormFieldController<String>(
+                                        _model.obraSocialValue ??= 'No tengo',
+                                      ),
+                                      options: functions.getObrasSociales()!,
+                                      onChanged: (val) async {
+                                        safeSetState(
+                                            () => _model.obraSocialValue = val);
+                                        if (_model.obraSocialValue !=
+                                            'No tengo') {
                                           if (animationsMap[
                                                   'textFieldOnActionTriggerAnimation'] !=
                                               null) {
@@ -1170,58 +1183,11 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
 
                                         safeSetState(() {});
                                       },
-                                      textCapitalization:
-                                          TextCapitalization.words,
-                                      textInputAction: TextInputAction.next,
-                                      obscureText: false,
-                                      decoration: InputDecoration(
-                                        labelText: 'Obra Social (Opcional)',
-                                        labelStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              font: GoogleFonts.inter(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondary,
-                                              fontSize: 16.0,
-                                              letterSpacing: 0.0,
-                                              fontWeight:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontWeight,
-                                              fontStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .fontStyle,
-                                            ),
-                                        alignLabelWithHint: false,
-                                        hintText: 'Nombre de su obra social',
-                                        hintStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .override(
-                                              font: GoogleFonts.inter(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .labelMedium
-                                                        .fontStyle,
-                                              ),
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              letterSpacing: 0.0,
+                                      searchHintTextStyle: FlutterFlowTheme.of(
+                                              context)
+                                          .labelMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
                                               fontWeight:
                                                   FlutterFlowTheme.of(context)
                                                       .labelMedium
@@ -1231,48 +1197,41 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                                       .labelMedium
                                                       .fontStyle,
                                             ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            width: 2.0,
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium
+                                                    .fontStyle,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
-                                            width: 2.0,
+                                      searchTextStyle: FlutterFlowTheme.of(
+                                              context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                        errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0xFFFF0000),
-                                            width: 2.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                        focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0xFFFF0000),
-                                            width: 2.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                        filled: true,
-                                        fillColor: FlutterFlowTheme.of(context)
-                                            .primaryBackground,
-                                        contentPadding:
-                                            EdgeInsetsDirectional.fromSTEB(
-                                                16.0, 16.0, 16.0, 16.0),
-                                      ),
-                                      style: FlutterFlowTheme.of(context)
+                                      textStyle: FlutterFlowTheme.of(context)
                                           .bodyMedium
                                           .override(
                                             font: GoogleFonts.inter(
@@ -1286,8 +1245,7 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                                       .fontStyle,
                                             ),
                                             color: FlutterFlowTheme.of(context)
-                                                .secondary,
-                                            fontSize: 16.0,
+                                                .secondaryText,
                                             letterSpacing: 0.0,
                                             fontWeight:
                                                 FlutterFlowTheme.of(context)
@@ -1298,25 +1256,29 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
-                                      cursorColor: Color(0xFFFF6600),
-                                      validator: _model
-                                          .obrasocialTextControllerValidator
-                                          .asValidator(context),
-                                      inputFormatters: [
-                                        if (!isAndroid && !isiOS)
-                                          TextInputFormatter.withFunction(
-                                              (oldValue, newValue) {
-                                            return TextEditingValue(
-                                              selection: newValue.selection,
-                                              text: newValue.text
-                                                  .toCapitalization(
-                                                      TextCapitalization.words),
-                                            );
-                                          }),
-                                      ],
+                                      hintText: 'Seleccione su obra social',
+                                      searchHintText: 'Buscar...',
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        size: 24.0,
+                                      ),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .primaryBackground,
+                                      elevation: 2.0,
+                                      borderColor:
+                                          FlutterFlowTheme.of(context).primary,
+                                      borderWidth: 2.0,
+                                      borderRadius: 12.0,
+                                      margin: EdgeInsetsDirectional.fromSTEB(
+                                          12.0, 0.0, 12.0, 0.0),
+                                      hidesUnderline: true,
+                                      isOverButton: false,
+                                      isSearchable: true,
+                                      isMultiSelect: false,
                                     ),
-                                    if (_model.obrasocialTextController.text !=
-                                            '')
+                                    if (_model.obraSocialValue != 'No tengo')
                                       TextFormField(
                                         controller: _model
                                             .numerobenficiarioTextController,
@@ -1465,13 +1427,16 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                         validator: _model
                                             .numerobenficiarioTextControllerValidator
                                             .asValidator(context),
+                                        inputFormatters: [
+                                          FilteringTextInputFormatter.allow(
+                                              RegExp('[0-9]'))
+                                        ],
                                       ).animateOnActionTrigger(
                                           animationsMap[
                                               'textFieldOnActionTriggerAnimation']!,
                                           hasBeenTriggered:
                                               hasTextFieldTriggered),
-                                    if (_model.obrasocialTextController.text !=
-                                            '')
+                                    if (_model.obraSocialValue != 'No tengo')
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 8.0, 0.0, 8.0),
@@ -1871,7 +1836,6 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
-                                      keyboardType: TextInputType.number,
                                       cursorColor: Color(0xFFFF6600),
                                       validator: _model
                                           .passwordTextControllerValidator
@@ -2022,7 +1986,6 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                                     .bodyMedium
                                                     .fontStyle,
                                           ),
-                                      keyboardType: TextInputType.number,
                                       cursorColor: Color(0xFFFF6600),
                                       validator: _model
                                           .password2TextControllerValidator
@@ -2078,8 +2041,8 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                               _model.emailTextController.text,
                                           nombre:
                                               _model.nombreTextController.text,
-                                          nombreObraSocial: _model
-                                              .obrasocialTextController.text,
+                                          nombreObraSocial:
+                                              _model.obraSocialValue,
                                           numeroObraSocial: _model
                                               .numerobenficiarioTextController
                                               .text,

@@ -156,12 +156,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: OfertasWidget.routeName,
           path: OfertasWidget.routePath,
           requireAuth: true,
-          builder: (context, params) => OfertasWidget(
-            tiempoInicio: params.getParam(
-              'tiempoInicio',
-              ParamType.int,
-            ),
-          ),
+          builder: (context, params) => OfertasWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -348,17 +343,15 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 50.0,
-                    height: 50.0,
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        FlutterFlowTheme.of(context).primary,
+              ? isWeb
+                  ? Container()
+                  : Container(
+                      color: FlutterFlowTheme.of(context).tertiary,
+                      child: Image.asset(
+                        'assets/images/ChatGPT_Image_Sep_29,_2025,_09_47_45_AM.png',
+                        fit: BoxFit.scaleDown,
                       ),
-                    ),
-                  ),
-                )
+                    )
               : page;
 
           final transitionInfo = state.transitionInfo;

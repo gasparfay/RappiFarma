@@ -1,5 +1,6 @@
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/index.dart';
 import 'registrarse_widget.dart' show RegistrarseWidget;
 import 'package:flutter/material.dart';
@@ -32,10 +33,9 @@ class RegistrarseModel extends FlutterFlowModel<RegistrarseWidget> {
   FocusNode? emailFocusNode;
   TextEditingController? emailTextController;
   String? Function(BuildContext, String?)? emailTextControllerValidator;
-  // State field(s) for obrasocial widget.
-  FocusNode? obrasocialFocusNode;
-  TextEditingController? obrasocialTextController;
-  String? Function(BuildContext, String?)? obrasocialTextControllerValidator;
+  // State field(s) for obraSocial widget.
+  String? obraSocialValue;
+  FormFieldController<String>? obraSocialValueController;
   // State field(s) for numerobenficiario widget.
   FocusNode? numerobenficiarioFocusNode;
   TextEditingController? numerobenficiarioTextController;
@@ -83,9 +83,6 @@ class RegistrarseModel extends FlutterFlowModel<RegistrarseWidget> {
 
     emailFocusNode?.dispose();
     emailTextController?.dispose();
-
-    obrasocialFocusNode?.dispose();
-    obrasocialTextController?.dispose();
 
     numerobenficiarioFocusNode?.dispose();
     numerobenficiarioTextController?.dispose();

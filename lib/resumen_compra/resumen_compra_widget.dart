@@ -876,8 +876,11 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                         isEqualTo: currentUserUid,
                                       ),
                                     );
-                                    while (_model.ofertasUid != null &&
-                                        (_model.ofertasUid)!.isNotEmpty) {
+                                    for (int loop1Index = 0;
+                                        loop1Index < _model.ofertasUid!.length;
+                                        loop1Index++) {
+                                      final currentLoop1Item =
+                                          _model.ofertasUid![loop1Index];
                                       await _model
                                           .ofertasUid!.lastOrNull!.reference
                                           .delete();
