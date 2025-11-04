@@ -40,6 +40,7 @@ class _LoginWidgetState extends State<LoginWidget>
       if (RootPageContext.isInactiveRootPage(context)) {
         return;
       }
+      setDarkModeSetting(context, ThemeMode.system);
       if ((Theme.of(context).brightness == Brightness.dark) != true) {
         setDarkModeSetting(context, ThemeMode.light);
         if (animationsMap['containerOnActionTriggerAnimation'] != null) {
@@ -476,8 +477,11 @@ class _LoginWidgetState extends State<LoginWidget>
                                     },
                                     text: 'Iniciar sesión',
                                     options: FFButtonOptions(
-                                      width: 230.0,
-                                      height: 52.0,
+                                      width: MediaQuery.sizeOf(context).width *
+                                          0.6,
+                                      height:
+                                          MediaQuery.sizeOf(context).height *
+                                              0.06,
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 0.0),
                                       iconPadding:

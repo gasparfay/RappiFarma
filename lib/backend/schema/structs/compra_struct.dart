@@ -12,7 +12,7 @@ class CompraStruct extends FFFirebaseStruct {
     String? obraSocial,
     String? observaciones,
     String? direccion,
-    int? tiempoInicio,
+    DateTime? tiempoInicio,
     String? uid,
     double? precio,
     String? uidFarmacia,
@@ -58,12 +58,9 @@ class CompraStruct extends FFFirebaseStruct {
   bool hasDireccion() => _direccion != null;
 
   // "tiempoInicio" field.
-  int? _tiempoInicio;
-  int get tiempoInicio => _tiempoInicio ?? 0;
-  set tiempoInicio(int? val) => _tiempoInicio = val;
-
-  void incrementTiempoInicio(int amount) =>
-      tiempoInicio = tiempoInicio + amount;
+  DateTime? _tiempoInicio;
+  DateTime? get tiempoInicio => _tiempoInicio;
+  set tiempoInicio(DateTime? val) => _tiempoInicio = val;
 
   bool hasTiempoInicio() => _tiempoInicio != null;
 
@@ -102,7 +99,7 @@ class CompraStruct extends FFFirebaseStruct {
         obraSocial: data['obraSocial'] as String?,
         observaciones: data['observaciones'] as String?,
         direccion: data['direccion'] as String?,
-        tiempoInicio: castToType<int>(data['tiempoInicio']),
+        tiempoInicio: data['tiempoInicio'] as DateTime?,
         uid: data['uid'] as String?,
         precio: castToType<double>(data['precio']),
         uidFarmacia: data['uidFarmacia'] as String?,
@@ -144,7 +141,7 @@ class CompraStruct extends FFFirebaseStruct {
         ),
         'tiempoInicio': serializeParam(
           _tiempoInicio,
-          ParamType.int,
+          ParamType.DateTime,
         ),
         'uid': serializeParam(
           _uid,
@@ -188,7 +185,7 @@ class CompraStruct extends FFFirebaseStruct {
         ),
         tiempoInicio: deserializeParam(
           data['tiempoInicio'],
-          ParamType.int,
+          ParamType.DateTime,
           false,
         ),
         uid: deserializeParam(
@@ -249,7 +246,7 @@ CompraStruct createCompraStruct({
   String? obraSocial,
   String? observaciones,
   String? direccion,
-  int? tiempoInicio,
+  DateTime? tiempoInicio,
   String? uid,
   double? precio,
   String? uidFarmacia,

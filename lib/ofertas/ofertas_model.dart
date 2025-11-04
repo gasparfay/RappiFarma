@@ -24,6 +24,10 @@ class OfertasModel extends FlutterFlowModel<OfertasWidget> {
   List<OfertaRecord>? ofertasUid;
   // Stores action output result for [Firestore Query - Query a collection] action in Timer widget.
   OrdenRecord? ordenUid;
+  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  List<OfertaRecord>? ofertasUidCopy;
+  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  OrdenRecord? ordenUidCopy;
 
   @override
   void initState(BuildContext context) {}

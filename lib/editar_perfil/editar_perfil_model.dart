@@ -1,10 +1,15 @@
 import '/backend/api_requests/api_calls.dart';
 import '/components/imagen_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/form_field_controller.dart';
 import 'editar_perfil_widget.dart' show EditarPerfilWidget;
 import 'package:flutter/material.dart';
 
 class EditarPerfilModel extends FlutterFlowModel<EditarPerfilWidget> {
+  ///  Local state fields for this page.
+
+  bool subioFoto = false;
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for nombre widget.
@@ -23,23 +28,22 @@ class EditarPerfilModel extends FlutterFlowModel<EditarPerfilWidget> {
   FocusNode? telefonoFocusNode;
   TextEditingController? telefonoTextController;
   String? Function(BuildContext, String?)? telefonoTextControllerValidator;
-  // State field(s) for obrasocial widget.
-  FocusNode? obrasocialFocusNode;
-  TextEditingController? obrasocialTextController;
-  String? Function(BuildContext, String?)? obrasocialTextControllerValidator;
+  // State field(s) for obraSocial widget.
+  String? obraSocialValue;
+  FormFieldController<String>? obraSocialValueController;
   // State field(s) for numerobenficiario widget.
   FocusNode? numerobenficiarioFocusNode;
   TextEditingController? numerobenficiarioTextController;
   String? Function(BuildContext, String?)?
       numerobenficiarioTextControllerValidator;
+  // Model for imagen component.
+  late ImagenModel imagenModel;
   bool isDataUploading_nuevaFotoCarnet = false;
   FFUploadedFile uploadedLocalFile_nuevaFotoCarnet =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
-  // Stores action output result for [Backend Call - API (UploadToCloudinary)] action in Container widget.
-  ApiCallResponse? urlCarnet;
-  // Model for imagen component.
-  late ImagenModel imagenModel;
+  // Stores action output result for [Backend Call - API (UploadToCloudinary)] action in Text widget.
+  ApiCallResponse? apiResultda2;
 
   @override
   void initState(BuildContext context) {
@@ -59,9 +63,6 @@ class EditarPerfilModel extends FlutterFlowModel<EditarPerfilWidget> {
 
     telefonoFocusNode?.dispose();
     telefonoTextController?.dispose();
-
-    obrasocialFocusNode?.dispose();
-    obrasocialTextController?.dispose();
 
     numerobenficiarioFocusNode?.dispose();
     numerobenficiarioTextController?.dispose();

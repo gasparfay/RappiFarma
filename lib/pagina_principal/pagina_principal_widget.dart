@@ -984,7 +984,7 @@ class _PaginaPrincipalWidgetState extends State<PaginaPrincipalWidget>
                                           });
                                           safeSetState(() {});
                                         },
-                                        text: 'Ya recibí',
+                                        text: 'Ya lo recibí',
                                         options: FFButtonOptions(
                                           width: 230.0,
                                           height: 52.0,
@@ -1204,12 +1204,13 @@ class _PaginaPrincipalWidgetState extends State<PaginaPrincipalWidget>
                                                 SnackBar(
                                                   content: Text(
                                                     'No se pudo procesar la receta',
-                                                    style: TextStyle(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
+                                                    style: GoogleFonts.roboto(
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .primaryBackground,
+                                                      fontSize: 16.0,
                                                     ),
+                                                    textAlign: TextAlign.start,
                                                   ),
                                                   duration: Duration(
                                                       milliseconds: 4000),

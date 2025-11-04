@@ -2,6 +2,7 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/components/biometric_widget.dart';
+import '/components/imagen_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -1130,7 +1131,9 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                     FlutterFlowDropDown<String>(
                                       controller:
                                           _model.obraSocialValueController ??=
-                                              FormFieldController<String>(null),
+                                              FormFieldController<String>(
+                                        _model.obraSocialValue ??= 'No tengo',
+                                      ),
                                       options: functions.getObrasSociales()!,
                                       onChanged: (val) async {
                                         safeSetState(
@@ -1628,19 +1631,21 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                                       width: 2.0,
                                                     ),
                                                   ),
-                                                  child: Padding(
-                                                    padding:
-                                                        EdgeInsets.all(16.0),
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .center,
-                                                      children: [
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      if ((_model
+                                                                  .uploadedLocalFile_fotoCarnetSubida
+                                                                  .bytes
+                                                                  ?.isEmpty ??
+                                                              true))
                                                         Icon(
                                                           Icons
                                                               .camera_alt_outlined,
@@ -1648,6 +1653,11 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                                               Color(0xFFFF6600),
                                                           size: 48.0,
                                                         ),
+                                                      if ((_model
+                                                                  .uploadedLocalFile_fotoCarnetSubida
+                                                                  .bytes
+                                                                  ?.isEmpty ??
+                                                              true))
                                                         Text(
                                                           'Toque para subir foto del carnet',
                                                           textAlign:
@@ -1680,9 +1690,37 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                                                     .fontStyle,
                                                               ),
                                                         ),
-                                                      ].divide(SizedBox(
-                                                          height: 8.0)),
-                                                    ),
+                                                      if ((_model
+                                                                  .uploadedLocalFile_fotoCarnetSubida
+                                                                  .bytes
+                                                                  ?.isNotEmpty ??
+                                                              false))
+                                                        Expanded(
+                                                          child: Align(
+                                                            alignment:
+                                                                AlignmentDirectional(
+                                                                    0.0, 0.0),
+                                                            child:
+                                                                wrapWithModel(
+                                                              model: _model
+                                                                  .imagenModel,
+                                                              updateCallback: () =>
+                                                                  safeSetState(
+                                                                      () {}),
+                                                              child:
+                                                                  ImagenWidget(
+                                                                foto:
+                                                                    getJsonField(
+                                                                  (_model.urlCarnet
+                                                                          ?.jsonBody ??
+                                                                      ''),
+                                                                  r'''$.secure_url''',
+                                                                ).toString(),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                    ],
                                                   ),
                                                 ),
                                               ),
@@ -2083,7 +2121,7 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                         },
                                       ).then((value) => safeSetState(() {}));
 
-                                      context.pushNamedAuth(
+                                      context.goNamedAuth(
                                           PaginaPrincipalWidget.routeName,
                                           context.mounted);
                                     },

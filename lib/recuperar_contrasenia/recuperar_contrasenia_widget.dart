@@ -380,57 +380,6 @@ class _RecuperarContraseniaWidgetState
                                       ).then((s) => s.firstOrNull);
                                       if (_model.registrado?.email ==
                                           _model.emailTextController.text) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'Se envió el correo electrónico de recuperación',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .titleMedium
-                                                  .override(
-                                                    font:
-                                                        GoogleFonts.interTight(
-                                                      fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleMedium
-                                                              .fontWeight,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleMedium
-                                                              .fontStyle,
-                                                    ),
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .titleMedium
-                                                            .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .titleMedium
-                                                            .fontStyle,
-                                                  ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            duration:
-                                                Duration(milliseconds: 2050),
-                                            backgroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryBackground,
-                                          ),
-                                        );
-                                        await Future.delayed(
-                                          Duration(
-                                            milliseconds: 200,
-                                          ),
-                                        );
                                         if (_model
                                             .emailTextController.text.isEmpty) {
                                           ScaffoldMessenger.of(context)
@@ -448,66 +397,10 @@ class _RecuperarContraseniaWidgetState
                                               _model.emailTextController.text,
                                           context: context,
                                         );
-                                        await Future.delayed(
-                                          Duration(
-                                            milliseconds: 2050,
-                                          ),
-                                        );
 
                                         context
                                             .pushNamed(LoginWidget.routeName);
                                       } else {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'No existe una cuenta con ese correo electrónico',
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .titleMedium
-                                                  .override(
-                                                    font:
-                                                        GoogleFonts.interTight(
-                                                      fontWeight:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleMedium
-                                                              .fontWeight,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleMedium
-                                                              .fontStyle,
-                                                    ),
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .titleMedium
-                                                            .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .titleMedium
-                                                            .fontStyle,
-                                                  ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                            duration:
-                                                Duration(milliseconds: 2050),
-                                            backgroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryBackground,
-                                          ),
-                                        );
-                                        await Future.delayed(
-                                          Duration(
-                                            milliseconds: 2050,
-                                          ),
-                                        );
                                         safeSetState(() {});
                                       }
 

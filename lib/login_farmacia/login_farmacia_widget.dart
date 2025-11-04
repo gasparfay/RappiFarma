@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -34,6 +35,19 @@ class _LoginFarmaciaWidgetState extends State<LoginFarmaciaWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => LoginFarmaciaModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setDarkModeSetting(context, ThemeMode.system);
+      if ((Theme.of(context).brightness == Brightness.dark) != true) {
+        setDarkModeSetting(context, ThemeMode.light);
+        if (animationsMap['containerOnActionTriggerAnimation'] != null) {
+          await animationsMap['containerOnActionTriggerAnimation']!
+              .controller
+              .reverse();
+        }
+      }
+    });
 
     _model.codeTextController ??= TextEditingController();
     _model.codeFocusNode ??= FocusNode();

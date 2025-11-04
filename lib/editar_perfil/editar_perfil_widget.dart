@@ -3,11 +3,14 @@ import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
 import '/components/imagen_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -55,10 +58,6 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
     _model.telefonoTextController ??=
         TextEditingController(text: currentPhoneNumber);
     _model.telefonoFocusNode ??= FocusNode();
-
-    _model.obrasocialTextController ??= TextEditingController(
-        text: valueOrDefault(currentUserDocument?.nombreObraSocial, ''));
-    _model.obrasocialFocusNode ??= FocusNode();
 
     _model.numerobenficiarioTextController ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.numeroObraSocial, ''));
@@ -874,14 +873,23 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                       ),
                                     ),
                                     AuthUserStreamWidget(
-                                      builder: (context) => TextFormField(
+                                      builder: (context) =>
+                                          FlutterFlowDropDown<String>(
                                         controller:
-                                            _model.obrasocialTextController,
-                                        focusNode: _model.obrasocialFocusNode,
-                                        onFieldSubmitted: (_) async {
-                                          if (_model.obrasocialTextController
-                                                      .text !=
-                                                  '') {
+                                            _model.obraSocialValueController ??=
+                                                FormFieldController<String>(
+                                          _model.obraSocialValue ??=
+                                              valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.nombreObraSocial,
+                                                  ''),
+                                        ),
+                                        options: functions.getObrasSociales()!,
+                                        onChanged: (val) async {
+                                          safeSetState(() =>
+                                              _model.obraSocialValue = val);
+                                          if (_model.obraSocialValue !=
+                                              'No tengo') {
                                             if (animationsMap[
                                                     'textFieldOnActionTriggerAnimation'] !=
                                                 null) {
@@ -927,64 +935,11 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
 
                                           safeSetState(() {});
                                         },
-                                        textCapitalization:
-                                            TextCapitalization.words,
-                                        textInputAction: TextInputAction.next,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelText: 'Obra Social ',
-                                          labelStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .bodyMedium
-                                              .override(
-                                                font: GoogleFonts.inter(
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                                fontSize: 16.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .fontStyle,
-                                              ),
-                                          alignLabelWithHint: false,
-                                          hintText: 'Nombre de su obra social',
-                                          hintStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .labelMedium
-                                              .override(
-                                                font: GoogleFonts.inter(
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .labelMedium
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .labelMedium
-                                                          .fontStyle,
-                                                ),
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                letterSpacing: 0.0,
+                                        searchHintTextStyle: FlutterFlowTheme
+                                                .of(context)
+                                            .labelMedium
+                                            .override(
+                                              font: GoogleFonts.inter(
                                                 fontWeight:
                                                     FlutterFlowTheme.of(context)
                                                         .labelMedium
@@ -994,52 +949,41 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                                         .labelMedium
                                                         .fontStyle,
                                               ),
-                                          enabledBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
+                                              letterSpacing: 0.0,
+                                              fontWeight:
                                                   FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              width: 2.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                          focusedBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
+                                                      .labelMedium
+                                                      .fontWeight,
+                                              fontStyle:
                                                   FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              width: 2.0,
+                                                      .labelMedium
+                                                      .fontStyle,
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                          errorBorder: OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF0000),
-                                              width: 2.0,
+                                        searchTextStyle: FlutterFlowTheme.of(
+                                                context)
+                                            .bodyMedium
+                                            .override(
+                                              font: GoogleFonts.inter(
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .fontStyle,
+                                              ),
+                                              letterSpacing: 0.0,
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                          focusedErrorBorder:
-                                              OutlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color: Color(0xFFFF0000),
-                                              width: 2.0,
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
-                                          ),
-                                          filled: true,
-                                          fillColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryBackground,
-                                          contentPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  16.0, 16.0, 16.0, 16.0),
-                                        ),
-                                        style: FlutterFlowTheme.of(context)
+                                        textStyle: FlutterFlowTheme.of(context)
                                             .bodyMedium
                                             .override(
                                               font: GoogleFonts.inter(
@@ -1054,8 +998,7 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                               ),
                                               color:
                                                   FlutterFlowTheme.of(context)
-                                                      .secondary,
-                                              fontSize: 16.0,
+                                                      .secondaryText,
                                               letterSpacing: 0.0,
                                               fontWeight:
                                                   FlutterFlowTheme.of(context)
@@ -1066,27 +1009,31 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                                       .bodyMedium
                                                       .fontStyle,
                                             ),
-                                        cursorColor: Color(0xFFFF6600),
-                                        validator: _model
-                                            .obrasocialTextControllerValidator
-                                            .asValidator(context),
-                                        inputFormatters: [
-                                          if (!isAndroid && !isiOS)
-                                            TextInputFormatter.withFunction(
-                                                (oldValue, newValue) {
-                                              return TextEditingValue(
-                                                selection: newValue.selection,
-                                                text: newValue.text
-                                                    .toCapitalization(
-                                                        TextCapitalization
-                                                            .words),
-                                              );
-                                            }),
-                                        ],
+                                        hintText: 'Seleccione su obra social',
+                                        searchHintText: 'Buscar...',
+                                        icon: Icon(
+                                          Icons.keyboard_arrow_down_rounded,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 24.0,
+                                        ),
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .primaryBackground,
+                                        elevation: 2.0,
+                                        borderColor:
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                        borderWidth: 2.0,
+                                        borderRadius: 12.0,
+                                        margin: EdgeInsetsDirectional.fromSTEB(
+                                            12.0, 0.0, 12.0, 0.0),
+                                        hidesUnderline: true,
+                                        isOverButton: false,
+                                        isSearchable: true,
+                                        isMultiSelect: false,
                                       ),
                                     ),
-                                    if (_model.obrasocialTextController.text !=
-                                            '')
+                                    if (_model.obraSocialValue != 'No tengo')
                                       AuthUserStreamWidget(
                                         builder: (context) => TextFormField(
                                           controller: _model
@@ -1251,8 +1198,7 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                             hasBeenTriggered:
                                                 hasTextFieldTriggered),
                                       ),
-                                    if (_model.obrasocialTextController.text !=
-                                            '')
+                                    if (_model.obraSocialValue != 'No tengo')
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 8.0, 0.0, 8.0),
@@ -1298,169 +1244,41 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                             Align(
                                               alignment: AlignmentDirectional(
                                                   0.0, 0.0),
-                                              child: InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  final selectedMedia =
-                                                      await selectMediaWithSourceBottomSheet(
-                                                    context: context,
-                                                    allowPhoto: true,
-                                                  );
-                                                  if (selectedMedia != null &&
-                                                      selectedMedia.every((m) =>
-                                                          validateFileFormat(
-                                                              m.storagePath,
-                                                              context))) {
-                                                    safeSetState(() => _model
-                                                            .isDataUploading_nuevaFotoCarnet =
-                                                        true);
-                                                    var selectedUploadedFiles =
-                                                        <FFUploadedFile>[];
-
-                                                    try {
-                                                      selectedUploadedFiles =
-                                                          selectedMedia
-                                                              .map((m) =>
-                                                                  FFUploadedFile(
-                                                                    name: m
-                                                                        .storagePath
-                                                                        .split(
-                                                                            '/')
-                                                                        .last,
-                                                                    bytes:
-                                                                        m.bytes,
-                                                                    height: m
-                                                                        .dimensions
-                                                                        ?.height,
-                                                                    width: m
-                                                                        .dimensions
-                                                                        ?.width,
-                                                                    blurHash: m
-                                                                        .blurHash,
-                                                                    originalFilename:
-                                                                        m.originalFilename,
-                                                                  ))
-                                                              .toList();
-                                                    } finally {
-                                                      _model.isDataUploading_nuevaFotoCarnet =
-                                                          false;
-                                                    }
-                                                    if (selectedUploadedFiles
-                                                            .length ==
-                                                        selectedMedia.length) {
-                                                      safeSetState(() {
-                                                        _model.uploadedLocalFile_nuevaFotoCarnet =
-                                                            selectedUploadedFiles
-                                                                .first;
-                                                      });
-                                                    } else {
-                                                      safeSetState(() {});
-                                                      return;
-                                                    }
-                                                  }
-
-                                                  _model.urlCarnet =
-                                                      await UploadToCloudinaryCall
-                                                          .call(
-                                                    file: _model
-                                                        .uploadedLocalFile_nuevaFotoCarnet,
-                                                  );
-
-                                                  if ((_model.urlCarnet
-                                                          ?.succeeded ??
-                                                      true)) {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                          'Se subio la imagen correctamente',
-                                                          style: TextStyle(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryText,
-                                                          ),
-                                                        ),
-                                                        duration: Duration(
-                                                            milliseconds: 2000),
-                                                        backgroundColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondary,
-                                                      ),
-                                                    );
-                                                  } else {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .showSnackBar(
-                                                      SnackBar(
-                                                        content: Text(
-                                                          'No se pudo subir la imagen, intente nuevamente.',
-                                                          style: TextStyle(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primaryText,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                          ),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                        ),
-                                                        duration: Duration(
-                                                            milliseconds: 2000),
-                                                        backgroundColor:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondary,
-                                                      ),
-                                                    );
-                                                    safeSetState(() {});
-                                                  }
-
-                                                  safeSetState(() {});
-                                                },
-                                                child: Container(
-                                                  width: double.infinity,
-                                                  height: 134.9,
-                                                  decoration: BoxDecoration(
+                                              child: Container(
+                                                width: double.infinity,
+                                                height: 134.9,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryBackground,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                  border: Border.all(
                                                     color: FlutterFlowTheme.of(
                                                             context)
-                                                        .primaryBackground,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            12.0),
-                                                    border: Border.all(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      width: 2.0,
-                                                    ),
+                                                        .primary,
+                                                    width: 2.0,
                                                   ),
-                                                  child: AuthUserStreamWidget(
-                                                    builder: (context) =>
-                                                        wrapWithModel(
-                                                      model: _model.imagenModel,
-                                                      updateCallback: () =>
-                                                          safeSetState(() {}),
-                                                      child: ImagenWidget(
-                                                        foto: (_model
-                                                                        .uploadedLocalFile_nuevaFotoCarnet
-                                                                        .bytes
-                                                                        ?.isNotEmpty ??
-                                                                    false)
-                                                            ? getJsonField(
-                                                                (_model.urlCarnet
-                                                                        ?.jsonBody ??
-                                                                    ''),
-                                                                r'''$.secure_url''',
-                                                              ).toString()
-                                                            : currentUserPhoto,
-                                                      ),
+                                                ),
+                                                child: AuthUserStreamWidget(
+                                                  builder: (context) =>
+                                                      wrapWithModel(
+                                                    model: _model.imagenModel,
+                                                    updateCallback: () =>
+                                                        safeSetState(() {}),
+                                                    child: ImagenWidget(
+                                                      foto: _model.subioFoto
+                                                          ? getJsonField(
+                                                              (_model.apiResultda2
+                                                                      ?.jsonBody ??
+                                                                  ''),
+                                                              r'''$.secure_url''',
+                                                            ).toString()
+                                                          : valueOrDefault(
+                                                              currentUserDocument
+                                                                  ?.carnetObraSocial,
+                                                              ''),
                                                     ),
                                                   ),
                                                 ),
@@ -1475,38 +1293,183 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                                   alignment:
                                                       AlignmentDirectional(
                                                           0.0, 0.0),
-                                                  child: Text(
-                                                    'Toque la imagen para cambiar foto del carnet',
-                                                    textAlign: TextAlign.center,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .labelMedium
-                                                        .override(
-                                                          font:
-                                                              GoogleFonts.inter(
-                                                            fontWeight:
+                                                  child: InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    onTap: () async {
+                                                      final selectedMedia =
+                                                          await selectMediaWithSourceBottomSheet(
+                                                        context: context,
+                                                        allowPhoto: true,
+                                                      );
+                                                      if (selectedMedia !=
+                                                              null &&
+                                                          selectedMedia.every((m) =>
+                                                              validateFileFormat(
+                                                                  m.storagePath,
+                                                                  context))) {
+                                                        safeSetState(() => _model
+                                                                .isDataUploading_nuevaFotoCarnet =
+                                                            true);
+                                                        var selectedUploadedFiles =
+                                                            <FFUploadedFile>[];
+
+                                                        try {
+                                                          selectedUploadedFiles =
+                                                              selectedMedia
+                                                                  .map((m) =>
+                                                                      FFUploadedFile(
+                                                                        name: m
+                                                                            .storagePath
+                                                                            .split('/')
+                                                                            .last,
+                                                                        bytes: m
+                                                                            .bytes,
+                                                                        height: m
+                                                                            .dimensions
+                                                                            ?.height,
+                                                                        width: m
+                                                                            .dimensions
+                                                                            ?.width,
+                                                                        blurHash:
+                                                                            m.blurHash,
+                                                                        originalFilename:
+                                                                            m.originalFilename,
+                                                                      ))
+                                                                  .toList();
+                                                        } finally {
+                                                          _model.isDataUploading_nuevaFotoCarnet =
+                                                              false;
+                                                        }
+                                                        if (selectedUploadedFiles
+                                                                .length ==
+                                                            selectedMedia
+                                                                .length) {
+                                                          safeSetState(() {
+                                                            _model.uploadedLocalFile_nuevaFotoCarnet =
+                                                                selectedUploadedFiles
+                                                                    .first;
+                                                          });
+                                                        } else {
+                                                          safeSetState(() {});
+                                                          return;
+                                                        }
+                                                      }
+
+                                                      _model.apiResultda2 =
+                                                          await UploadToCloudinaryCall
+                                                              .call(
+                                                        file: _model
+                                                            .uploadedLocalFile_nuevaFotoCarnet,
+                                                      );
+
+                                                      if ((_model.apiResultda2
+                                                              ?.succeeded ??
+                                                          true)) {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'Se subio la imagen correctamente',
+                                                              style: GoogleFonts
+                                                                  .roboto(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBackground,
+                                                                fontSize: 16.0,
+                                                              ),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .start,
+                                                            ),
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    2000),
+                                                            backgroundColor:
                                                                 FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondary,
+                                                          ),
+                                                        );
+                                                        _model.subioFoto = true;
+                                                        safeSetState(() {});
+                                                      } else {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'No se pudo subir la imagen, intente nuevamente.',
+                                                              style: TextStyle(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryBackground,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w600,
+                                                                fontSize: 16.0,
+                                                              ),
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .start,
+                                                            ),
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    2000),
+                                                            backgroundColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondary,
+                                                          ),
+                                                        );
+                                                        safeSetState(() {});
+                                                      }
+
+                                                      safeSetState(() {});
+                                                    },
+                                                    child: Text(
+                                                      'Toque la imagen para cambiar foto del carnet',
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                font:
+                                                                    GoogleFonts
+                                                                        .inter(
+                                                                  fontWeight: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .fontWeight,
+                                                                  fontStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .labelMedium
+                                                                      .fontStyle,
+                                                                ),
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                fontWeight: FlutterFlowTheme.of(
                                                                         context)
                                                                     .labelMedium
                                                                     .fontWeight,
-                                                            fontStyle:
-                                                                FlutterFlowTheme.of(
+                                                                fontStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                     .labelMedium
                                                                     .fontStyle,
-                                                          ),
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .labelMedium
-                                                                  .fontStyle,
-                                                        ),
+                                                                decoration:
+                                                                    TextDecoration
+                                                                        .underline,
+                                                              ),
+                                                    ),
                                                   ),
                                                 ),
                                               ],
@@ -1528,13 +1491,11 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                       0.0, 32.0, 0.0, 32.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      if ((_model.uploadedLocalFile_nuevaFotoCarnet
-                                                  .bytes?.isNotEmpty ??
-                                              false)) {
+                                      if (_model.subioFoto) {
                                         await currentUserReference!
                                             .update(createUsuarioRecordData(
-                                          nombreObraSocial: _model
-                                              .obrasocialTextController.text,
+                                          nombreObraSocial:
+                                              _model.obraSocialValue,
                                           domicilio: _model
                                               .domicilioTextController.text,
                                           numeroObraSocial: _model
@@ -1547,7 +1508,8 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                           apellido: _model
                                               .apellidoTextController.text,
                                           carnetObraSocial: getJsonField(
-                                            (_model.urlCarnet?.jsonBody ?? ''),
+                                            (_model.apiResultda2?.jsonBody ??
+                                                ''),
                                             r'''$.secure_url''',
                                           ).toString(),
                                         ));
@@ -1560,13 +1522,14 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                               style: GoogleFonts.roboto(
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryText,
+                                                        .primaryBackground,
                                                 fontWeight: FontWeight.w600,
-                                                fontSize: 24.0,
+                                                fontSize: 16.0,
                                               ),
+                                              textAlign: TextAlign.start,
                                             ),
                                             duration:
-                                                Duration(milliseconds: 2100),
+                                                Duration(milliseconds: 2000),
                                             backgroundColor:
                                                 FlutterFlowTheme.of(context)
                                                     .secondary,
@@ -1575,8 +1538,8 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                       } else {
                                         await currentUserReference!
                                             .update(createUsuarioRecordData(
-                                          nombreObraSocial: _model
-                                              .obrasocialTextController.text,
+                                          nombreObraSocial:
+                                              _model.obraSocialValue,
                                           domicilio: _model
                                               .domicilioTextController.text,
                                           numeroObraSocial: _model
@@ -1598,13 +1561,14 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                               style: GoogleFonts.roboto(
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryText,
+                                                        .primaryBackground,
                                                 fontWeight: FontWeight.w600,
-                                                fontSize: 24.0,
+                                                fontSize: 16.0,
                                               ),
+                                              textAlign: TextAlign.start,
                                             ),
                                             duration:
-                                                Duration(milliseconds: 2100),
+                                                Duration(milliseconds: 2000),
                                             backgroundColor:
                                                 FlutterFlowTheme.of(context)
                                                     .secondary,

@@ -8,6 +8,8 @@ class ResumenCompraModel extends FlutterFlowModel<ResumenCompraWidget> {
 
   int? codigo;
 
+  bool huellaValidada = false;
+
   ///  State fields for stateful widgets in this page.
 
   bool huella = false;

@@ -1,4 +1,6 @@
+import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'imagen_model.dart';
 export 'imagen_model.dart';
@@ -41,13 +43,40 @@ class _ImagenWidgetState extends State<ImagenWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8.0),
-      child: Image.network(
-        widget.foto!,
-        width: double.infinity,
-        height: double.infinity,
-        fit: BoxFit.cover,
+    return InkWell(
+      splashColor: Colors.transparent,
+      focusColor: Colors.transparent,
+      hoverColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      onTap: () async {
+        await Navigator.push(
+          context,
+          PageTransition(
+            type: PageTransitionType.fade,
+            child: FlutterFlowExpandedImageView(
+              image: Image.network(
+                functions.stringToImagePath(widget.foto)!,
+                fit: BoxFit.contain,
+              ),
+              allowRotation: false,
+              tag: functions.stringToImagePath(widget.foto)!,
+              useHeroAnimation: true,
+            ),
+          ),
+        );
+      },
+      child: Hero(
+        tag: functions.stringToImagePath(widget.foto)!,
+        transitionOnUserGestures: true,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12.0),
+          child: Image.network(
+            functions.stringToImagePath(widget.foto)!,
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+        ),
       ),
     );
   }

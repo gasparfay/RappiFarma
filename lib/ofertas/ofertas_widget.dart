@@ -78,7 +78,30 @@ class _OfertasWidgetState extends State<OfertasWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.pushNamed(PaginaPrincipalWidget.routeName);
+              _model.ofertasUidCopy = await queryOfertaRecordOnce(
+                queryBuilder: (ofertaRecord) => ofertaRecord.where(
+                  'oferta.uid',
+                  isEqualTo: currentUserUid,
+                ),
+              );
+              for (int loop1Index = 0;
+                  loop1Index < _model.ofertasUidCopy!.length;
+                  loop1Index++) {
+                final currentLoop1Item = _model.ofertasUidCopy![loop1Index];
+                await currentLoop1Item.reference.delete();
+              }
+              _model.ordenUidCopy = await queryOrdenRecordOnce(
+                queryBuilder: (ordenRecord) => ordenRecord.where(
+                  'orden.uid',
+                  isEqualTo: currentUserUid,
+                ),
+                singleRecord: true,
+              ).then((s) => s.firstOrNull);
+              await _model.ordenUidCopy!.reference.delete();
+
+              context.goNamed(PaginaPrincipalWidget.routeName);
+
+              safeSetState(() {});
             },
           ),
           title: Text(

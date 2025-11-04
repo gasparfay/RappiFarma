@@ -43,13 +43,13 @@ class _RecetaPedidoWidgetState extends State<RecetaPedidoWidget> {
         SnackBar(
           content: Text(
             'Receta cargada con éxito',
-            style: TextStyle(
-              color: FlutterFlowTheme.of(context).primaryText,
-              fontWeight: FontWeight.w600,
+            style: GoogleFonts.roboto(
+              color: Color(0x00000000),
+              fontSize: 16.0,
             ),
             textAlign: TextAlign.center,
           ),
-          duration: Duration(milliseconds: 2050),
+          duration: Duration(milliseconds: 2000),
           backgroundColor: FlutterFlowTheme.of(context).secondary,
         ),
       );
@@ -75,8 +75,8 @@ class _RecetaPedidoWidgetState extends State<RecetaPedidoWidget> {
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
         child: Container(
-          width: MediaQuery.sizeOf(context).width * 0.8,
-          height: MediaQuery.sizeOf(context).height * 0.8,
+          width: MediaQuery.sizeOf(context).width * 0.75,
+          height: MediaQuery.sizeOf(context).height * 0.75,
           decoration: BoxDecoration(
             color: FlutterFlowTheme.of(context).primaryBackground,
             boxShadow: [
@@ -315,13 +315,14 @@ class _RecetaPedidoWidgetState extends State<RecetaPedidoWidget> {
                             SnackBar(
                               content: Text(
                                 'Pedido con receta enviado correctamente.',
-                                style: TextStyle(
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
+                                style: GoogleFonts.roboto(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  fontSize: 16.0,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
-                              duration: Duration(milliseconds: 2100),
+                              duration: Duration(milliseconds: 2000),
                               backgroundColor:
                                   FlutterFlowTheme.of(context).secondary,
                             ),

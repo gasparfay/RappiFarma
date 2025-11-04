@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/components/imagen_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/form_field_controller.dart';
 import '/index.dart';
@@ -47,6 +48,8 @@ class RegistrarseModel extends FlutterFlowModel<RegistrarseWidget> {
 
   // Stores action output result for [Backend Call - API (UploadToCloudinary)] action in Container widget.
   ApiCallResponse? urlCarnet;
+  // Model for imagen component.
+  late ImagenModel imagenModel;
   // State field(s) for password widget.
   FocusNode? passwordFocusNode;
   TextEditingController? passwordTextController;
@@ -60,6 +63,7 @@ class RegistrarseModel extends FlutterFlowModel<RegistrarseWidget> {
 
   @override
   void initState(BuildContext context) {
+    imagenModel = createModel(context, () => ImagenModel());
     passwordVisibility = false;
     password2Visibility = false;
   }
@@ -87,6 +91,7 @@ class RegistrarseModel extends FlutterFlowModel<RegistrarseWidget> {
     numerobenficiarioFocusNode?.dispose();
     numerobenficiarioTextController?.dispose();
 
+    imagenModel.dispose();
     passwordFocusNode?.dispose();
     passwordTextController?.dispose();
 

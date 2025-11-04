@@ -114,7 +114,7 @@ class _OfertaWidgetState extends State<OfertaWidget> {
                             ),
                       ),
                       Text(
-                        'Precio total${widget.ofertaObjeto?.oferta.precioTotal.toString()}',
+                        'Precio total: \$${widget.ofertaObjeto?.oferta.precioTotal.toString()}',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
                               font: GoogleFonts.inter(
                                 fontWeight: FlutterFlowTheme.of(context)
@@ -136,7 +136,7 @@ class _OfertaWidgetState extends State<OfertaWidget> {
                             ),
                       ),
                       Text(
-                        'Descuento: ${widget.ofertaObjeto?.oferta.descuentoOS.toString()}',
+                        'Descuento: \$${widget.ofertaObjeto?.oferta.descuentoOS.toString()}',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
                               font: GoogleFonts.inter(
                                 fontWeight: FlutterFlowTheme.of(context)
@@ -158,7 +158,7 @@ class _OfertaWidgetState extends State<OfertaWidget> {
                             ),
                       ),
                       Text(
-                        'Precio final: ${(widget.ofertaObjeto!.oferta.precioTotal - widget.ofertaObjeto!.oferta.descuentoOS).toString()}',
+                        'Precio final: \$${(widget.ofertaObjeto!.oferta.precioTotal - widget.ofertaObjeto!.oferta.descuentoOS).toString()}',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
                               font: GoogleFonts.inter(
                                 fontWeight: FlutterFlowTheme.of(context)

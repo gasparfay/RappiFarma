@@ -244,3 +244,7 @@ OSTEL
 
   return list;
 }
+
+String? stringToImagePath(String? str) {
+  return str;
+}
