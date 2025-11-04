@@ -93,10 +93,11 @@ class _OrdenWidgetState extends State<OrdenWidget> {
                 Expanded(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Pedido ${widget.index?.toString()}',
+                        'Pedido ${((widget.index!) + 1).toString()}',
                         style:
                             FlutterFlowTheme.of(context).titleMedium.override(
                                   font: GoogleFonts.interTight(
@@ -316,7 +317,15 @@ class _OrdenWidgetState extends State<OrdenWidget> {
                     size: 24.0,
                   ),
                   onPressed: () async {
-                    await widget.orden!.reference.delete();
+                    await widget.orden!.reference.update(createOrdenRecordData(
+                      orden: createOrdenConRecetaStruct(
+                        fieldValues: {
+                          'uidsPendientes':
+                              FieldValue.arrayRemove([widget.uidFarmacia]),
+                        },
+                        clearUnsetFields: false,
+                      ),
+                    ));
                   },
                 ),
               ].divide(SizedBox(width: 12.0)),

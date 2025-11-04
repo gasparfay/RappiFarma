@@ -90,6 +90,11 @@ class UsuarioRecord extends FirestoreRecord {
   int get codigoSeguridad => _codigoSeguridad ?? 0;
   bool hasCodigoSeguridad() => _codigoSeguridad != null;
 
+  // "biometricAuth" field.
+  bool? _biometricAuth;
+  bool get biometricAuth => _biometricAuth ?? false;
+  bool hasBiometricAuth() => _biometricAuth != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
@@ -106,6 +111,7 @@ class UsuarioRecord extends FirestoreRecord {
     _carnetObraSocial = snapshotData['carnetObraSocial'] as String?;
     _pedidoActivo = snapshotData['pedidoActivo'] as bool?;
     _codigoSeguridad = castToType<int>(snapshotData['codigoSeguridad']);
+    _biometricAuth = snapshotData['biometricAuth'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -158,6 +164,7 @@ Map<String, dynamic> createUsuarioRecordData({
   String? carnetObraSocial,
   bool? pedidoActivo,
   int? codigoSeguridad,
+  bool? biometricAuth,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -176,6 +183,7 @@ Map<String, dynamic> createUsuarioRecordData({
       'carnetObraSocial': carnetObraSocial,
       'pedidoActivo': pedidoActivo,
       'codigoSeguridad': codigoSeguridad,
+      'biometricAuth': biometricAuth,
     }.withoutNulls,
   );
 
@@ -201,7 +209,8 @@ class UsuarioRecordDocumentEquality implements Equality<UsuarioRecord> {
         e1?.photoUrl == e2?.photoUrl &&
         e1?.carnetObraSocial == e2?.carnetObraSocial &&
         e1?.pedidoActivo == e2?.pedidoActivo &&
-        e1?.codigoSeguridad == e2?.codigoSeguridad;
+        e1?.codigoSeguridad == e2?.codigoSeguridad &&
+        e1?.biometricAuth == e2?.biometricAuth;
   }
 
   @override
@@ -220,7 +229,8 @@ class UsuarioRecordDocumentEquality implements Equality<UsuarioRecord> {
         e?.photoUrl,
         e?.carnetObraSocial,
         e?.pedidoActivo,
-        e?.codigoSeguridad
+        e?.codigoSeguridad,
+        e?.biometricAuth
       ]);
 
   @override

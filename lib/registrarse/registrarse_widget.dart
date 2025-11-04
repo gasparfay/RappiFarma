@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
+import '/components/biometric_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -1129,9 +1130,7 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                     FlutterFlowDropDown<String>(
                                       controller:
                                           _model.obraSocialValueController ??=
-                                              FormFieldController<String>(
-                                        _model.obraSocialValue ??= 'No tengo',
-                                      ),
+                                              FormFieldController<String>(null),
                                       options: functions.getObrasSociales()!,
                                       onChanged: (val) async {
                                         safeSetState(
@@ -1525,6 +1524,8 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                                                         ?.width,
                                                                     blurHash: m
                                                                         .blurHash,
+                                                                    originalFilename:
+                                                                        m.originalFilename,
                                                                   ))
                                                               .toList();
                                                     } finally {
@@ -2049,6 +2050,7 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                           pedidoActivo: false,
                                           phoneNumber: _model
                                               .telefonoTextController.text,
+                                          biometricAuth: false,
                                         ),
                                         ...mapToFirestore(
                                           {
@@ -2058,7 +2060,30 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                         ),
                                       });
 
-                                      context.goNamedAuth(
+                                      await showModalBottomSheet(
+                                        isScrollControlled: true,
+                                        backgroundColor: Colors.transparent,
+                                        enableDrag: false,
+                                        context: context,
+                                        builder: (context) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              FocusScope.of(context).unfocus();
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
+                                            },
+                                            child: Padding(
+                                              padding: MediaQuery.viewInsetsOf(
+                                                  context),
+                                              child: BiometricWidget(
+                                                usuario: currentUserReference,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                      ).then((value) => safeSetState(() {}));
+
+                                      context.pushNamedAuth(
                                           PaginaPrincipalWidget.routeName,
                                           context.mounted);
                                     },

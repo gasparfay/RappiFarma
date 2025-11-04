@@ -1,3 +1,5 @@
+import '/backend/api_requests/api_calls.dart';
+import '/components/imagen_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'editar_perfil_widget.dart' show EditarPerfilWidget;
 import 'package:flutter/material.dart';
@@ -30,13 +32,19 @@ class EditarPerfilModel extends FlutterFlowModel<EditarPerfilWidget> {
   TextEditingController? numerobenficiarioTextController;
   String? Function(BuildContext, String?)?
       numerobenficiarioTextControllerValidator;
-  bool isDataUploading_uploadDataKbt = false;
-  FFUploadedFile uploadedLocalFile_uploadDataKbt =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
-  String uploadedFileUrl_uploadDataKbt = '';
+  bool isDataUploading_nuevaFotoCarnet = false;
+  FFUploadedFile uploadedLocalFile_nuevaFotoCarnet =
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
+
+  // Stores action output result for [Backend Call - API (UploadToCloudinary)] action in Container widget.
+  ApiCallResponse? urlCarnet;
+  // Model for imagen component.
+  late ImagenModel imagenModel;
 
   @override
-  void initState(BuildContext context) {}
+  void initState(BuildContext context) {
+    imagenModel = createModel(context, () => ImagenModel());
+  }
 
   @override
   void dispose() {
@@ -57,5 +65,7 @@ class EditarPerfilModel extends FlutterFlowModel<EditarPerfilWidget> {
 
     numerobenficiarioFocusNode?.dispose();
     numerobenficiarioTextController?.dispose();
+
+    imagenModel.dispose();
   }
 }

@@ -1,27 +1,29 @@
-import '/backend/backend.dart';
+import '/backend/schema/structs/index.dart';
+import '/components/receta_orden_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'oferta_model.dart';
-export 'oferta_model.dart';
+import 'compra_model.dart';
+export 'compra_model.dart';
 
-class OfertaWidget extends StatefulWidget {
-  const OfertaWidget({
+class CompraWidget extends StatefulWidget {
+  const CompraWidget({
     super.key,
-    this.ofertaObjeto,
+    this.index,
+    required this.compra,
   });
 
-  final OfertaRecord? ofertaObjeto;
+  final int? index;
+  final CompraStruct? compra;
 
   @override
-  State<OfertaWidget> createState() => _OfertaWidgetState();
+  State<CompraWidget> createState() => _CompraWidgetState();
 }
 
-class _OfertaWidgetState extends State<OfertaWidget> {
-  late OfertaModel _model;
+class _CompraWidgetState extends State<CompraWidget> {
+  late CompraModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -32,7 +34,7 @@ class _OfertaWidgetState extends State<OfertaWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => OfertaModel());
+    _model = createModel(context, () => CompraModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -72,10 +74,11 @@ class _OfertaWidgetState extends State<OfertaWidget> {
                 Expanded(
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Oferta ',
+                        'Compra${((widget.index!) + 1).toString()}',
                         style:
                             FlutterFlowTheme.of(context).titleMedium.override(
                                   font: GoogleFonts.interTight(
@@ -92,7 +95,7 @@ class _OfertaWidgetState extends State<OfertaWidget> {
                                 ),
                       ),
                       Text(
-                        'Farmacia: ${widget.ofertaObjeto?.oferta.nombreFarmacia}',
+                        'Obra social: ${widget.compra?.obraSocial}',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
                               font: GoogleFonts.inter(
                                 fontWeight: FlutterFlowTheme.of(context)
@@ -103,7 +106,6 @@ class _OfertaWidgetState extends State<OfertaWidget> {
                                     .fontStyle,
                               ),
                               color: FlutterFlowTheme.of(context).secondaryText,
-                              fontSize: 15.0,
                               letterSpacing: 0.0,
                               fontWeight: FlutterFlowTheme.of(context)
                                   .bodySmall
@@ -114,7 +116,7 @@ class _OfertaWidgetState extends State<OfertaWidget> {
                             ),
                       ),
                       Text(
-                        'Precio total${widget.ofertaObjeto?.oferta.precioTotal.toString()}',
+                        'Observaciones:${widget.compra?.observaciones}',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
                               font: GoogleFonts.inter(
                                 fontWeight: FlutterFlowTheme.of(context)
@@ -125,7 +127,6 @@ class _OfertaWidgetState extends State<OfertaWidget> {
                                     .fontStyle,
                               ),
                               color: FlutterFlowTheme.of(context).secondaryText,
-                              fontSize: 15.0,
                               letterSpacing: 0.0,
                               fontWeight: FlutterFlowTheme.of(context)
                                   .bodySmall
@@ -136,7 +137,7 @@ class _OfertaWidgetState extends State<OfertaWidget> {
                             ),
                       ),
                       Text(
-                        'Descuento: ${widget.ofertaObjeto?.oferta.descuentoOS.toString()}',
+                        'Dirección: ${widget.compra?.direccion}',
                         style: FlutterFlowTheme.of(context).bodySmall.override(
                               font: GoogleFonts.inter(
                                 fontWeight: FlutterFlowTheme.of(context)
@@ -147,29 +148,6 @@ class _OfertaWidgetState extends State<OfertaWidget> {
                                     .fontStyle,
                               ),
                               color: FlutterFlowTheme.of(context).secondaryText,
-                              fontSize: 15.0,
-                              letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodySmall
-                                  .fontStyle,
-                            ),
-                      ),
-                      Text(
-                        'Precio final: ${(widget.ofertaObjeto!.oferta.precioTotal - widget.ofertaObjeto!.oferta.descuentoOS).toString()}',
-                        style: FlutterFlowTheme.of(context).bodySmall.override(
-                              font: GoogleFonts.inter(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodySmall
-                                    .fontStyle,
-                              ),
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              fontSize: 15.0,
                               letterSpacing: 0.0,
                               fontWeight: FlutterFlowTheme.of(context)
                                   .bodySmall
@@ -189,38 +167,25 @@ class _OfertaWidgetState extends State<OfertaWidget> {
                   buttonSize: 40.0,
                   fillColor: FlutterFlowTheme.of(context).primaryBackground,
                   icon: Icon(
-                    Icons.check,
+                    Icons.image_sharp,
                     color: FlutterFlowTheme.of(context).primary,
                     size: 24.0,
                   ),
                   onPressed: () async {
-                    context.pushNamed(
-                      ResumenCompraWidget.routeName,
-                      queryParameters: {
-                        'oferta': serializeParam(
-                          widget.ofertaObjeto,
-                          ParamType.Document,
-                        ),
-                      }.withoutNulls,
-                      extra: <String, dynamic>{
-                        'oferta': widget.ofertaObjeto,
+                    await showModalBottomSheet(
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      enableDrag: false,
+                      context: context,
+                      builder: (context) {
+                        return Padding(
+                          padding: MediaQuery.viewInsetsOf(context),
+                          child: RecetaOrdenWidget(
+                            foto: widget.compra?.receta,
+                          ),
+                        );
                       },
-                    );
-                  },
-                ),
-                FlutterFlowIconButton(
-                  borderColor: FlutterFlowTheme.of(context).primary,
-                  borderRadius: 8.0,
-                  borderWidth: 2.0,
-                  buttonSize: 40.0,
-                  fillColor: FlutterFlowTheme.of(context).primaryBackground,
-                  icon: Icon(
-                    Icons.close,
-                    color: FlutterFlowTheme.of(context).primary,
-                    size: 24.0,
-                  ),
-                  onPressed: () async {
-                    await widget.ofertaObjeto!.reference.delete();
+                    ).then((value) => safeSetState(() {}));
                   },
                 ),
               ].divide(SizedBox(width: 12.0)),

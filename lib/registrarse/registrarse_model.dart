@@ -43,7 +43,7 @@ class RegistrarseModel extends FlutterFlowModel<RegistrarseWidget> {
       numerobenficiarioTextControllerValidator;
   bool isDataUploading_fotoCarnetSubida = false;
   FFUploadedFile uploadedLocalFile_fotoCarnetSubida =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Backend Call - API (UploadToCloudinary)] action in Container widget.
   ApiCallResponse? urlCarnet;

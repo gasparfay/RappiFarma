@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
-import '/backend/firebase_storage/storage.dart';
+import '/components/imagen_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -1315,13 +1316,11 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                                               m.storagePath,
                                                               context))) {
                                                     safeSetState(() => _model
-                                                            .isDataUploading_uploadDataKbt =
+                                                            .isDataUploading_nuevaFotoCarnet =
                                                         true);
                                                     var selectedUploadedFiles =
                                                         <FFUploadedFile>[];
 
-                                                    var downloadUrls =
-                                                        <String>[];
                                                     try {
                                                       selectedUploadedFiles =
                                                           selectedMedia
@@ -1342,45 +1341,87 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                                                         ?.width,
                                                                     blurHash: m
                                                                         .blurHash,
+                                                                    originalFilename:
+                                                                        m.originalFilename,
                                                                   ))
                                                               .toList();
-
-                                                      downloadUrls =
-                                                          (await Future.wait(
-                                                        selectedMedia.map(
-                                                          (m) async =>
-                                                              await uploadData(
-                                                                  m.storagePath,
-                                                                  m.bytes),
-                                                        ),
-                                                      ))
-                                                              .where((u) =>
-                                                                  u != null)
-                                                              .map((u) => u!)
-                                                              .toList();
                                                     } finally {
-                                                      _model.isDataUploading_uploadDataKbt =
+                                                      _model.isDataUploading_nuevaFotoCarnet =
                                                           false;
                                                     }
                                                     if (selectedUploadedFiles
-                                                                .length ==
-                                                            selectedMedia
-                                                                .length &&
-                                                        downloadUrls.length ==
-                                                            selectedMedia
-                                                                .length) {
+                                                            .length ==
+                                                        selectedMedia.length) {
                                                       safeSetState(() {
-                                                        _model.uploadedLocalFile_uploadDataKbt =
+                                                        _model.uploadedLocalFile_nuevaFotoCarnet =
                                                             selectedUploadedFiles
                                                                 .first;
-                                                        _model.uploadedFileUrl_uploadDataKbt =
-                                                            downloadUrls.first;
                                                       });
                                                     } else {
                                                       safeSetState(() {});
                                                       return;
                                                     }
                                                   }
+
+                                                  _model.urlCarnet =
+                                                      await UploadToCloudinaryCall
+                                                          .call(
+                                                    file: _model
+                                                        .uploadedLocalFile_nuevaFotoCarnet,
+                                                  );
+
+                                                  if ((_model.urlCarnet
+                                                          ?.succeeded ??
+                                                      true)) {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'Se subio la imagen correctamente',
+                                                          style: TextStyle(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                          ),
+                                                        ),
+                                                        duration: Duration(
+                                                            milliseconds: 2000),
+                                                        backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondary,
+                                                      ),
+                                                    );
+                                                  } else {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .showSnackBar(
+                                                      SnackBar(
+                                                        content: Text(
+                                                          'No se pudo subir la imagen, intente nuevamente.',
+                                                          style: TextStyle(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .primaryText,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                          ),
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                        ),
+                                                        duration: Duration(
+                                                            milliseconds: 2000),
+                                                        backgroundColor:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondary,
+                                                      ),
+                                                    );
+                                                    safeSetState(() {});
+                                                  }
+
+                                                  safeSetState(() {});
                                                 },
                                                 child: Container(
                                                   width: double.infinity,
@@ -1400,70 +1441,75 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                                       width: 2.0,
                                                     ),
                                                   ),
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    children: [
-                                                      Padding(
-                                                        padding: EdgeInsets.all(
-                                                            16.0),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            Icon(
-                                                              Icons
-                                                                  .camera_alt_outlined,
-                                                              color: Color(
-                                                                  0xFFFF6600),
-                                                              size: 48.0,
-                                                            ),
-                                                            Text(
-                                                              'Toque para cambiar foto del carnet',
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .labelMedium
-                                                                  .override(
-                                                                    font: GoogleFonts
-                                                                        .inter(
-                                                                      fontWeight: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .labelMedium
-                                                                          .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .labelMedium
-                                                                          .fontStyle,
-                                                                    ),
-                                                                    letterSpacing:
-                                                                        0.0,
-                                                                    fontWeight: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .labelMedium
-                                                                        .fontWeight,
-                                                                    fontStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .labelMedium
-                                                                        .fontStyle,
-                                                                  ),
-                                                            ),
-                                                          ].divide(SizedBox(
-                                                              height: 8.0)),
-                                                        ),
+                                                  child: AuthUserStreamWidget(
+                                                    builder: (context) =>
+                                                        wrapWithModel(
+                                                      model: _model.imagenModel,
+                                                      updateCallback: () =>
+                                                          safeSetState(() {}),
+                                                      child: ImagenWidget(
+                                                        foto: (_model
+                                                                        .uploadedLocalFile_nuevaFotoCarnet
+                                                                        .bytes
+                                                                        ?.isNotEmpty ??
+                                                                    false)
+                                                            ? getJsonField(
+                                                                (_model.urlCarnet
+                                                                        ?.jsonBody ??
+                                                                    ''),
+                                                                r'''$.secure_url''',
+                                                              ).toString()
+                                                            : currentUserPhoto,
                                                       ),
-                                                    ],
+                                                    ),
                                                   ),
                                                 ),
                                               ),
+                                            ),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          0.0, 0.0),
+                                                  child: Text(
+                                                    'Toque la imagen para cambiar foto del carnet',
+                                                    textAlign: TextAlign.center,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .labelMedium
+                                                        .override(
+                                                          font:
+                                                              GoogleFonts.inter(
+                                                            fontWeight:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .fontWeight,
+                                                            fontStyle:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .labelMedium
+                                                                    .fontStyle,
+                                                          ),
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .labelMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
                                           ].divide(SizedBox(height: 12.0)),
                                         ).animateOnActionTrigger(
@@ -1482,45 +1528,89 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                       0.0, 32.0, 0.0, 32.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      await currentUserReference!
-                                          .update(createUsuarioRecordData(
-                                        nombreObraSocial: _model
-                                            .obrasocialTextController.text,
-                                        domicilio:
-                                            _model.domicilioTextController.text,
-                                        numeroObraSocial: _model
-                                            .numerobenficiarioTextController
-                                            .text,
-                                        phoneNumber:
-                                            _model.telefonoTextController.text,
-                                        nombre:
-                                            _model.nombreTextController.text,
-                                        apellido:
-                                            _model.apellidoTextController.text,
-                                        carnetObraSocial: _model
-                                            .uploadedFileUrl_uploadDataKbt,
-                                      ));
-                                      context.safePop();
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                            'Perfil modificado correctamente',
-                                            style: GoogleFonts.roboto(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 24.0,
+                                      if ((_model.uploadedLocalFile_nuevaFotoCarnet
+                                                  .bytes?.isNotEmpty ??
+                                              false)) {
+                                        await currentUserReference!
+                                            .update(createUsuarioRecordData(
+                                          nombreObraSocial: _model
+                                              .obrasocialTextController.text,
+                                          domicilio: _model
+                                              .domicilioTextController.text,
+                                          numeroObraSocial: _model
+                                              .numerobenficiarioTextController
+                                              .text,
+                                          phoneNumber: _model
+                                              .telefonoTextController.text,
+                                          nombre:
+                                              _model.nombreTextController.text,
+                                          apellido: _model
+                                              .apellidoTextController.text,
+                                          carnetObraSocial: getJsonField(
+                                            (_model.urlCarnet?.jsonBody ?? ''),
+                                            r'''$.secure_url''',
+                                          ).toString(),
+                                        ));
+                                        context.safePop();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Perfil modificado correctamente',
+                                              style: GoogleFonts.roboto(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 24.0,
+                                              ),
                                             ),
+                                            duration:
+                                                Duration(milliseconds: 2100),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondary,
                                           ),
-                                          duration:
-                                              Duration(milliseconds: 2100),
-                                          backgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondary,
-                                        ),
-                                      );
+                                        );
+                                      } else {
+                                        await currentUserReference!
+                                            .update(createUsuarioRecordData(
+                                          nombreObraSocial: _model
+                                              .obrasocialTextController.text,
+                                          domicilio: _model
+                                              .domicilioTextController.text,
+                                          numeroObraSocial: _model
+                                              .numerobenficiarioTextController
+                                              .text,
+                                          phoneNumber: _model
+                                              .telefonoTextController.text,
+                                          nombre:
+                                              _model.nombreTextController.text,
+                                          apellido: _model
+                                              .apellidoTextController.text,
+                                        ));
+                                        context.safePop();
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Perfil modificado correctamente',
+                                              style: GoogleFonts.roboto(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 24.0,
+                                              ),
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 2100),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondary,
+                                          ),
+                                        );
+                                      }
                                     },
                                     text: 'Guardar Cambios',
                                     options: FFButtonOptions(

@@ -10,6 +10,7 @@ class ResumenCompraModel extends FlutterFlowModel<ResumenCompraWidget> {
 
   ///  State fields for stateful widgets in this page.
 
+  bool huella = false;
   // Stores action output result for [Firestore Query - Query a collection] action in Button widget.
   List<OfertaRecord>? ofertasUid;
   // Stores action output result for [Firestore Query - Query a collection] action in Button widget.

@@ -9,7 +9,7 @@ class PaginaPrincipalModel extends FlutterFlowModel<PaginaPrincipalWidget> {
 
   bool isDataUploading_recetaSubida = false;
   FFUploadedFile uploadedLocalFile_recetaSubida =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Backend Call - API (UploadToCloudinary)] action in Button widget.
   ApiCallResponse? urlFotoReceta;

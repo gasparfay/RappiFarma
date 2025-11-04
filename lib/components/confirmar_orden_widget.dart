@@ -1,4 +1,3 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -566,10 +565,11 @@ class _ConfirmarOrdenWidgetState extends State<ConfirmarOrdenWidget>
                                               .descuentoTextController.text),
                                           productos: _model
                                               .productosTextController.text,
-                                          farmacia: widget.farmacia,
+                                          nombreFarmacia: widget.farmacia,
                                           direccion: widget
                                               .ordenObjeto?.orden.direccion,
-                                          uid: currentUserUid,
+                                          uid: widget.ordenObjeto?.orden.uid,
+                                          uidFarmacia: widget.uidFarmacia,
                                         ),
                                         clearUnsetFields: false,
                                         create: true,

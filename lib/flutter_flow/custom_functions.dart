@@ -232,10 +232,15 @@ OSTEL
   for (final line in raw.split('\n')) {
     final s = line.trim();
     if (s.isEmpty) continue;
-    // normaliza espacios internos y elimina duplicados
     final norm = s.replaceAll(RegExp(r'\s+'), ' ').trim();
     set.add(norm);
   }
+
   final list = set.toList()..sort((a, b) => a.compareTo(b));
+
+  // Asegurar que "No tengo" esté al inicio (si existe)
+  list.remove('No tengo');
+  list.insert(0, 'No tengo');
+
   return list;
 }

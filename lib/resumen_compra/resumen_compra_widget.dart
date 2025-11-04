@@ -8,7 +8,9 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:local_auth/local_auth.dart';
 import 'resumen_compra_model.dart';
 export 'resumen_compra_model.dart';
 
@@ -868,6 +870,46 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                     0.0, 0.0, 0.0, 16.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
+                                    if (valueOrDefault<bool>(
+                                        currentUserDocument?.biometricAuth,
+                                        false)) {
+                                      while (!_model.huella) {
+                                        await showDialog(
+                                          context: context,
+                                          builder: (alertDialogContext) {
+                                            return AlertDialog(
+                                              title: Text(
+                                                  'No se pudieron validar los datos, intente nuevmanete.'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () =>
+                                                      Navigator.pop(
+                                                          alertDialogContext),
+                                                  child: Text('Continuar'),
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                        final _localAuth =
+                                            LocalAuthentication();
+                                        bool _isBiometricSupported =
+                                            await _localAuth
+                                                .isDeviceSupported();
+
+                                        if (_isBiometricSupported) {
+                                          try {
+                                            _model.huella =
+                                                await _localAuth.authenticate(
+                                                    localizedReason:
+                                                        'Autentica tus datos para confirmar la compra');
+                                          } on PlatformException {
+                                            _model.huella = false;
+                                          }
+                                          safeSetState(() {});
+                                        }
+                                      }
+                                    }
                                     _model.ofertasUid =
                                         await queryOfertaRecordOnce(
                                       queryBuilder: (ofertaRecord) =>
@@ -893,6 +935,35 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                       singleRecord: true,
                                     ).then((s) => s.firstOrNull);
                                     await _model.ordenUid!.reference.delete();
+
+                                    await CompraRecord.collection
+                                        .doc()
+                                        .set(createCompraRecordData(
+                                          compra: createCompraStruct(
+                                            receta:
+                                                _model.ordenUid?.orden.receta,
+                                            obraSocial: valueOrDefault(
+                                                currentUserDocument
+                                                    ?.nombreObraSocial,
+                                                ''),
+                                            observaciones: _model
+                                                .ordenUid?.orden.observaciones,
+                                            direccion: valueOrDefault(
+                                                currentUserDocument?.domicilio,
+                                                ''),
+                                            tiempoInicio: getCurrentTimestamp
+                                                .millisecondsSinceEpoch,
+                                            uid: currentUserUid,
+                                            precio: widget
+                                                .oferta?.oferta.precioTotal,
+                                            uidFarmacia: widget
+                                                .oferta?.oferta.uidFarmacia,
+                                            nombreFarmacia: widget
+                                                .oferta?.oferta.nombreFarmacia,
+                                            clearUnsetFields: false,
+                                            create: true,
+                                          ),
+                                        ));
                                     _model.codigo =
                                         random_data.randomInteger(0, 10);
                                     safeSetState(() {});

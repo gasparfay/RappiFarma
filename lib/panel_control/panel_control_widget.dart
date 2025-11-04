@@ -1,4 +1,5 @@
 import '/backend/backend.dart';
+import '/components/compra_widget.dart';
 import '/components/orden_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -597,35 +598,21 @@ class _PanelControlWidgetState extends State<PanelControlWidget>
                           alignment: AlignmentDirectional(-1.0, 1.0),
                           child: Padding(
                             padding: EdgeInsets.all(16.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 18.0, 0.0, 18.0),
-                                      child: Text(
-                                        'Ordenes',
-                                        style: FlutterFlowTheme.of(context)
-                                            .headlineMedium
-                                            .override(
-                                              font: GoogleFonts.interTight(
-                                                fontWeight:
-                                                    FlutterFlowTheme.of(context)
-                                                        .headlineMedium
-                                                        .fontWeight,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .headlineMedium
-                                                        .fontStyle,
-                                              ),
-                                              letterSpacing: 0.0,
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 18.0, 0.0, 18.0),
+                                    child: Text(
+                                      'Ordenes',
+                                      style: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .override(
+                                            font: GoogleFonts.interTight(
                                               fontWeight:
                                                   FlutterFlowTheme.of(context)
                                                       .headlineMedium
@@ -635,67 +622,160 @@ class _PanelControlWidgetState extends State<PanelControlWidget>
                                                       .headlineMedium
                                                       .fontStyle,
                                             ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                StreamBuilder<List<OrdenRecord>>(
-                                  stream: queryOrdenRecord(
-                                    queryBuilder: (ordenRecord) =>
-                                        ordenRecord.where(
-                                      'orden.uidsPendientes',
-                                      arrayContains:
-                                          widget.farmacia?.uid.toString(),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .headlineMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .headlineMedium
+                                                    .fontStyle,
+                                          ),
                                     ),
                                   ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 50.0,
-                                          height: 50.0,
-                                          child: CircularProgressIndicator(
-                                            valueColor:
-                                                AlwaysStoppedAnimation<Color>(
-                                              FlutterFlowTheme.of(context)
-                                                  .primary,
+                                  StreamBuilder<List<OrdenRecord>>(
+                                    stream: queryOrdenRecord(
+                                      queryBuilder: (ordenRecord) =>
+                                          ordenRecord.where(
+                                        'orden.uidsPendientes',
+                                        arrayContains:
+                                            widget.farmacia?.uid.toString(),
+                                      ),
+                                    ),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50.0,
+                                            height: 50.0,
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    }
-                                    List<OrdenRecord> listViewOrdenRecordList =
-                                        snapshot.data!;
-
-                                    return ListView.builder(
-                                      padding: EdgeInsets.zero,
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: listViewOrdenRecordList.length,
-                                      itemBuilder: (context, listViewIndex) {
-                                        final listViewOrdenRecord =
-                                            listViewOrdenRecordList[
-                                                listViewIndex];
-                                        return OrdenWidget(
-                                          key: Key(
-                                              'Keyhks_${listViewIndex}_of_${listViewOrdenRecordList.length}'),
-                                          tiempo: (180000 +
-                                                  listViewOrdenRecord
-                                                      .orden.tiempoInicio) -
-                                              getCurrentTimestamp
-                                                  .millisecondsSinceEpoch,
-                                          index: listViewIndex,
-                                          orden: listViewOrdenRecord,
-                                          farmacia: widget.farmacia!.name,
-                                          uidFarmacia:
-                                              widget.farmacia!.uid.toString(),
                                         );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ],
+                                      }
+                                      List<OrdenRecord>
+                                          listViewOrdenRecordList =
+                                          snapshot.data!;
+
+                                      return ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        itemCount:
+                                            listViewOrdenRecordList.length,
+                                        itemBuilder: (context, listViewIndex) {
+                                          final listViewOrdenRecord =
+                                              listViewOrdenRecordList[
+                                                  listViewIndex];
+                                          return OrdenWidget(
+                                            key: Key(
+                                                'Keyhks_${listViewIndex}_of_${listViewOrdenRecordList.length}'),
+                                            tiempo: (180000 +
+                                                    listViewOrdenRecord
+                                                        .orden.tiempoInicio) -
+                                                getCurrentTimestamp
+                                                    .millisecondsSinceEpoch,
+                                            index: listViewIndex,
+                                            orden: listViewOrdenRecord,
+                                            farmacia: widget.farmacia!.name,
+                                            uidFarmacia: widget.farmacia!.uid
+                                                .toString(),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 18.0, 0.0, 18.0),
+                                    child: Text(
+                                      'Compras',
+                                      style: FlutterFlowTheme.of(context)
+                                          .headlineMedium
+                                          .override(
+                                            font: GoogleFonts.interTight(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .headlineMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .headlineMedium
+                                                      .fontStyle,
+                                            ),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .headlineMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .headlineMedium
+                                                    .fontStyle,
+                                          ),
+                                    ),
+                                  ),
+                                  StreamBuilder<List<CompraRecord>>(
+                                    stream: queryCompraRecord(
+                                      queryBuilder: (compraRecord) =>
+                                          compraRecord
+                                              .where(
+                                                'compra.uid',
+                                                isEqualTo: widget.farmacia?.uid
+                                                    .toString(),
+                                              )
+                                              .orderBy('compra.tiempoInicio'),
+                                    ),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 50.0,
+                                            height: 50.0,
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                FlutterFlowTheme.of(context)
+                                                    .primary,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      List<CompraRecord>
+                                          listViewCompraRecordList =
+                                          snapshot.data!;
+
+                                      return ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        itemCount:
+                                            listViewCompraRecordList.length,
+                                        itemBuilder: (context, listViewIndex) {
+                                          final listViewCompraRecord =
+                                              listViewCompraRecordList[
+                                                  listViewIndex];
+                                          return CompraWidget(
+                                            key: Key(
+                                                'Keytd8_${listViewIndex}_of_${listViewCompraRecordList.length}'),
+                                            index: listViewIndex,
+                                            compra: listViewCompraRecord.compra,
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

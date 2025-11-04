@@ -1,3 +1,18 @@
 {
-  "indexes": []
+  "indexes": [
+    {
+      "collectionGroup": "Compra",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "compra.uid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "compra.tiempoInicio",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ]
 }

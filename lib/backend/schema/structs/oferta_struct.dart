@@ -11,16 +11,18 @@ class OfertaStruct extends FFFirebaseStruct {
     double? precioTotal,
     double? descuentoOS,
     String? productos,
-    String? farmacia,
+    String? nombreFarmacia,
     String? direccion,
     String? uid,
+    String? uidFarmacia,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _precioTotal = precioTotal,
         _descuentoOS = descuentoOS,
         _productos = productos,
-        _farmacia = farmacia,
+        _nombreFarmacia = nombreFarmacia,
         _direccion = direccion,
         _uid = uid,
+        _uidFarmacia = uidFarmacia,
         super(firestoreUtilData);
 
   // "precioTotal" field.
@@ -50,12 +52,12 @@ class OfertaStruct extends FFFirebaseStruct {
 
   bool hasProductos() => _productos != null;
 
-  // "farmacia" field.
-  String? _farmacia;
-  String get farmacia => _farmacia ?? '';
-  set farmacia(String? val) => _farmacia = val;
+  // "nombreFarmacia" field.
+  String? _nombreFarmacia;
+  String get nombreFarmacia => _nombreFarmacia ?? '';
+  set nombreFarmacia(String? val) => _nombreFarmacia = val;
 
-  bool hasFarmacia() => _farmacia != null;
+  bool hasNombreFarmacia() => _nombreFarmacia != null;
 
   // "direccion" field.
   String? _direccion;
@@ -71,13 +73,21 @@ class OfertaStruct extends FFFirebaseStruct {
 
   bool hasUid() => _uid != null;
 
+  // "uidFarmacia" field.
+  String? _uidFarmacia;
+  String get uidFarmacia => _uidFarmacia ?? '';
+  set uidFarmacia(String? val) => _uidFarmacia = val;
+
+  bool hasUidFarmacia() => _uidFarmacia != null;
+
   static OfertaStruct fromMap(Map<String, dynamic> data) => OfertaStruct(
         precioTotal: castToType<double>(data['precioTotal']),
         descuentoOS: castToType<double>(data['descuentoOS']),
         productos: data['productos'] as String?,
-        farmacia: data['farmacia'] as String?,
+        nombreFarmacia: data['nombreFarmacia'] as String?,
         direccion: data['direccion'] as String?,
         uid: data['uid'] as String?,
+        uidFarmacia: data['uidFarmacia'] as String?,
       );
 
   static OfertaStruct? maybeFromMap(dynamic data) =>
@@ -87,9 +97,10 @@ class OfertaStruct extends FFFirebaseStruct {
         'precioTotal': _precioTotal,
         'descuentoOS': _descuentoOS,
         'productos': _productos,
-        'farmacia': _farmacia,
+        'nombreFarmacia': _nombreFarmacia,
         'direccion': _direccion,
         'uid': _uid,
+        'uidFarmacia': _uidFarmacia,
       }.withoutNulls;
 
   @override
@@ -106,8 +117,8 @@ class OfertaStruct extends FFFirebaseStruct {
           _productos,
           ParamType.String,
         ),
-        'farmacia': serializeParam(
-          _farmacia,
+        'nombreFarmacia': serializeParam(
+          _nombreFarmacia,
           ParamType.String,
         ),
         'direccion': serializeParam(
@@ -116,6 +127,10 @@ class OfertaStruct extends FFFirebaseStruct {
         ),
         'uid': serializeParam(
           _uid,
+          ParamType.String,
+        ),
+        'uidFarmacia': serializeParam(
+          _uidFarmacia,
           ParamType.String,
         ),
       }.withoutNulls;
@@ -137,8 +152,8 @@ class OfertaStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
-        farmacia: deserializeParam(
-          data['farmacia'],
+        nombreFarmacia: deserializeParam(
+          data['nombreFarmacia'],
           ParamType.String,
           false,
         ),
@@ -149,6 +164,11 @@ class OfertaStruct extends FFFirebaseStruct {
         ),
         uid: deserializeParam(
           data['uid'],
+          ParamType.String,
+          false,
+        ),
+        uidFarmacia: deserializeParam(
+          data['uidFarmacia'],
           ParamType.String,
           false,
         ),
@@ -163,23 +183,32 @@ class OfertaStruct extends FFFirebaseStruct {
         precioTotal == other.precioTotal &&
         descuentoOS == other.descuentoOS &&
         productos == other.productos &&
-        farmacia == other.farmacia &&
+        nombreFarmacia == other.nombreFarmacia &&
         direccion == other.direccion &&
-        uid == other.uid;
+        uid == other.uid &&
+        uidFarmacia == other.uidFarmacia;
   }
 
   @override
-  int get hashCode => const ListEquality()
-      .hash([precioTotal, descuentoOS, productos, farmacia, direccion, uid]);
+  int get hashCode => const ListEquality().hash([
+        precioTotal,
+        descuentoOS,
+        productos,
+        nombreFarmacia,
+        direccion,
+        uid,
+        uidFarmacia
+      ]);
 }
 
 OfertaStruct createOfertaStruct({
   double? precioTotal,
   double? descuentoOS,
   String? productos,
-  String? farmacia,
+  String? nombreFarmacia,
   String? direccion,
   String? uid,
+  String? uidFarmacia,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -189,9 +218,10 @@ OfertaStruct createOfertaStruct({
       precioTotal: precioTotal,
       descuentoOS: descuentoOS,
       productos: productos,
-      farmacia: farmacia,
+      nombreFarmacia: nombreFarmacia,
       direccion: direccion,
       uid: uid,
+      uidFarmacia: uidFarmacia,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,
