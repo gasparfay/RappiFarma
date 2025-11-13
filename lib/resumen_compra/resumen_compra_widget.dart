@@ -72,8 +72,8 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
               color: FlutterFlowTheme.of(context).primaryText,
               size: 24.0,
             ),
-            onPressed: () {
-              print('IconButton pressed ...');
+            onPressed: () async {
+              context.safePop();
             },
           ),
           title: Align(
@@ -1143,6 +1143,13 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                               nombreFarmacia: widget.oferta
                                                   ?.oferta.nombreFarmacia,
                                               codigo: _model.codigo,
+                                              fieldValues: {
+                                                'productos':
+                                                    getProductoListFirestoreData(
+                                                  widget.oferta?.oferta
+                                                      .productos,
+                                                ),
+                                              },
                                               clearUnsetFields: false,
                                               create: true,
                                             ),

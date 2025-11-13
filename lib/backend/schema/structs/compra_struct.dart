@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '/backend/schema/util/firestore_util.dart';
 
+import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 class CompraStruct extends FFFirebaseStruct {
@@ -18,6 +19,7 @@ class CompraStruct extends FFFirebaseStruct {
     String? uidFarmacia,
     String? nombreFarmacia,
     int? codigo,
+    List<ProductoStruct>? productos,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _receta = receta,
         _obraSocial = obraSocial,
@@ -29,6 +31,7 @@ class CompraStruct extends FFFirebaseStruct {
         _uidFarmacia = uidFarmacia,
         _nombreFarmacia = nombreFarmacia,
         _codigo = codigo,
+        _productos = productos,
         super(firestoreUtilData);
 
   // "receta" field.
@@ -105,6 +108,17 @@ class CompraStruct extends FFFirebaseStruct {
 
   bool hasCodigo() => _codigo != null;
 
+  // "productos" field.
+  List<ProductoStruct>? _productos;
+  List<ProductoStruct> get productos => _productos ?? const [];
+  set productos(List<ProductoStruct>? val) => _productos = val;
+
+  void updateProductos(Function(List<ProductoStruct>) updateFn) {
+    updateFn(_productos ??= []);
+  }
+
+  bool hasProductos() => _productos != null;
+
   static CompraStruct fromMap(Map<String, dynamic> data) => CompraStruct(
         receta: data['receta'] as String?,
         obraSocial: data['obraSocial'] as String?,
@@ -116,6 +130,10 @@ class CompraStruct extends FFFirebaseStruct {
         uidFarmacia: data['uidFarmacia'] as String?,
         nombreFarmacia: data['nombreFarmacia'] as String?,
         codigo: castToType<int>(data['codigo']),
+        productos: getStructList(
+          data['productos'],
+          ProductoStruct.fromMap,
+        ),
       );
 
   static CompraStruct? maybeFromMap(dynamic data) =>
@@ -132,6 +150,7 @@ class CompraStruct extends FFFirebaseStruct {
         'uidFarmacia': _uidFarmacia,
         'nombreFarmacia': _nombreFarmacia,
         'codigo': _codigo,
+        'productos': _productos?.map((e) => e.toMap()).toList(),
       }.withoutNulls;
 
   @override
@@ -175,6 +194,11 @@ class CompraStruct extends FFFirebaseStruct {
         'codigo': serializeParam(
           _codigo,
           ParamType.int,
+        ),
+        'productos': serializeParam(
+          _productos,
+          ParamType.DataStruct,
+          isList: true,
         ),
       }.withoutNulls;
 
@@ -230,6 +254,12 @@ class CompraStruct extends FFFirebaseStruct {
           ParamType.int,
           false,
         ),
+        productos: deserializeStructParam<ProductoStruct>(
+          data['productos'],
+          ParamType.DataStruct,
+          true,
+          structBuilder: ProductoStruct.fromSerializableMap,
+        ),
       );
 
   @override
@@ -237,6 +267,7 @@ class CompraStruct extends FFFirebaseStruct {
 
   @override
   bool operator ==(Object other) {
+    const listEquality = ListEquality();
     return other is CompraStruct &&
         receta == other.receta &&
         obraSocial == other.obraSocial &&
@@ -247,7 +278,8 @@ class CompraStruct extends FFFirebaseStruct {
         precio == other.precio &&
         uidFarmacia == other.uidFarmacia &&
         nombreFarmacia == other.nombreFarmacia &&
-        codigo == other.codigo;
+        codigo == other.codigo &&
+        listEquality.equals(productos, other.productos);
   }
 
   @override
@@ -261,7 +293,8 @@ class CompraStruct extends FFFirebaseStruct {
         precio,
         uidFarmacia,
         nombreFarmacia,
-        codigo
+        codigo,
+        productos
       ]);
 }
 
