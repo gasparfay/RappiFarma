@@ -48,7 +48,7 @@ class _OrdenWidgetState extends State<OrdenWidget> {
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (widget.tiempo! < 180000) {
+      if (widget.tiempo! < 600000) {
         _model.timerController.onStartTimer();
       } else {
         await widget.orden!.reference.delete();

@@ -151,6 +151,27 @@ class _CompraWidgetState extends State<CompraWidget> {
                           ),
                     ),
                     Text(
+                      'Codigo de seguridad: ${widget.compra?.compra.codigo.toString()}',
+                      style: FlutterFlowTheme.of(context).bodySmall.override(
+                            font: GoogleFonts.inter(
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .fontStyle,
+                            ),
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            letterSpacing: 0.0,
+                            fontWeight: FlutterFlowTheme.of(context)
+                                .bodySmall
+                                .fontWeight,
+                            fontStyle: FlutterFlowTheme.of(context)
+                                .bodySmall
+                                .fontStyle,
+                          ),
+                    ),
+                    Text(
                       'Fecha: ${dateTimeFormat(
                         "d/M/y",
                         DateTime.fromMillisecondsSinceEpoch(valueOrDefault<int>(

@@ -17,6 +17,7 @@ class CompraStruct extends FFFirebaseStruct {
     double? precio,
     String? uidFarmacia,
     String? nombreFarmacia,
+    int? codigo,
     FirestoreUtilData firestoreUtilData = const FirestoreUtilData(),
   })  : _receta = receta,
         _obraSocial = obraSocial,
@@ -27,6 +28,7 @@ class CompraStruct extends FFFirebaseStruct {
         _precio = precio,
         _uidFarmacia = uidFarmacia,
         _nombreFarmacia = nombreFarmacia,
+        _codigo = codigo,
         super(firestoreUtilData);
 
   // "receta" field.
@@ -94,6 +96,15 @@ class CompraStruct extends FFFirebaseStruct {
 
   bool hasNombreFarmacia() => _nombreFarmacia != null;
 
+  // "codigo" field.
+  int? _codigo;
+  int get codigo => _codigo ?? 0;
+  set codigo(int? val) => _codigo = val;
+
+  void incrementCodigo(int amount) => codigo = codigo + amount;
+
+  bool hasCodigo() => _codigo != null;
+
   static CompraStruct fromMap(Map<String, dynamic> data) => CompraStruct(
         receta: data['receta'] as String?,
         obraSocial: data['obraSocial'] as String?,
@@ -104,6 +115,7 @@ class CompraStruct extends FFFirebaseStruct {
         precio: castToType<double>(data['precio']),
         uidFarmacia: data['uidFarmacia'] as String?,
         nombreFarmacia: data['nombreFarmacia'] as String?,
+        codigo: castToType<int>(data['codigo']),
       );
 
   static CompraStruct? maybeFromMap(dynamic data) =>
@@ -119,6 +131,7 @@ class CompraStruct extends FFFirebaseStruct {
         'precio': _precio,
         'uidFarmacia': _uidFarmacia,
         'nombreFarmacia': _nombreFarmacia,
+        'codigo': _codigo,
       }.withoutNulls;
 
   @override
@@ -158,6 +171,10 @@ class CompraStruct extends FFFirebaseStruct {
         'nombreFarmacia': serializeParam(
           _nombreFarmacia,
           ParamType.String,
+        ),
+        'codigo': serializeParam(
+          _codigo,
+          ParamType.int,
         ),
       }.withoutNulls;
 
@@ -208,6 +225,11 @@ class CompraStruct extends FFFirebaseStruct {
           ParamType.String,
           false,
         ),
+        codigo: deserializeParam(
+          data['codigo'],
+          ParamType.int,
+          false,
+        ),
       );
 
   @override
@@ -224,7 +246,8 @@ class CompraStruct extends FFFirebaseStruct {
         uid == other.uid &&
         precio == other.precio &&
         uidFarmacia == other.uidFarmacia &&
-        nombreFarmacia == other.nombreFarmacia;
+        nombreFarmacia == other.nombreFarmacia &&
+        codigo == other.codigo;
   }
 
   @override
@@ -237,7 +260,8 @@ class CompraStruct extends FFFirebaseStruct {
         uid,
         precio,
         uidFarmacia,
-        nombreFarmacia
+        nombreFarmacia,
+        codigo
       ]);
 }
 
@@ -251,6 +275,7 @@ CompraStruct createCompraStruct({
   double? precio,
   String? uidFarmacia,
   String? nombreFarmacia,
+  int? codigo,
   Map<String, dynamic> fieldValues = const {},
   bool clearUnsetFields = true,
   bool create = false,
@@ -266,6 +291,7 @@ CompraStruct createCompraStruct({
       precio: precio,
       uidFarmacia: uidFarmacia,
       nombreFarmacia: nombreFarmacia,
+      codigo: codigo,
       firestoreUtilData: FirestoreUtilData(
         clearUnsetFields: clearUnsetFields,
         create: create,

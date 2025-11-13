@@ -400,7 +400,29 @@ class _RecuperarContraseniaWidgetState
 
                                         context
                                             .pushNamed(LoginWidget.routeName);
+
+                                        context.goNamed(LoginWidget.routeName);
                                       } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'No existe una cuenta con ese correo electrónico',
+                                              style: GoogleFonts.roboto(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryBackground,
+                                                fontSize: 16.0,
+                                              ),
+                                              textAlign: TextAlign.start,
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 4000),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondary,
+                                          ),
+                                        );
                                         safeSetState(() {});
                                       }
 

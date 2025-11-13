@@ -57,6 +57,10 @@ class _ImagenWidgetState extends State<ImagenWidget> {
               image: Image.network(
                 functions.stringToImagePath(widget.foto)!,
                 fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) => Image.asset(
+                  'assets/images/error_image.png',
+                  fit: BoxFit.contain,
+                ),
               ),
               allowRotation: false,
               tag: functions.stringToImagePath(widget.foto)!,
@@ -74,7 +78,13 @@ class _ImagenWidgetState extends State<ImagenWidget> {
             functions.stringToImagePath(widget.foto)!,
             width: double.infinity,
             height: double.infinity,
-            fit: BoxFit.cover,
+            fit: BoxFit.scaleDown,
+            errorBuilder: (context, error, stackTrace) => Image.asset(
+              'assets/images/error_image.png',
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.scaleDown,
+            ),
           ),
         ),
       ),

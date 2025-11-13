@@ -477,11 +477,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                     },
                                     text: 'Iniciar sesión',
                                     options: FFButtonOptions(
-                                      width: MediaQuery.sizeOf(context).width *
-                                          0.6,
-                                      height:
-                                          MediaQuery.sizeOf(context).height *
-                                              0.06,
+                                      width: 230.0,
+                                      height: 52.0,
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 0.0),
                                       iconPadding:

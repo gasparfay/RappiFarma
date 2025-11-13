@@ -1,6 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
-import '/backend/backend.dart';
+import '/components/codigo_seguridad_widget.dart';
 import '/components/receta_pedido_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -383,7 +383,7 @@ class _PaginaPrincipalWidgetState extends State<PaginaPrincipalWidget>
                                                 currentUserDocument
                                                     ?.nombreObraSocial,
                                                 '') !=
-                                            '')
+                                            'No tengo')
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
@@ -465,7 +465,7 @@ class _PaginaPrincipalWidgetState extends State<PaginaPrincipalWidget>
                                                 currentUserDocument
                                                     ?.nombreObraSocial,
                                                 '') !=
-                                            '')
+                                            'No tengo')
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
@@ -882,7 +882,8 @@ class _PaginaPrincipalWidgetState extends State<PaginaPrincipalWidget>
                                         text: TextSpan(
                                           children: [
                                             TextSpan(
-                                              text: 'Código de seguridad: ',
+                                              text:
+                                                  'Tienes un pedido activo, cuando lo recibas podras realizar otro',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
@@ -905,35 +906,6 @@ class _PaginaPrincipalWidgetState extends State<PaginaPrincipalWidget>
                                                                     context)
                                                                 .bodyMedium
                                                                 .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
-                                            ),
-                                            TextSpan(
-                                              text: valueOrDefault(
-                                                      currentUserDocument
-                                                          ?.codigoSeguridad,
-                                                      0)
-                                                  .toString(),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.bold,
                                                         fontStyle:
                                                             FlutterFlowTheme.of(
                                                                     context)
@@ -971,18 +943,31 @@ class _PaginaPrincipalWidgetState extends State<PaginaPrincipalWidget>
                                           0.0, 12.0, 0.0, 12.0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          await currentUserReference!.update({
-                                            ...createUsuarioRecordData(
-                                              pedidoActivo: false,
-                                            ),
-                                            ...mapToFirestore(
-                                              {
-                                                'codigoSeguridad':
-                                                    FieldValue.delete(),
-                                              },
-                                            ),
-                                          });
-                                          safeSetState(() {});
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            enableDrag: false,
+                                            context: context,
+                                            builder: (context) {
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  FocusScope.of(context)
+                                                      .unfocus();
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child:
+                                                      CodigoSeguridadWidget(),
+                                                ),
+                                              );
+                                            },
+                                          ).then(
+                                              (value) => safeSetState(() {}));
                                         },
                                         text: 'Ya lo recibí',
                                         options: FFButtonOptions(
@@ -1308,6 +1293,24 @@ class _PaginaPrincipalWidgetState extends State<PaginaPrincipalWidget>
 
                         context.goNamedAuth(
                             LoginWidget.routeName, context.mounted);
+
+                        ScaffoldMessenger.of(context).clearSnackBars();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              'Sesión cerrada correctamente.',
+                              style: GoogleFonts.roboto(
+                                color: FlutterFlowTheme.of(context)
+                                    .primaryBackground,
+                                fontSize: 16.0,
+                              ),
+                              textAlign: TextAlign.start,
+                            ),
+                            duration: Duration(milliseconds: 2050),
+                            backgroundColor:
+                                FlutterFlowTheme.of(context).secondary,
+                          ),
+                        );
                       },
                       text: 'Cerrar sesión',
                       options: FFButtonOptions(

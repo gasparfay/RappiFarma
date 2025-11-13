@@ -259,7 +259,7 @@ class _OfertasWidgetState extends State<OfertasWidget> {
                                   ),
                             ),
                             FlutterFlowTimer(
-                              initialTime: (180000 + (widget.tiempoInicio!)) -
+                              initialTime: (600000 + (widget.tiempoInicio!)) -
                                   getCurrentTimestamp.millisecondsSinceEpoch,
                               getDisplayTime: (value) =>
                                   StopWatchTimer.getDisplayTime(

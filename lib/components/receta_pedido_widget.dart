@@ -39,6 +39,7 @@ class _RecetaPedidoWidgetState extends State<RecetaPedidoWidget> {
 
     // On component load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -47,7 +48,7 @@ class _RecetaPedidoWidgetState extends State<RecetaPedidoWidget> {
               color: Color(0x00000000),
               fontSize: 16.0,
             ),
-            textAlign: TextAlign.center,
+            textAlign: TextAlign.start,
           ),
           duration: Duration(milliseconds: 2000),
           backgroundColor: FlutterFlowTheme.of(context).secondary,
@@ -311,6 +312,7 @@ class _RecetaPedidoWidgetState extends State<RecetaPedidoWidget> {
                                   create: true,
                                 ),
                               ));
+                          ScaffoldMessenger.of(context).clearSnackBars();
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text(
@@ -320,7 +322,7 @@ class _RecetaPedidoWidgetState extends State<RecetaPedidoWidget> {
                                       .primaryBackground,
                                   fontSize: 16.0,
                                 ),
-                                textAlign: TextAlign.center,
+                                textAlign: TextAlign.start,
                               ),
                               duration: Duration(milliseconds: 2000),
                               backgroundColor:

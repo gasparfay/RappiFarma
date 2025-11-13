@@ -95,6 +95,11 @@ class UsuarioRecord extends FirestoreRecord {
   bool get biometricAuth => _biometricAuth ?? false;
   bool hasBiometricAuth() => _biometricAuth != null;
 
+  // "dni" field.
+  int? _dni;
+  int get dni => _dni ?? 0;
+  bool hasDni() => _dni != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
@@ -112,6 +117,7 @@ class UsuarioRecord extends FirestoreRecord {
     _pedidoActivo = snapshotData['pedidoActivo'] as bool?;
     _codigoSeguridad = castToType<int>(snapshotData['codigoSeguridad']);
     _biometricAuth = snapshotData['biometricAuth'] as bool?;
+    _dni = castToType<int>(snapshotData['dni']);
   }
 
   static CollectionReference get collection =>
@@ -165,6 +171,7 @@ Map<String, dynamic> createUsuarioRecordData({
   bool? pedidoActivo,
   int? codigoSeguridad,
   bool? biometricAuth,
+  int? dni,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -184,6 +191,7 @@ Map<String, dynamic> createUsuarioRecordData({
       'pedidoActivo': pedidoActivo,
       'codigoSeguridad': codigoSeguridad,
       'biometricAuth': biometricAuth,
+      'dni': dni,
     }.withoutNulls,
   );
 
@@ -210,7 +218,8 @@ class UsuarioRecordDocumentEquality implements Equality<UsuarioRecord> {
         e1?.carnetObraSocial == e2?.carnetObraSocial &&
         e1?.pedidoActivo == e2?.pedidoActivo &&
         e1?.codigoSeguridad == e2?.codigoSeguridad &&
-        e1?.biometricAuth == e2?.biometricAuth;
+        e1?.biometricAuth == e2?.biometricAuth &&
+        e1?.dni == e2?.dni;
   }
 
   @override
@@ -230,7 +239,8 @@ class UsuarioRecordDocumentEquality implements Equality<UsuarioRecord> {
         e?.carnetObraSocial,
         e?.pedidoActivo,
         e?.codigoSeguridad,
-        e?.biometricAuth
+        e?.biometricAuth,
+        e?.dni
       ]);
 
   @override

@@ -13,6 +13,7 @@ import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/upload_data.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import '/index.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -2040,90 +2041,149 @@ class _RegistrarseWidgetState extends State<RegistrarseWidget>
                                       0.0, 32.0, 0.0, 32.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      GoRouter.of(context).prepareAuthEvent();
-                                      if (_model.passwordTextController.text !=
-                                          _model.password2TextController.text) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'Passwords don\'t match!',
-                                            ),
+                                      _model.validado = true;
+                                      if (_model.formKey.currentState == null ||
+                                          !_model.formKey.currentState!
+                                              .validate()) {
+                                        safeSetState(
+                                            () => _model.validado = false);
+                                        return;
+                                      }
+                                      if (_model.validado!) {
+                                        _model.usr =
+                                            await queryUsuarioRecordOnce(
+                                          queryBuilder: (usuarioRecord) =>
+                                              usuarioRecord.where(
+                                            'dni',
+                                            isEqualTo: int.tryParse(
+                                                _model.dniTextController.text),
                                           ),
-                                        );
-                                        return;
-                                      }
-
-                                      final user = await authManager
-                                          .createAccountWithEmail(
-                                        context,
-                                        _model.emailTextController.text,
-                                        _model.passwordTextController.text,
-                                      );
-                                      if (user == null) {
-                                        return;
-                                      }
-
-                                      await UsuarioRecord.collection
-                                          .doc(user.uid)
-                                          .update({
-                                        ...createUsuarioRecordData(
-                                          apellido: _model
-                                              .apellidoTextController.text,
-                                          carnetObraSocial: getJsonField(
-                                            (_model.urlCarnet?.jsonBody ?? ''),
-                                            r'''$.secure_url''',
-                                          ).toString(),
-                                          domicilio: _model
-                                              .domicilioTextController.text,
-                                          email:
-                                              _model.emailTextController.text,
-                                          nombre:
-                                              _model.nombreTextController.text,
-                                          nombreObraSocial:
-                                              _model.obraSocialValue,
-                                          numeroObraSocial: _model
-                                              .numerobenficiarioTextController
-                                              .text,
-                                          pedidoActivo: false,
-                                          phoneNumber: _model
-                                              .telefonoTextController.text,
-                                          biometricAuth: false,
-                                        ),
-                                        ...mapToFirestore(
-                                          {
-                                            'created_time':
-                                                FieldValue.serverTimestamp(),
-                                          },
-                                        ),
-                                      });
-
-                                      await showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        backgroundColor: Colors.transparent,
-                                        enableDrag: false,
-                                        context: context,
-                                        builder: (context) {
-                                          return GestureDetector(
-                                            onTap: () {
-                                              FocusScope.of(context).unfocus();
-                                              FocusManager.instance.primaryFocus
-                                                  ?.unfocus();
-                                            },
-                                            child: Padding(
-                                              padding: MediaQuery.viewInsetsOf(
-                                                  context),
-                                              child: BiometricWidget(
-                                                usuario: currentUserReference,
+                                          singleRecord: true,
+                                        ).then((s) => s.firstOrNull);
+                                        if (_model.usr?.reference == null) {
+                                          GoRouter.of(context)
+                                              .prepareAuthEvent();
+                                          if (_model.passwordTextController
+                                                  .text !=
+                                              _model.password2TextController
+                                                  .text) {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'Passwords don\'t match!',
+                                                ),
                                               ),
+                                            );
+                                            return;
+                                          }
+
+                                          final user = await authManager
+                                              .createAccountWithEmail(
+                                            context,
+                                            _model.emailTextController.text,
+                                            _model.passwordTextController.text,
+                                          );
+                                          if (user == null) {
+                                            return;
+                                          }
+
+                                          await UsuarioRecord.collection
+                                              .doc(user.uid)
+                                              .update({
+                                            ...createUsuarioRecordData(
+                                              apellido: _model
+                                                  .apellidoTextController.text,
+                                              carnetObraSocial: getJsonField(
+                                                (_model.urlCarnet?.jsonBody ??
+                                                    ''),
+                                                r'''$.secure_url''',
+                                              ).toString(),
+                                              domicilio: _model
+                                                  .domicilioTextController.text,
+                                              email: _model
+                                                  .emailTextController.text,
+                                              nombre: _model
+                                                  .nombreTextController.text,
+                                              nombreObraSocial:
+                                                  _model.obraSocialValue,
+                                              numeroObraSocial: _model
+                                                  .numerobenficiarioTextController
+                                                  .text,
+                                              pedidoActivo: false,
+                                              phoneNumber: _model
+                                                  .telefonoTextController.text,
+                                              biometricAuth: false,
+                                              dni: int.tryParse(_model
+                                                  .dniTextController.text),
+                                            ),
+                                            ...mapToFirestore(
+                                              {
+                                                'created_time': FieldValue
+                                                    .serverTimestamp(),
+                                              },
+                                            ),
+                                          });
+
+                                          await showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            backgroundColor: Colors.transparent,
+                                            enableDrag: false,
+                                            context: context,
+                                            builder: (context) {
+                                              return GestureDetector(
+                                                onTap: () {
+                                                  FocusScope.of(context)
+                                                      .unfocus();
+                                                  FocusManager
+                                                      .instance.primaryFocus
+                                                      ?.unfocus();
+                                                },
+                                                child: Padding(
+                                                  padding:
+                                                      MediaQuery.viewInsetsOf(
+                                                          context),
+                                                  child: BiometricWidget(
+                                                    usuario:
+                                                        currentUserReference,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ).then(
+                                              (value) => safeSetState(() {}));
+
+                                          context.goNamedAuth(
+                                              PaginaPrincipalWidget.routeName,
+                                              context.mounted);
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'El DNI ingresado ya esta registrado',
+                                                style: GoogleFonts.roboto(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryBackground,
+                                                  fontSize: 16.0,
+                                                ),
+                                                textAlign: TextAlign.start,
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 2000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
                                             ),
                                           );
-                                        },
-                                      ).then((value) => safeSetState(() {}));
+                                          safeSetState(() {});
+                                        }
+                                      } else {
+                                        safeSetState(() {});
+                                      }
 
-                                      context.goNamedAuth(
-                                          PaginaPrincipalWidget.routeName,
-                                          context.mounted);
+                                      safeSetState(() {});
                                     },
                                     text: 'Crear cuenta',
                                     options: FFButtonOptions(

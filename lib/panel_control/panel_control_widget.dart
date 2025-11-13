@@ -611,7 +611,7 @@ class _PanelControlWidgetState extends State<PanelControlWidget>
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 18.0, 0.0, 18.0),
                                     child: Text(
-                                      'Ordenes',
+                                      'Órdenes',
                                       style: FlutterFlowTheme.of(context)
                                           .headlineMedium
                                           .override(
@@ -672,6 +672,7 @@ class _PanelControlWidgetState extends State<PanelControlWidget>
 
                                         return ListView.builder(
                                           padding: EdgeInsets.zero,
+                                          primary: false,
                                           shrinkWrap: true,
                                           scrollDirection: Axis.vertical,
                                           itemCount:
@@ -684,7 +685,7 @@ class _PanelControlWidgetState extends State<PanelControlWidget>
                                             return OrdenWidget(
                                               key: Key(
                                                   'Keyhks_${listViewIndex}_of_${listViewOrdenRecordList.length}'),
-                                              tiempo: (180000 +
+                                              tiempo: (600000 +
                                                       listViewOrdenRecord
                                                           .orden.tiempoInicio) -
                                                   getCurrentTimestamp
@@ -763,6 +764,7 @@ class _PanelControlWidgetState extends State<PanelControlWidget>
                                       return ListView.builder(
                                         padding: EdgeInsets.zero,
                                         reverse: true,
+                                        primary: false,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
                                         itemCount:

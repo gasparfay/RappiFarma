@@ -4,13 +4,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '/backend/schema/util/firestore_util.dart';
 
+import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 class OfertaStruct extends FFFirebaseStruct {
   OfertaStruct({
     double? precioTotal,
     double? descuentoOS,
-    String? productos,
+    List<ProductoStruct>? productos,
     String? nombreFarmacia,
     String? direccion,
     String? uid,
@@ -46,9 +47,13 @@ class OfertaStruct extends FFFirebaseStruct {
   bool hasDescuentoOS() => _descuentoOS != null;
 
   // "productos" field.
-  String? _productos;
-  String get productos => _productos ?? '';
-  set productos(String? val) => _productos = val;
+  List<ProductoStruct>? _productos;
+  List<ProductoStruct> get productos => _productos ?? const [];
+  set productos(List<ProductoStruct>? val) => _productos = val;
+
+  void updateProductos(Function(List<ProductoStruct>) updateFn) {
+    updateFn(_productos ??= []);
+  }
 
   bool hasProductos() => _productos != null;
 
@@ -83,7 +88,10 @@ class OfertaStruct extends FFFirebaseStruct {
   static OfertaStruct fromMap(Map<String, dynamic> data) => OfertaStruct(
         precioTotal: castToType<double>(data['precioTotal']),
         descuentoOS: castToType<double>(data['descuentoOS']),
-        productos: data['productos'] as String?,
+        productos: getStructList(
+          data['productos'],
+          ProductoStruct.fromMap,
+        ),
         nombreFarmacia: data['nombreFarmacia'] as String?,
         direccion: data['direccion'] as String?,
         uid: data['uid'] as String?,
@@ -96,7 +104,7 @@ class OfertaStruct extends FFFirebaseStruct {
   Map<String, dynamic> toMap() => {
         'precioTotal': _precioTotal,
         'descuentoOS': _descuentoOS,
-        'productos': _productos,
+        'productos': _productos?.map((e) => e.toMap()).toList(),
         'nombreFarmacia': _nombreFarmacia,
         'direccion': _direccion,
         'uid': _uid,
@@ -115,7 +123,8 @@ class OfertaStruct extends FFFirebaseStruct {
         ),
         'productos': serializeParam(
           _productos,
-          ParamType.String,
+          ParamType.DataStruct,
+          isList: true,
         ),
         'nombreFarmacia': serializeParam(
           _nombreFarmacia,
@@ -147,10 +156,11 @@ class OfertaStruct extends FFFirebaseStruct {
           ParamType.double,
           false,
         ),
-        productos: deserializeParam(
+        productos: deserializeStructParam<ProductoStruct>(
           data['productos'],
-          ParamType.String,
-          false,
+          ParamType.DataStruct,
+          true,
+          structBuilder: ProductoStruct.fromSerializableMap,
         ),
         nombreFarmacia: deserializeParam(
           data['nombreFarmacia'],
@@ -179,10 +189,11 @@ class OfertaStruct extends FFFirebaseStruct {
 
   @override
   bool operator ==(Object other) {
+    const listEquality = ListEquality();
     return other is OfertaStruct &&
         precioTotal == other.precioTotal &&
         descuentoOS == other.descuentoOS &&
-        productos == other.productos &&
+        listEquality.equals(productos, other.productos) &&
         nombreFarmacia == other.nombreFarmacia &&
         direccion == other.direccion &&
         uid == other.uid &&
@@ -204,7 +215,6 @@ class OfertaStruct extends FFFirebaseStruct {
 OfertaStruct createOfertaStruct({
   double? precioTotal,
   double? descuentoOS,
-  String? productos,
   String? nombreFarmacia,
   String? direccion,
   String? uid,
@@ -217,7 +227,6 @@ OfertaStruct createOfertaStruct({
     OfertaStruct(
       precioTotal: precioTotal,
       descuentoOS: descuentoOS,
-      productos: productos,
       nombreFarmacia: nombreFarmacia,
       direccion: direccion,
       uid: uid,

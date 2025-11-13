@@ -248,3 +248,20 @@ OSTEL
 String? stringToImagePath(String? str) {
   return str;
 }
+
+double sumarLista(List<ProductoStruct> productos) {
+  double total = 0.0;
+
+  for (final p in productos) {
+    // Evitar nulls por seguridad
+    final double precio = p.precio;
+    final int cantidad = p.cantidad;
+
+    total += precio * cantidad;
+  }
+  return total;
+}
+
+List<ProductoStruct> eliminarLista() {
+  return [];
+}

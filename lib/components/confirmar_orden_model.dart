@@ -5,14 +5,8 @@ import 'package:flutter/material.dart';
 class ConfirmarOrdenModel extends FlutterFlowModel<ConfirmarOrdenWidget> {
   ///  State fields for stateful widgets in this component.
 
-  // State field(s) for productos widget.
-  FocusNode? productosFocusNode;
-  TextEditingController? productosTextController;
-  String? Function(BuildContext, String?)? productosTextControllerValidator;
-  // State field(s) for precioTotal widget.
-  FocusNode? precioTotalFocusNode;
-  TextEditingController? precioTotalTextController;
-  String? Function(BuildContext, String?)? precioTotalTextControllerValidator;
+  // State field(s) for cantProductos widget.
+  int? cantProductosValue;
   // State field(s) for descuento widget.
   FocusNode? descuentoFocusNode;
   TextEditingController? descuentoTextController;
@@ -23,12 +17,6 @@ class ConfirmarOrdenModel extends FlutterFlowModel<ConfirmarOrdenWidget> {
 
   @override
   void dispose() {
-    productosFocusNode?.dispose();
-    productosTextController?.dispose();
-
-    precioTotalFocusNode?.dispose();
-    precioTotalTextController?.dispose();
-
     descuentoFocusNode?.dispose();
     descuentoTextController?.dispose();
   }

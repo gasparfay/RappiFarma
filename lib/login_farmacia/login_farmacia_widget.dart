@@ -330,13 +330,12 @@ class _LoginFarmaciaWidgetState extends State<LoginFarmaciaWidget>
                                                   .bodyMedium
                                                   .fontStyle,
                                         ),
-                                    keyboardType: TextInputType.number,
                                     validator: _model
                                         .codeTextControllerValidator
                                         .asValidator(context),
                                     inputFormatters: [
                                       FilteringTextInputFormatter.allow(
-                                          RegExp('[0-9]'))
+                                          RegExp('[a-zA-Z0-9]'))
                                     ],
                                   ),
                                 ),
@@ -381,17 +380,17 @@ class _LoginFarmaciaWidgetState extends State<LoginFarmaciaWidget>
                                               style: GoogleFonts.roboto(
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primaryText,
+                                                        .primaryBackground,
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 16.0,
                                               ),
-                                              textAlign: TextAlign.center,
+                                              textAlign: TextAlign.start,
                                             ),
                                             duration:
                                                 Duration(milliseconds: 2050),
                                             backgroundColor:
                                                 FlutterFlowTheme.of(context)
-                                                    .secondaryBackground,
+                                                    .secondary,
                                           ),
                                         );
                                         safeSetState(() {});
