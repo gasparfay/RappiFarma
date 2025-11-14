@@ -759,6 +759,81 @@ class _PaginaPrincipalWidgetState extends State<PaginaPrincipalWidget>
                                             ),
                                           ),
                                         ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 10.0),
+                                          child: RichText(
+                                            textScaler: MediaQuery.of(context)
+                                                .textScaler,
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: 'DNI: ',
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        font: GoogleFonts.inter(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontStyle,
+                                                      ),
+                                                ),
+                                                TextSpan(
+                                                  text: valueOrDefault(
+                                                          currentUserDocument
+                                                              ?.dni,
+                                                          0)
+                                                      .toString(),
+                                                  style: TextStyle(),
+                                                )
+                                              ],
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        font: GoogleFonts.inter(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                        fontSize: 18.0,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontStyle,
+                                                      ),
+                                            ),
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -883,7 +958,7 @@ class _PaginaPrincipalWidgetState extends State<PaginaPrincipalWidget>
                                           children: [
                                             TextSpan(
                                               text:
-                                                  'Tienes un pedido activo, cuando lo recibas podras realizar otro',
+                                                  'Tienes un pedido activo, cuando lo recibas podrás realizar otro',
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium
@@ -1086,9 +1161,8 @@ class _PaginaPrincipalWidgetState extends State<PaginaPrincipalWidget>
                                         child: FFButtonWidget(
                                           onPressed: () async {
                                             final selectedMedia =
-                                                await selectMediaWithSourceBottomSheet(
-                                              context: context,
-                                              allowPhoto: true,
+                                                await selectMedia(
+                                              multiImage: false,
                                             );
                                             if (selectedMedia != null &&
                                                 selectedMedia.every((m) =>
@@ -1183,6 +1257,28 @@ class _PaginaPrincipalWidgetState extends State<PaginaPrincipalWidget>
                                                 },
                                               ).then((value) =>
                                                   safeSetState(() {}));
+
+                                              ScaffoldMessenger.of(context)
+                                                  .clearSnackBars();
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                  content: Text(
+                                                    'Receta cargada con éxito',
+                                                    style: GoogleFonts.roboto(
+                                                      color: Color(0x00000000),
+                                                      fontSize: 16.0,
+                                                    ),
+                                                    textAlign: TextAlign.start,
+                                                  ),
+                                                  duration: Duration(
+                                                      milliseconds: 2000),
+                                                  backgroundColor:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .secondary,
+                                                ),
+                                              );
                                             } else {
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(

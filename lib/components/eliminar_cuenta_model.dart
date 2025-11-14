@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'eliminar_cuenta_widget.dart' show EliminarCuentaWidget;
@@ -11,6 +12,8 @@ class EliminarCuentaModel extends FlutterFlowModel<EliminarCuentaWidget> {
 
   ///  State fields for stateful widgets in this component.
 
+  // Stores action output result for [Firestore Query - Query a collection] action in Button widget.
+  UsuarioRecord? usr;
   // State field(s) for Timer widget.
   final timerInitialTimeMs = 5000;
   int timerMilliseconds = 5000;

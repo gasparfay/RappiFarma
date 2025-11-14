@@ -130,7 +130,7 @@ class _CodigoSeguridadWidgetState extends State<CodigoSeguridadWidget>
                 Padding(
                   padding: EdgeInsets.all(12.0),
                   child: Text(
-                    'Para confirmar la recepcion debes ingresar el codigo de seguridad de cuatro digitos que te dará el repartidor.',
+                    'Para confirmar la recepcion debes ingresar el código de seguridad de cuatro digitos que te dará el repartidor.',
                     textAlign: TextAlign.center,
                     style: FlutterFlowTheme.of(context).labelMedium.override(
                           font: GoogleFonts.inter(

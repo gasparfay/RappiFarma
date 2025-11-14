@@ -225,7 +225,7 @@ class _LoginFarmaciaWidgetState extends State<LoginFarmaciaWidget>
                                     autofillHints: [AutofillHints.password],
                                     obscureText: !_model.codeVisibility,
                                     decoration: InputDecoration(
-                                      labelText: 'Codigo',
+                                      labelText: 'Código',
                                       labelStyle: FlutterFlowTheme.of(context)
                                           .labelMedium
                                           .override(

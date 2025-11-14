@@ -1,10 +1,13 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/index.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -239,7 +242,6 @@ class _EliminarCuentaWidgetState extends State<EliminarCuentaWidget>
                               padding: EdgeInsets.all(12.0),
                               child: FFButtonWidget(
                                 onPressed: () async {
-                                  Function() _navigate = () {};
                                   if (_model.time == true) {
                                     ScaffoldMessenger.of(context)
                                         .clearSnackBars();
@@ -259,10 +261,26 @@ class _EliminarCuentaWidgetState extends State<EliminarCuentaWidget>
                                                 .secondary,
                                       ),
                                     );
+                                    await Future.delayed(
+                                      Duration(
+                                        milliseconds: 100,
+                                      ),
+                                    );
+                                    _model.usr = await queryUsuarioRecordOnce(
+                                      queryBuilder: (usuarioRecord) =>
+                                          usuarioRecord.where(
+                                        'uid',
+                                        isEqualTo: currentUserUid,
+                                      ),
+                                      singleRecord: true,
+                                    ).then((s) => s.firstOrNull);
+                                    await _model.usr!.reference.delete();
                                     await authManager.deleteUser(context);
+
+                                    context.goNamed(LoginWidget.routeName);
                                   }
 
-                                  _navigate();
+                                  safeSetState(() {});
                                 },
                                 text: 'Si',
                                 options: FFButtonOptions(

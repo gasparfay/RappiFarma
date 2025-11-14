@@ -1087,6 +1087,11 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                           }
                                         }
                                       }
+                                      _model.prodsAux = widget
+                                          .oferta!.oferta.productos
+                                          .toList()
+                                          .cast<ProductoStruct>();
+                                      safeSetState(() {});
                                       _model.ofertasUid =
                                           await queryOfertaRecordOnce(
                                         queryBuilder: (ofertaRecord) =>
@@ -1146,8 +1151,7 @@ class _ResumenCompraWidgetState extends State<ResumenCompraWidget> {
                                               fieldValues: {
                                                 'productos':
                                                     getProductoListFirestoreData(
-                                                  widget.oferta?.oferta
-                                                      .productos,
+                                                  _model.prodsAux,
                                                 ),
                                               },
                                               clearUnsetFields: false,

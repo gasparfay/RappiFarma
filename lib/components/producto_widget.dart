@@ -109,7 +109,7 @@ class _ProductoWidgetState extends State<ProductoWidget> {
                       autofocus: true,
                       obscureText: false,
                       decoration: InputDecoration(
-                        labelText: 'Nombre del prodcuto',
+                        labelText: 'Nombre del producto',
                         labelStyle:
                             FlutterFlowTheme.of(context).labelMedium.override(
                                   font: GoogleFonts.inter(

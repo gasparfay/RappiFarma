@@ -11,6 +11,15 @@ class ResumenCompraModel extends FlutterFlowModel<ResumenCompraWidget> {
 
   bool huellaValidada = false;
 
+  List<ProductoStruct> prodsAux = [];
+  void addToProdsAux(ProductoStruct item) => prodsAux.add(item);
+  void removeFromProdsAux(ProductoStruct item) => prodsAux.remove(item);
+  void removeAtIndexFromProdsAux(int index) => prodsAux.removeAt(index);
+  void insertAtIndexInProdsAux(int index, ProductoStruct item) =>
+      prodsAux.insert(index, item);
+  void updateProdsAuxAtIndex(int index, Function(ProductoStruct) updateFn) =>
+      prodsAux[index] = updateFn(prodsAux[index]);
+
   ///  State fields for stateful widgets in this page.
 
   bool huella = false;

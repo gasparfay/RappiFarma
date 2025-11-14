@@ -1387,9 +1387,8 @@ class _EditarPerfilWidgetState extends State<EditarPerfilWidget>
                                                           Colors.transparent,
                                                       onTap: () async {
                                                         final selectedMedia =
-                                                            await selectMediaWithSourceBottomSheet(
-                                                          context: context,
-                                                          allowPhoto: true,
+                                                            await selectMedia(
+                                                          multiImage: false,
                                                         );
                                                         if (selectedMedia !=
                                                                 null &&

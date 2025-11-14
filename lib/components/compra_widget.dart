@@ -151,7 +151,7 @@ class _CompraWidgetState extends State<CompraWidget> {
                           ),
                     ),
                     Text(
-                      'Precio final${widget.compra?.compra.precio.toString()}',
+                      'Precio final: \$${widget.compra?.compra.precio.toString()}',
                       style: FlutterFlowTheme.of(context).bodySmall.override(
                             font: GoogleFonts.inter(
                               fontWeight: FlutterFlowTheme.of(context)

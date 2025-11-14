@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'receta_pedido_model.dart';
 export 'receta_pedido_model.dart';
@@ -36,25 +35,6 @@ class _RecetaPedidoWidgetState extends State<RecetaPedidoWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => RecetaPedidoModel());
-
-    // On component load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      ScaffoldMessenger.of(context).clearSnackBars();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Receta cargada con éxito',
-            style: GoogleFonts.roboto(
-              color: Color(0x00000000),
-              fontSize: 16.0,
-            ),
-            textAlign: TextAlign.start,
-          ),
-          duration: Duration(milliseconds: 2000),
-          backgroundColor: FlutterFlowTheme.of(context).secondary,
-        ),
-      );
-    });
 
     _model.textController ??= TextEditingController();
     _model.textFieldFocusNode ??= FocusNode();
